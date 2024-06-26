@@ -22,6 +22,8 @@ brew "vips"
 brew "wimlib"
 brew "yarn"
 brew "zellij"
+brew "go-task"
+brew oh-my-posh
 
 cask "1password-cli"
 cask "alacritty"
@@ -33,4 +35,3 @@ cask "postman"
 cask "raycast"
 cask "zed"
 cask "visual-studio-code"
-
