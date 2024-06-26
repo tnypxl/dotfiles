@@ -38,5 +38,5 @@ alias suggest="gh copilot suggest"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$HOME/.neovim/nvim-macos-arm64/bin:$BUN_INSTALL/bin:$PATH"
 
-# zellij
-eval "$(zellij setup --generate-auto-start zsh)"
+# # zellij
+# eval "$(zellij setup --generate-auto-start zsh)"
