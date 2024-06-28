@@ -74,6 +74,7 @@ alias lst="tree -a -C -L 1 --dirsfirst"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$HOME/.neovim/nvim-macos-arm64/bin:$BUN_INSTALL/bin:$PATH"
 export EDITOR="lvim"
+export vim="lvim"
 
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
