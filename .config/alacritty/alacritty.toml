@@ -15,6 +15,7 @@ args = ["-l"]
 padding = { x = 5, y = 5 }
 option_as_alt = "Both"
 dynamic_padding = true
+decorations = "Buttonless"
 
 [scrolling]
 history = 25000
