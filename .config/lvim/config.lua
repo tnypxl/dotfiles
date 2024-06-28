@@ -4,13 +4,12 @@
 -- Forum: https://www.reddit.com/r/lunarvim/
 -- Discord: https://discord.com/invite/iXb9B4Ny
 
-
 lvim.plugins = {
   {
     "catppuccin/nvim",
     name = "catppuccin",
     opts = {
-      flavor = "mocha"
+      flavor = "macchiato"
     }
   },
   {
