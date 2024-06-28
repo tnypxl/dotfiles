@@ -65,7 +65,7 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 alias explain="gh copilot explain"
 alias suggest="gh copilot suggest"
-alias lst="tree -C -L 1 --dirsfirst"
+alias lst="tree -a -C -L 1 --dirsfirst"
 
 # bun completions
 [ -s "/Users/arik/.oh-my-zsh/completions/_bun" ] && source "/Users/arik/.oh-my-zsh/completions/_bun"
