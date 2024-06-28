@@ -1,9 +1,19 @@
-if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
-  eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/zen.toml)"
+# bun
+export BUN_INSTALL="$HOME/.bun"
+
+export PATH="$BUN_INSTALL/bin:$PATH"
+export EDITOR="lvim"
+export vim="lvim"
+
+if [[ -f "/opt/homebrew/bin/brew" ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-if [[ -f "/opt/homebrew/bin/brew" ]] then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
+# load asdf
+source $HOME/.asdf/asdf.sh
+
+if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
+  eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/zen.toml)"
 fi
 
 # Set the directory we want to store zinit and plugins
@@ -18,6 +28,10 @@ fi
 # Source/Load zinit
 source "${ZINIT_HOME}/zinit.zsh"
 
+# Load completions
+fpath=($HOME/.config/completions $fpath)
+autoload -Uz compinit && compinit
+
 # Add in zsh plugins
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
@@ -26,6 +40,8 @@ zinit light Aloxaf/fzf-tab
 
 # Setup custom completions in zinit
 zinit ice as"completion"
+zinit snippet $HOME/.config/completions/_bun
+zinit snippet $HOME/.config/completions/_task
 
 # Add in snippets
 zinit snippet OMZP::git
@@ -33,12 +49,6 @@ zinit snippet OMZP::sudo
 zinit snippet OMZP::aws
 zinit snippet OMZP::ruby
 zinit snippet OMZP::command-not-found
-
-zinit snippet $HOME/dotfiles/.config/completions/_bun
-zinit snippet $HOME/dotfiles/.config/completions/_task
-
-# Load completions
-autoload -Uz compinit && compinit
 
 zinit cdreplay -q
 
@@ -57,28 +67,19 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
-# Completion stlying
+# Completion styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
+# Initialize fzf and zoxide after completion is set up
+eval "$(zoxide init --cmd cd zsh)"
+source <(fzf --zsh)
 
 alias explain="gh copilot explain"
 alias suggest="gh copilot suggest"
 alias lst="tree -a -C -L 1 --dirsfirst"
-
 # bun completions
-[ -s "/Users/arik/.oh-my-zsh/completions/_bun" ] && source "/Users/arik/.oh-my-zsh/completions/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$HOME/.neovim/nvim-macos-arm64/bin:$BUN_INSTALL/bin:$PATH"
-export EDITOR="lvim"
-export vim="lvim"
-
-eval "$(fzf --zsh)"
-eval "$(zoxide init --cmd cd zsh)"
-# # zellij
-# eval "$(zellij setup --generate-auto-start zsh)"
+[ -s "/Users/arikj/dotfiles/.config/completions/_bun" ] && source "/Users/arikj/dotfiles/.config/completions/_bun"
