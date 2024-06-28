@@ -24,13 +24,18 @@ zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
 
+# Setup custom completions in zinit
+zinit ice as"completion"
+
 # Add in snippets
 zinit snippet OMZP::git
 zinit snippet OMZP::sudo
 zinit snippet OMZP::aws
 zinit snippet OMZP::ruby
-zinit snippet OMZP::rails
 zinit snippet OMZP::command-not-found
+
+zinit snippet $HOME/dotfiles/.config/completions/_bun
+zinit snippet $HOME/dotfiles/.config/completions/_task
 
 # Load completions
 autoload -Uz compinit && compinit
