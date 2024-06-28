@@ -42,6 +42,8 @@ autoload -Uz compinit && compinit
 
 zinit cdreplay -q
 
+bindkey -e
+
 # History
 HISTSIZE=10000
 HISTFILE=~/.zsh_history
