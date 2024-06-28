@@ -6,7 +6,6 @@ bold.family = "JetBrainsMono Nerd Font"
 italic.family = "JetBrainsMono Nerd Font"
 bold_italic.family = "JetBrainsMono Nerd Font"
 size = 13
-offset.y = 1
 
 [shell]
 program = "/bin/zsh"
@@ -14,11 +13,9 @@ args = ["-l"]
 
 [window]
 padding = { x = 5, y = 5 }
-option_as_alt = "OnlyLeft"
+option_as_alt = "Both"
+dynamic_padding = true
 
 [scrolling]
 history = 25000
 
-[cursor]
-style.shape = "Beam"
-thickness = 0.3
