@@ -1,16 +1,12 @@
 # bun
 export BUN_INSTALL="$HOME/.bun"
-
-export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.neovim/nvim-macos-arm64/bin:$BUN_INSTALL/bin:$PATH"
 export EDITOR="lvim"
 export vim="lvim"
 
 if [[ -f "/opt/homebrew/bin/brew" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
-
-# load asdf
-source $HOME/.asdf/asdf.sh
 
 if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
   eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/zen.toml)"
@@ -29,19 +25,17 @@ fi
 source "${ZINIT_HOME}/zinit.zsh"
 
 # Load completions
-fpath=($HOME/.config/completions $fpath)
 autoload -Uz compinit && compinit
 
 # Add in zsh plugins
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-history-substring-search
 zinit light Aloxaf/fzf-tab
 
-# Setup custom completions in zinit
-zinit ice as"completion"
-zinit snippet $HOME/.config/completions/_bun
-zinit snippet $HOME/.config/completions/_task
+# Setup custom completions
+fpath=($HOME/.config/completions $fpath)
 
 # Add in snippets
 zinit snippet OMZP::git
@@ -74,12 +68,15 @@ zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
-# Initialize fzf and zoxide after completion is set up
+# Initialize zoxide and fzf completions
 eval "$(zoxide init --cmd cd zsh)"
 source <(fzf --zsh)
 
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+# Aliases
 alias explain="gh copilot explain"
 alias suggest="gh copilot suggest"
-alias lst="tree -a -C -L 1 --dirsfirst"
-# bun completions
-[ -s "/Users/arikj/dotfiles/.config/completions/_bun" ] && source "/Users/arikj/dotfiles/.config/completions/_bun"
+alias lst="tree -auphC -L 1 --dirsfirst"
+alias t="task $1 -t ~/Taskfile.yml"
