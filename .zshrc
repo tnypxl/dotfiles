@@ -1,8 +1,7 @@
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$HOME/.local/bin:$HOME/.neovim/nvim-macos-arm64/bin:$BUN_INSTALL/bin:$PATH"
-export EDITOR="lvim"
-export vim="lvim"
+export EDITOR="nvim"
 
 if [[ -f "/opt/homebrew/bin/brew" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -51,7 +50,7 @@ zinit cdreplay -q
 bindkey -e
 
 # History
-HISTSIZE=10000
+HISTSIZE=100000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
@@ -91,3 +90,5 @@ alias explain="gh copilot explain"
 alias suggest="gh copilot suggest"
 alias lst="tree -auphC -L 1 --dirsfirst"
 alias t="task $1 -t ~/Taskfile.yml"
+alias vim="nvim"
+
