@@ -77,6 +77,15 @@ source <(fzf --zsh)
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
+# Jump to the start of the line
+bindkey '^[^[[H' beginning-of-line
+bindkey '^[[H' beginning-of-line
+
+# Jump to the end of the line
+bindkey '^[^[[F' end-of-line
+bindkey '^[[F' end-of-line
+
+
 # Aliases
 alias explain="gh copilot explain"
 alias suggest="gh copilot suggest"
