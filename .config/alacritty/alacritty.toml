@@ -40,3 +40,7 @@ key = "Right"
 mods = "Command"
 chars = "\u001B[F"
 
+[[keyboard.bindings]]
+key ="Back"
+mods = "Command"
+chars = "\u0015"
