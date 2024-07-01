@@ -323,6 +323,11 @@ themes {
 //
 theme "catppuccin-mocha"
 
+ui {
+  pane_frames {
+    rounded_corners true
+  }
+}
 // The name of the default layout to load on startup
 // Default: "default"
 //
