@@ -1,6 +1,6 @@
 # bun
 export BUN_INSTALL="$HOME/.bun"
-export PATH="$HOME/.local/bin:$HOME/.neovim/nvim-macos-arm64/bin:$BUN_INSTALL/bin:$PATH"
+export PATH="$HOME/.local/bin:$BUN_INSTALL/bin:$PATH"
 export EDITOR="nvim"
 
 if [[ -f "/opt/homebrew/bin/brew" ]]; then
