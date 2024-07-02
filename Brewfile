@@ -20,10 +20,9 @@ brew "stow"
 brew "vim"
 brew "vips"
 brew "wimlib"
-brew "yarn"
 brew "zellij"
 brew "go-task"
-brew oh-my-posh
+brew "oh-my-posh""
 
 cask "1password-cli"
 cask "alacritty"

@@ -4,7 +4,12 @@ local on_init = require("nvchad.configs.lspconfig").on_init
 local capabilities = require("nvchad.configs.lspconfig").capabilities
 
 local lspconfig = require "lspconfig"
-local servers = { "html", "cssls" }
+local servers = {
+    "terraformls", "lua_ls", "gopls", "solargraph", "bashls", "pyright",
+    "cssls", "html", "tsserver", "eslint", "tflint",
+    "rubocop", "standardrb", "ruby_lsp"
+}
+
 
 -- lsps with default config
 for _, lsp in ipairs(servers) do
@@ -16,8 +21,30 @@ for _, lsp in ipairs(servers) do
 end
 
 -- typescript
-lspconfig.tsserver.setup {
-  on_attach = on_attach,
-  on_init = on_init,
-  capabilities = capabilities,
+-- lspconfig.tsserver.setup {
+--   on_attach = on_attach,
+--   on_init = on_init,
+--   capabilities = capabilities,
+-- }
+
+-- terraform
+lspconfig.terraformls.setup {
+    on_attach = function(client, bufnr)
+        -- Custom keybindings for LSP actions
+        local bufopts = { noremap=true, silent=true, buffer=bufnr }
+        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+        vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
+        vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
+    end,
+    settings = {
+        terraform = {
+            lint = {
+                enable = true,
+            }
+        },
+    },
+    flags = {
+        debound_text_changes = 150,
+    }
 }
