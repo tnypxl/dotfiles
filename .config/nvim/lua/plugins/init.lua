@@ -23,7 +23,7 @@ return {
             "solargraph", "bash-language-server", "pyright", "css-lsp",
             "html-lsp", "typescript-language-server", "eslint-lsp", "tflint", "tfsec",
             "sonarlint-language-server", "rubocop", "erb-lint", "erb-formatter",
-            "standardrb", "ruby-lsp", "stimulus-language-server",
+            "standardrb", "stimulus-language-server",
   		},
   	},
   },
@@ -33,14 +33,13 @@ return {
         require("null-ls").setup()
     end,
   },
-
   {
   	"nvim-treesitter/nvim-treesitter",
   	opts = {
   		ensure_installed = {
   		    "vim", "lua", "vimdoc",
             "html", "css", "go", "javascript",
-            "python", "bash", "ruby", "bash",
+            "python", "bash", "ruby", "bash", "kdl",
   		},
   	},
   },

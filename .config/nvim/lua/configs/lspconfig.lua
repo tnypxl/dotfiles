@@ -7,7 +7,6 @@ local lspconfig = require "lspconfig"
 local servers = {
     "terraformls", "lua_ls", "gopls", "solargraph", "bashls", "pyright",
     "cssls", "html", "tsserver", "eslint", "tflint",
-    "rubocop", "standardrb", "ruby_lsp"
 }
 
 
@@ -19,13 +18,6 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
   }
 end
-
--- typescript
--- lspconfig.tsserver.setup {
---   on_attach = on_attach,
---   on_init = on_init,
---   capabilities = capabilities,
--- }
 
 -- terraform
 lspconfig.terraformls.setup {
