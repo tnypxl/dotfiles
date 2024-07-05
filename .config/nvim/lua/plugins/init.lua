@@ -1,46 +1,70 @@
 return {
-  {
-    "stevearc/conform.nvim",
-    -- event = 'BufWritePre', -- uncomment for format on save
-    config = function()
-      require "configs.conform"
-    end,
-  },
+    {
+        "stevearc/conform.nvim",
+        -- event = 'BufWritePre', -- uncomment for format on save
+        config = function()
+            require "configs.conform"
+        end,
+    },
+    {
+        "sourcegraph/sg.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            -- "nvim-telescope/telescope.nvim"
+        },
+        lazy = false,
+        config = function()
+            require("sg").setup()
+        end
+    },
+    {
+        "neovim/nvim-lspconfig",
+        config = function()
+            require("nvchad.configs.lspconfig").defaults()
+            require "configs.lspconfig"
+        end,
+    },
+    {
+        "williamboman/mason.nvim",
+        opts = {
+            ensure_installed = {
+                -- LSP
+                "html-lsp",
+                "css-lsp",
+                "gopls",
+                "solargraph",
+                "pyright",
+                "terraform-ls",
+                "yaml-language-server",
+                "json-lsp",
+                "xmlformatter",
+                "marksman",
+                "bash-language-server",
 
-  -- These are some examples, uncomment them if you want to see them work!
-  {
-    "neovim/nvim-lspconfig",
-    config = function()
-      require("nvchad.configs.lspconfig").defaults()
-      require "configs.lspconfig"
-    end,
-  },
-  {
-  	"williamboman/mason.nvim",
-  	opts = {
-  		ensure_installed = {
-  		    "terraform-ls", "lua-language-server", "stylua", "gopls",
-            "solargraph", "bash-language-server", "pyright", "css-lsp",
-            "html-lsp", "typescript-language-server", "eslint-lsp", "tflint", "tfsec",
-            "sonarlint-language-server", "rubocop", "erb-lint", "erb-formatter",
-            "standardrb", "stimulus-language-server",
-  		},
-  	},
-  },
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    config = function()
-        require("null-ls").setup()
-    end,
-  },
-  {
-  	"nvim-treesitter/nvim-treesitter",
-  	opts = {
-  		ensure_installed = {
-  		    "vim", "lua", "vimdoc",
-            "html", "css", "go", "javascript",
-            "python", "bash", "ruby", "bash", "kdl",
-  		},
-  	},
-  },
+                -- Formatters
+                "gofmt",
+                "rubocop",
+                "black",
+                "terraform-fmt",
+                "prettier",
+                "shfmt",
+            },
+        },
+    },
+    {
+        "nvim-treesitter/nvim-treesitter",
+        opts = {
+            ensure_installed = {
+                "go",
+                "ruby",
+                "python",
+                "hcl", -- for Terraform
+                "yaml",
+                "json",
+                "xml",
+                "markdown",
+                "bash",
+            },
+        },
+    },
 }
