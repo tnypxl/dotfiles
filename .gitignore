@@ -2,3 +2,4 @@
 .tool-versions
 /.config/zellij/layouts/*
 !/.config/zellij/layouts/default.kdl
+/**/*.backup
