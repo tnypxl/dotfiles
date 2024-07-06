@@ -3,6 +3,12 @@ local options = {
         lua = { "stylua" },
         css = { "prettier" },
         html = { "prettier" },
+        go = { "gofmt", "goimports" },
+        json = { "prettier" },
+        ruby = { "rubocop" },
+        sh = { "shfmt" },
+        javascript = { "prettier" },
+        typescript = { "prettier" },
     },
 
     format_on_save = {

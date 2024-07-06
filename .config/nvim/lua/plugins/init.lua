@@ -1,7 +1,7 @@
 return {
     {
         "stevearc/conform.nvim",
-        -- event = 'BufWritePre', -- uncomment for format on save
+        event = 'BufWritePre', -- uncomment for format on save
         config = function()
             require "configs.conform"
         end,
@@ -34,8 +34,9 @@ return {
                 "gopls",
                 "solargraph",
                 "pyright",
-                "terraform-ls",
+                "terraformls",
                 "yaml-language-server",
+                "tsserver",
                 "json-lsp",
                 "xmlformatter",
                 "marksman",
@@ -63,7 +64,11 @@ return {
                 "json",
                 "xml",
                 "markdown",
+                "terraform",
+                "javascript",
+                "typescript",
                 "bash",
+                "kdl",
             },
         },
     },
