@@ -2,6 +2,7 @@
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$HOME/.local/bin:$BUN_INSTALL/bin:$PATH"
 export EDITOR="nvim"
+export TERM=xterm-256color
 
 if [[ -f "/opt/homebrew/bin/brew" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
