@@ -8,6 +8,7 @@ if [[ -f "/opt/homebrew/bin/brew" ]]; then
 fi
 
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
+. "$HOME/.asdf/installs/rust/stable/env"
 
 if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
   eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/zen.toml)"
@@ -19,7 +20,7 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 # Download Zinit, if it's not there yet
 if [ ! -d "$ZINIT_HOME" ]; then
    mkdir -p "$(dirname $ZINIT_HOME)"
-   git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+   git clone https://github.com/zdharma-continuum/zinit.git q "$ZINIT_HOME"
 fi
 
 # Source/Load zinit
