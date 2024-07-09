@@ -8,6 +8,8 @@
 return {
   "AstroNvim/astrocommunity",
   { import = "astrocommunity.pack.lua" },
+  { import = "astrocommunity.pack.ruby" },
+  { import = "astrocommunity.pack.go" },
   { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.editing-support/conform-nvim" },
   { import = "astrocommunity.utility.noice-nvim" },
