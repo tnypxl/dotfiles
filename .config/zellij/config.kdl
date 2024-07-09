@@ -111,7 +111,7 @@ keybinds {
     }
     session {
         bind "Ctrl o" { SwitchToMode "Normal"; }
-        bind "Ctrl s" { SwitchToMode "Scroll"; }
+        // bind "Ctrl s" { SwitchToMode "Scroll"; }
         bind "d" { Detach; }
         bind "w" {
             LaunchOrFocusPlugin "session-manager" {
@@ -165,12 +165,12 @@ keybinds {
     shared_except "pane" "locked" {
         bind "Ctrl p" { SwitchToMode "Pane"; }
     }
-    //  shared_except "resize" "locked" {
-    //      bind "Ctrl n" { SwitchToMode "Resize"; }
-    //  }
-    shared_except "scroll" "locked" {
-        bind "Ctrl s" { SwitchToMode "Scroll"; }
-    }
+    // shared_except "resize" "locked" {
+    //     bind "Ctrl n" { SwitchToMode "Resize"; }
+    // }
+    // shared_except "scroll" "locked" {
+    //     bind "Ctrl s" { SwitchToMode "Scroll"; }
+    // }
     shared_except "session" "locked" {
         bind "Ctrl o" { SwitchToMode "Session"; }
     }
@@ -183,6 +183,9 @@ keybinds {
     shared_except "tmux" "locked" {
         bind "Ctrl b" { SwitchToMode "Tmux"; }
     }
+
+    unbind "Ctrl s"
+
 }
 
 plugins {
