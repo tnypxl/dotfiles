@@ -26,6 +26,9 @@ return {
         },
         ignore_filetypes = { -- disable format on save for specified filetypes
           -- "python",
+          "terraform",
+          "terraform-vars",
+          "json",
         },
       },
       disabled = { -- disable formatting capabilities for the listed language servers
@@ -42,6 +45,9 @@ return {
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
+      ruby_lsp = { enabled = false },
+      standardrb = { enabled = false },
+      prettier = { enabled = false },
       -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
     },
     -- customize how language servers are attached
