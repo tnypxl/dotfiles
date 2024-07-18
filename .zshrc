@@ -94,3 +94,4 @@ alias lst="tree -auphC -L 1 --dirsfirst"
 alias t="task $1 -t ~/Taskfile.yml"
 alias vim="nvim"
 
+[ -f $HOME/.zprofile ] && source ~/.zprofile
