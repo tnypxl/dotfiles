@@ -29,6 +29,7 @@ return {
           "terraform",
           "terraform-vars",
           "json",
+          "sql",
         },
       },
       disabled = { -- disable formatting capabilities for the listed language servers
@@ -48,6 +49,7 @@ return {
       ruby_lsp = { enabled = false },
       standardrb = { enabled = false },
       prettier = { enabled = false },
+
       -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
     },
     -- customize how language servers are attached

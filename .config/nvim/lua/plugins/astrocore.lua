@@ -34,8 +34,7 @@ return {
         wrap = false,
         expandtab = true,
         tabstop = 4,
-        softtabstop = 2,
-        shiftwidth = 2,
+        shiftwidth = 4,
         -- sets vim.opt.wrap
       },
       g = { -- vim.g.<key>
