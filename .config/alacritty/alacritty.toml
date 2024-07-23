@@ -5,7 +5,7 @@ normal.family = "JetBrainsMono Nerd Font"
 bold.family = "JetBrainsMono Nerd Font"
 italic.family = "JetBrainsMono Nerd Font"
 bold_italic.family = "JetBrainsMono Nerd Font"
-size = 13
+size = 12
 
 [shell]
 program = "/bin/zsh"
@@ -26,7 +26,7 @@ mods = "Alt"
 chars = "\u001BF"
 
 [[keyboard.bindings]]
-key = "Left"  
+key = "Left"
 mods = "Alt"
 chars = "\u001BB"
 
@@ -41,6 +41,6 @@ mods = "Command"
 chars = "\u001B[F"
 
 [[keyboard.bindings]]
-key ="Back"
+key = "Back"
 mods = "Command"
 chars = "\u0015"

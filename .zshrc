@@ -90,7 +90,7 @@ bindkey '^[[F' end-of-line
 # Aliases
 alias explain="gh copilot explain"
 alias suggest="gh copilot suggest"
-alias lst="tree -auphC -L 1 --dirsfirst"
+alias lst="tree -auphgiADC -L 1 --du --dirsfirst"
 alias t="task $1 -t ~/Taskfile.yml"
 alias vim="nvim"
 
