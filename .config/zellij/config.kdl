@@ -354,7 +354,7 @@ plugins {
         tab_fullscreen_indicator " 󰊓"
         tab_floating_indicator   " 󰹙"
 
-        notification_format_unread "#[bg=surface0,fg=$yellow]#[bg=$yellow,fg=$crust] #[bg=$surface1,fg=$yellow] {message}#[bg=$surface0,fg=$yellow]"
+        notification_format_unread "#[bg=$color_base,fg=$yellow]#[bg=$yellow,fg=$crust] #[bg=$surface1,fg=$yellow] {message}#[bg=$surface0,fg=$yellow]"
         notification_format_no_notifications ""
         notification_show_interval "10"
 
