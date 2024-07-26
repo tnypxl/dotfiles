@@ -53,6 +53,8 @@ return {
         -- navigate buffer tabs
         ["]b"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
         ["[b"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
+        ["<C-j>"] = { "<cmd>m .+1<cr>==", desc = "Move line down" },
+        ["<C-k>"] = { "<cmd>m .-2<cr>==", desc = "Move line up" },
         ["<Leader>s"] = { ":w<CR>", desc = "Save buffer" },
 
         -- mappings seen under group name "Buffer"
@@ -71,6 +73,10 @@ return {
 
         -- setting a mapping to false will disable it
         -- ["<C-S>"] = false,
+      },
+      v = {
+        ["<C-j>"] = { ":m '>+1<cr>gv=gv", desc = "Move selection down" },
+        ["<C-k>"] = { ":m '<-2<cr>gv=gv", desc = "Move selection up" },
       },
     },
     sessions = {
