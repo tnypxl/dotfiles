@@ -5,8 +5,9 @@ normal.family = "JetBrainsMono Nerd Font"
 bold.family = "JetBrainsMono Nerd Font"
 italic.family = "JetBrainsMono Nerd Font"
 bold_italic.family = "JetBrainsMono Nerd Font"
-size = 12
-offset.y = 2
+size = 13
+offset.y = 0
+offset.x = 0
 
 [shell]
 program = "/bin/zsh"
