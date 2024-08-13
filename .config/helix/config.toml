@@ -1,0 +1,9 @@
+theme = "catppuccin-macchiato"
+
+# [editor.statusline]
+# left = ["mode", "spinner", "file-name", "file-modification-indicator"]
+# right = ["version-control", "diagnostics", "selections", "position", "file-encoding", "file-line-ending", "file-type"]
+# separator = "│"
+# mode.normal = "NORMAL"
+# mode.insert = "INSERT"
+# mode.select = "SELECT"
