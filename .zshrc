@@ -1,6 +1,6 @@
 # bun
 export BUN_INSTALL="$HOME/.bun"
-export PATH="$HOME/.local/bin:$BUN_INSTALL/bin:$PATH"
+export PATH="$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$BUN_INSTALL/bin:$PATH"
 export EDITOR="nvim"
 export TERM=xterm-256color
 
@@ -93,5 +93,8 @@ alias suggest="gh copilot suggest"
 alias lst="tree -auphgiADC -L 1 --du --dirsfirst"
 alias t="task $1 -t ~/Taskfile.yml"
 alias vim="nvim"
+
+# Dynamically set GO env vars
+. ~/.asdf/plugins/golang/set-env.zsh
 
 [ -f $HOME/.zprofile ] && source ~/.zprofile
