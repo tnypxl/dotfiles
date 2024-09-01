@@ -2,7 +2,7 @@ local wezterm = require("wezterm")
 local act = wezterm.action
 local config = wezterm.config_builder()
 
-config.color_scheme = "Catppuccin Macchiato"
+config.color_scheme = "Catppuccin Macchiato" -- Change this to your preferred color scheme
 config.font = wezterm.font("JetBrainsMono Nerd Font")
 config.use_fancy_tab_bar = false
 config.show_new_tab_button_in_tab_bar = false
@@ -15,10 +15,17 @@ config.scrollback_lines = 25000
 config.window_frame = {
 	border_bottom_height = "0.5cell",
 }
+
+config.colors = {
+	tab_bar = {
+		background = "#23273C",
+	},
+}
 config.window_padding = {
+	top = "1cell",
 	left = "1cell",
 	right = "1cell",
-	bottom = "0.5cell",
+	bottom = "0.4cell",
 }
 
 -- Define custom keybindings
@@ -79,13 +86,13 @@ local function tab_title(tab_info)
 end
 
 wezterm.on("format-tab-title", function(tab, tabs, panes, conf, hover, max_width)
-	local background = "#65737E"
-	local foreground = "#F0F2F5"
+	local background = "#363a4f"
+	local foreground = "#8087a2"
 	local edge_background = "#23273C"
 
 	if tab.is_active or hover then
-		background = "#E5C07B"
-		foreground = "#282C34"
+		background = "#8bd5ca"
+		foreground = "#363a4f"
 	end
 	local edge_foreground = background
 

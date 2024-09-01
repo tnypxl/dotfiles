@@ -22,8 +22,6 @@ return {
   { import = "astrocommunity.pack.xml" },
   { import = "astrocommunity.pack.templ" },
   { import = "astrocommunity.colorscheme.catppuccin" },
-  -- { import = "astrocommunity.completion.supermaven-nvim" },
-  -- { import = "astrocommunity.editing-support/conform-nvim" },
+  { import = "astrocommunity.completion.supermaven-nvim" },
   { import = "astrocommunity.utility.noice-nvim" },
-  -- import/override with your plugins folder
 }
