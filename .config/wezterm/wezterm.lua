@@ -7,13 +7,14 @@ config.font = wezterm.font("JetBrainsMono Nerd Font")
 config.use_fancy_tab_bar = false
 config.show_new_tab_button_in_tab_bar = false
 config.enable_tab_bar = true
-config.tab_bar_at_bottom = true
+-- config.tab_bar_at_bottom = true
 config.window_decorations = "RESIZE"
 config.adjust_window_size_when_changing_font_size = false
 config.enable_scroll_bar = false
 config.scrollback_lines = 25000
 config.window_frame = {
-	border_bottom_height = "0.5cell",
+	-- border_bottom_height = "0.5cell",
+	border_top_height = "0.5cell",
 }
 
 config.colors = {
@@ -22,10 +23,10 @@ config.colors = {
 	},
 }
 config.window_padding = {
-	top = "1cell",
+	top = "0.5cell",
 	left = "1cell",
 	right = "1cell",
-	bottom = "0.4cell",
+	bottom = "0.5cell",
 }
 
 -- Define custom keybindings
