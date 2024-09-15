@@ -23,5 +23,6 @@ return {
   { import = "astrocommunity.pack.templ" },
   { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.completion.supermaven-nvim" },
+  { import = "astrocommunity.completion.avante-nvim" },
   { import = "astrocommunity.utility.noice-nvim" },
 }
