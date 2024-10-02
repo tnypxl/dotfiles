@@ -26,7 +26,7 @@ config.window_padding = {
 	top = "0.5cell",
 	left = "1cell",
 	right = "1cell",
-	bottom = "0.5cell",
+	bottom = "0cell",
 }
 
 -- Define custom keybindings
@@ -36,10 +36,10 @@ config.keys = {
 	{ key = "RightArrow", mods = "CTRL|SHIFT", action = act.ActivatePaneDirection("Right") },
 	{ key = "UpArrow", mods = "CTRL|SHIFT", action = act.ActivatePaneDirection("Up") },
 	{ key = "DownArrow", mods = "CTRL|SHIFT", action = act.ActivatePaneDirection("Down") },
-	{ key = "LeftArrow", mods = "CTRL|ALT", action = act.AdjustPaneSize({ "Left", 5 }) },
-	{ key = "RightArrow", mods = "CTRL|ALT", action = act.AdjustPaneSize({ "Right", 5 }) },
-	{ key = "UpArrow", mods = "CTRL|ALT", action = act.AdjustPaneSize({ "Up", 8 }) },
-	{ key = "DownArrow", mods = "CTRL|ALT", action = act.AdjustPaneSize({ "Down", 5 }) },
+	{ key = "LeftArrow", mods = "CTRL|CMD", action = act.AdjustPaneSize({ "Left", 5 }) },
+	{ key = "RightArrow", mods = "CTRL|CMD", action = act.AdjustPaneSize({ "Right", 5 }) },
+	{ key = "UpArrow", mods = "CTRL|CMD", action = act.AdjustPaneSize({ "Up", 10 }) },
+	{ key = "DownArrow", mods = "CTRL|CMD", action = act.AdjustPaneSize({ "Down", 5 }) },
 	{ key = "d", mods = "CMD", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
 	{ key = "d", mods = "CMD|SHIFT", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
 	{ key = "x", mods = "CTRL|SHIFT", action = act.CloseCurrentPane({ confirm = true }) },
