@@ -91,7 +91,7 @@ bindkey '^[[F' end-of-line
 alias explain="gh copilot explain"
 alias suggest="gh copilot suggest"
 alias lst="tree -auphgiADC -L 1 --du --dirsfirst"
-alias t="task $1 -t ~/Taskfile.yml"
+alias t="task -g $1"
 alias vim="nvim"
 
 # Dynamically set GO env vars
