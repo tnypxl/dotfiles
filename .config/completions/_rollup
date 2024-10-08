@@ -210,4 +210,3 @@ _rollup()
 if [ "$funcstack[1]" = "_rollup" ]; then
     _rollup
 fi
-
