@@ -330,7 +330,7 @@ plugins {
         mode_normal        "#[bg=$green,fg=$crust,bold] NORMAL#[bg=$color_base,fg=$green]"
         mode_tmux          "#[bg=$mauve,fg=$crust,bold] TMUX#[bg=$color_base,fg=$mauve]"
         mode_locked        "#[bg=$red,fg=$crust,bold] LOCKED#[bg=$color_base,fg=$red]"
-        mode_pane          "#[bg=$teal,fg=$crust,bold] PANE#[bg=$color_base,fg=teal,bold]"
+        mode_pane          "#[bg=$teal,fg=$crust,bold] PANE#[bg=$color_base,fg=teal]"
         mode_tab           "#[bg=$teal,fg=$crust,bold] TAB#[bg=$color_base,fg=$teal]"
         mode_scroll        "#[bg=$flamingo,fg=$crust,bold] SCROLL#[bg=$color_base,fg=$flamingo]"
         mode_enter_search  "#[bg=$flamingo,fg=$crust,bold] ENT-SEARCH#[bg=$color_base,fg=$flamingo]"

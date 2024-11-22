@@ -4,6 +4,8 @@ local config = wezterm.config_builder()
 
 config.color_scheme = "Catppuccin Macchiato" -- Change this to your preferred color scheme
 config.font = wezterm.font("JetBrainsMono Nerd Font")
+config.font_size = 12.5
+config.line_height = 1.1
 config.use_fancy_tab_bar = false
 config.show_new_tab_button_in_tab_bar = false
 config.enable_tab_bar = true
@@ -32,45 +34,45 @@ config.window_padding = {
 -- Define custom keybindings
 config.keys = {
 	-- Pane management
-	{ key = "LeftArrow", mods = "CTRL|SHIFT", action = act.ActivatePaneDirection("Left") },
+	{ key = "LeftArrow",  mods = "CTRL|SHIFT", action = act.ActivatePaneDirection("Left") },
 	{ key = "RightArrow", mods = "CTRL|SHIFT", action = act.ActivatePaneDirection("Right") },
-	{ key = "UpArrow", mods = "CTRL|SHIFT", action = act.ActivatePaneDirection("Up") },
-	{ key = "DownArrow", mods = "CTRL|SHIFT", action = act.ActivatePaneDirection("Down") },
-	{ key = "LeftArrow", mods = "CTRL|CMD", action = act.AdjustPaneSize({ "Left", 5 }) },
-	{ key = "RightArrow", mods = "CTRL|CMD", action = act.AdjustPaneSize({ "Right", 5 }) },
-	{ key = "UpArrow", mods = "CTRL|CMD", action = act.AdjustPaneSize({ "Up", 10 }) },
-	{ key = "DownArrow", mods = "CTRL|CMD", action = act.AdjustPaneSize({ "Down", 5 }) },
-	{ key = "d", mods = "CMD", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
-	{ key = "d", mods = "CMD|SHIFT", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
-	{ key = "x", mods = "CTRL|SHIFT", action = act.CloseCurrentPane({ confirm = true }) },
+	{ key = "UpArrow",    mods = "CTRL|SHIFT", action = act.ActivatePaneDirection("Up") },
+	{ key = "DownArrow",  mods = "CTRL|SHIFT", action = act.ActivatePaneDirection("Down") },
+	{ key = "LeftArrow",  mods = "CTRL|CMD",   action = act.AdjustPaneSize({ "Left", 2 }) },
+	{ key = "RightArrow", mods = "CTRL|CMD",   action = act.AdjustPaneSize({ "Right", 2 }) },
+	{ key = "UpArrow",    mods = "CTRL|CMD",   action = act.AdjustPaneSize({ "Up", 2 }) },
+	{ key = "DownArrow",  mods = "CTRL|CMD",   action = act.AdjustPaneSize({ "Down", 2 }) },
+	{ key = "d",          mods = "CMD",        action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+	{ key = "d",          mods = "CMD|SHIFT",  action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
+	{ key = "x",          mods = "CTRL|SHIFT", action = act.CloseCurrentPane({ confirm = true }) },
 
 	-- Workspace management
-	{ key = "n", mods = "CTRL|SHIFT", action = act.SwitchToWorkspace({ name = "default" }) },
-	{ key = "w", mods = "CTRL|SHIFT", action = act.SwitchToWorkspace({ name = "work" }) },
-	{ key = "s", mods = "CTRL|SHIFT", action = act.SwitchToWorkspace({ name = "study" }) },
-	{ key = "a", mods = "CTRL|SHIFT", action = act.SwitchToWorkspace({ name = "admin" }) },
-	{ key = "d", mods = "CTRL|SHIFT", action = act.SwitchToWorkspace({ name = "dev" }) },
-	{ key = "c", mods = "CTRL|SHIFT", action = act.SwitchToWorkspace({ name = "chat" }) },
-	{ key = "t", mods = "CTRL|SHIFT", action = act.SwitchToWorkspace({ name = "term" }) },
-	{ key = "r", mods = "CTRL|SHIFT", action = act.SwitchToWorkspace({ name = "research" }) },
+	{ key = "n",          mods = "CTRL|SHIFT", action = act.SwitchToWorkspace({ name = "default" }) },
+	{ key = "w",          mods = "CTRL|SHIFT", action = act.SwitchToWorkspace({ name = "work" }) },
+	{ key = "s",          mods = "CTRL|SHIFT", action = act.SwitchToWorkspace({ name = "study" }) },
+	{ key = "a",          mods = "CTRL|SHIFT", action = act.SwitchToWorkspace({ name = "admin" }) },
+	{ key = "d",          mods = "CTRL|SHIFT", action = act.SwitchToWorkspace({ name = "dev" }) },
+	{ key = "c",          mods = "CTRL|SHIFT", action = act.SwitchToWorkspace({ name = "chat" }) },
+	{ key = "t",          mods = "CTRL|SHIFT", action = act.SwitchToWorkspace({ name = "term" }) },
+	{ key = "r",          mods = "CTRL|SHIFT", action = act.SwitchToWorkspace({ name = "research" }) },
 
 	-- Option + Arrow Keys
-	{ key = "LeftArrow", mods = "OPT", action = act.SendKey({ key = "b", mods = "ALT" }) },
-	{ key = "RightArrow", mods = "OPT", action = act.SendKey({ key = "f", mods = "ALT" }) },
-	{ key = "UpArrow", mods = "OPT", action = act.SendKey({ key = "b", mods = "CTRL" }) },
-	{ key = "DownArrow", mods = "OPT", action = act.SendKey({ key = "f", mods = "CTRL" }) },
+	{ key = "LeftArrow",  mods = "OPT",        action = act.SendKey({ key = "b", mods = "ALT" }) },
+	{ key = "RightArrow", mods = "OPT",        action = act.SendKey({ key = "f", mods = "ALT" }) },
+	{ key = "UpArrow",    mods = "OPT",        action = act.SendKey({ key = "b", mods = "CTRL" }) },
+	{ key = "DownArrow",  mods = "OPT",        action = act.SendKey({ key = "f", mods = "CTRL" }) },
 
 	-- Command + Arrow Keys
-	{ key = "LeftArrow", mods = "CMD", action = act.SendKey({ key = "a", mods = "CTRL" }) },
-	{ key = "RightArrow", mods = "CMD", action = act.SendKey({ key = "e", mods = "CTRL" }) },
-	{ key = "UpArrow", mods = "CMD", action = act.SendKey({ key = "p", mods = "CTRL" }) },
-	{ key = "DownArrow", mods = "CMD", action = act.SendKey({ key = "n", mods = "CTRL" }) },
+	{ key = "LeftArrow",  mods = "CMD",        action = act.SendKey({ key = "a", mods = "CTRL" }) },
+	{ key = "RightArrow", mods = "CMD",        action = act.SendKey({ key = "e", mods = "CTRL" }) },
+	{ key = "UpArrow",    mods = "CMD",        action = act.SendKey({ key = "p", mods = "CTRL" }) },
+	{ key = "DownArrow",  mods = "CMD",        action = act.SendKey({ key = "n", mods = "CTRL" }) },
 
 	-- Option + Delete
-	{ key = "Backspace", mods = "OPT", action = act.SendKey({ key = "w", mods = "CTRL" }) },
+	{ key = "Backspace",  mods = "OPT",        action = act.SendKey({ key = "w", mods = "CTRL" }) },
 
 	-- Command + Delete
-	{ key = "Backspace", mods = "CMD", action = act.SendKey({ key = "u", mods = "CTRL" }) },
+	{ key = "Backspace",  mods = "CMD",        action = act.SendKey({ key = "u", mods = "CTRL" }) },
 }
 
 -- tabs
