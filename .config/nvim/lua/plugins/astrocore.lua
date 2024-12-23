@@ -57,6 +57,12 @@ return {
         ["<C-k>"] = { "<cmd>m .-2<cr>==", desc = "Move line up" },
         ["<Leader>s"] = { ":w<CR>", desc = "Save buffer" },
 
+        -- CodeCompanion
+        ["<Leader>cs"] = { "<cmd>CodeCompanionChat Toggle<CR>" },
+
+        -- codecompanion
+        -- ["<C-a>"] = { "n", "<cmd>CodeCompanionActions<cr>", desc = "Show CodeCompanion Actions" },
+
         -- mappings seen under group name "Buffer"
         ["<Leader>bd"] = {
           function()
