@@ -22,6 +22,7 @@ return {
   { import = "astrocommunity.pack.xml" },
   { import = "astrocommunity.pack.templ" },
   { import = "astrocommunity.colorscheme.catppuccin" },
+  { import = "astrocommunity.colorscheme.rose-pine" },
   -- { import = "astrocommunity.completion.codeium-nvim" },
   { import = "astrocommunity.completion.supermaven-nvim" },
   -- { import = "astrocommunity.completion.avante-nvim" },
