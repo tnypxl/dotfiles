@@ -2,9 +2,11 @@ theme = rose-pine-moon
 window-padding-x = 3
 window-padding-y = 3
 window-padding-balance = true
-font-feature = liga
+font-feature = calt
 font-family = JetBrainsMono Nerd Font
-font-size = 12.5
+font-size = 13.5
+font-style = medium
+font-feature = +liga
 font-thicken = false
 adjust-cell-width = 0
 adjust-cell-height = 1
@@ -14,5 +16,7 @@ macos-titlebar-style = tabs
 keybind = cmd+backspace=text:\x15
 shell-integration-features = no-cursor
 adjust-cursor-thickness = 2
-cursor-color = #ea9d34
+cursor-color = #ea9a97
 cursor-style = bar
+mouse-scroll-multiplier = 0.05
+

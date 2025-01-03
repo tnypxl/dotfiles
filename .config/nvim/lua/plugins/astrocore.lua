@@ -58,7 +58,8 @@ return {
         ["<Leader>s"] = { ":w<CR>", desc = "Save buffer" },
 
         -- CodeCompanion
-        ["<Leader>cs"] = { "<cmd>CodeCompanionChat Toggle<CR>" },
+        ["<C-c>"] = { "<cmd>CodeCompanionChat Toggle<CR>", desc = "Toggle CodeCompanion Chat" },
+        ["<C-a>"] = { "<cmd>CodeCompanionActions<CR>", desc = "Show CodeCompanion Actions" },
 
         -- codecompanion
         -- ["<C-a>"] = { "n", "<cmd>CodeCompanionActions<cr>", desc = "Show CodeCompanion Actions" },
