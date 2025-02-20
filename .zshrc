@@ -1,6 +1,7 @@
 # bun
+export ASDF_DATA_DIR="$HOME/.asdf"
 export BUN_INSTALL="$HOME/.bun"
-export PATH="$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$BUN_INSTALL/bin:$PATH"
+export PATH="$ASDF_DATA_DIR/shims:$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$BUN_INSTALL/bin:$PATH"
 export EDITOR="nvim"
 export TERM=xterm-256color
 
@@ -8,8 +9,8 @@ if [[ -f "/opt/homebrew/bin/brew" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-. /opt/homebrew/opt/asdf/libexec/asdf.sh
-. "$HOME/.asdf/installs/rust/stable/env"
+# . /opt/homebrew/opt/asdf/libexec/asdf.sh
+# . "$HOME/.asdf/installs/rust/stable/env"
 
 if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
   eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/zen.toml)"
@@ -91,8 +92,10 @@ bindkey '^[[F' end-of-line
 alias explain="gh copilot explain"
 alias suggest="gh copilot suggest"
 alias lst="tree -auphgiADC -L 1 --du --dirsfirst"
-alias t="task -g $1"
+alias t="task -t ~/Taskfile.yml $1"
 alias vim="nvim"
+
+eval "$(task --completion zsh)"
 
 # Dynamically set GO env vars
 . ~/.asdf/plugins/golang/set-env.zsh
