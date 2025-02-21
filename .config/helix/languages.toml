@@ -6,3 +6,8 @@ auto-format = true
 [[language]]
 name = "go"
 auto-format = true
+
+[[language]]
+name = "terraform"
+file-types = ["tfvars"]
+auto-format = false
