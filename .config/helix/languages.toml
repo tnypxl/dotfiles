@@ -1,13 +1,16 @@
 [[language]]
 name = "markdown"
+scope = "source.md"
 formatter = { command = "dprint", args = ["fmt", "--stdin", "md"] }
 auto-format = true
 
 [[language]]
 name = "go"
+scope = "source.go"
 auto-format = true
 
 [[language]]
 name = "terraform"
+scope = "source.tfvars"
 file-types = ["tfvars"]
 auto-format = false
