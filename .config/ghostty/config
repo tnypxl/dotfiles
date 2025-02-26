@@ -13,10 +13,13 @@ adjust-cell-height = 1
 selection-foreground = #907aa9
 selection-background = #191724
 macos-titlebar-style = tabs
-keybind = cmd+backspace=text:\x15
 shell-integration-features = no-cursor
 adjust-cursor-thickness = 1
 cursor-color = #ea9a97
 cursor-style = bar
 mouse-scroll-multiplier = 1
+shell-integration = zsh
+
+# Keybinds
+keybind = cmd+backspace=text:\x15
 
