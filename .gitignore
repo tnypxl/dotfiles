@@ -3,3 +3,4 @@
 /.config/zellij/layouts/*
 !/.config/zellij/layouts/default.kdl
 /**/*.backup
+.config/nvim/.lazy-lock.json
