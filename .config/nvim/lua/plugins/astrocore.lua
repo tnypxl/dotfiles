@@ -30,7 +30,7 @@ return {
         relativenumber = false, -- sets vim.opt.relativenumber
         number = true, -- sets vim.opt.number
         spell = false, -- sets vim.opt.spell
-        signcolumn = "yes", -- sets vim.opt.signcolumn to yes
+        signcolumn = "yes", -- sets svim.opt.signcolumn to yes
         wrap = false,
         expandtab = true,
         tabstop = 4,
@@ -56,13 +56,6 @@ return {
         ["<C-j>"] = { "<cmd>m .+1<cr>==", desc = "Move line down" },
         ["<C-k>"] = { "<cmd>m .-2<cr>==", desc = "Move line up" },
         ["<Leader>s"] = { ":w<CR>", desc = "Save buffer" },
-
-        -- CodeCompanion
-        ["<C-c>"] = { "<cmd>CodeCompanionChat Toggle<CR>", desc = "Toggle CodeCompanion Chat" },
-        ["<C-a>"] = { "<cmd>CodeCompanionActions<CR>", desc = "Show CodeCompanion Actions" },
-
-        -- codecompanion
-        -- ["<C-a>"] = { "n", "<cmd>CodeCompanionActions<cr>", desc = "Show CodeCompanion Actions" },
 
         -- mappings seen under group name "Buffer"
         ["<Leader>bd"] = {

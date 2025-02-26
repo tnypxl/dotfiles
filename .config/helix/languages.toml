@@ -11,6 +11,10 @@ auto-format = true
 
 [[language]]
 name = "terraform"
-scope = "source.tfvars"
-file-types = ["tfvars"]
+scope = "scope.terraform"
+file-types = ["tfvars", "tf"]
+auto-format = false
+
+[[language]]
+name = "json"
 auto-format = false
