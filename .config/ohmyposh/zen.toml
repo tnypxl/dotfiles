@@ -3,88 +3,94 @@ version = 3
 final_space = true
 
 [secondary_prompt]
-  template = '❯❯ '
-  foreground = 'magenta'
-  background = 'transparent'
+template = '❯❯ '
+foreground = 'magenta'
+background = 'transparent'
 
 [transient_prompt]
-  template = '❯ '
-  background = 'transparent'
-  foreground_templates = ['{{if gt .Code 0}}red{{end}}', '{{if eq .Code 0}}magenta{{end}}']
+template = '❯ '
+background = 'transparent'
+foreground_templates = [
+  '{{if gt .Code 0}}red{{end}}',
+  '{{if eq .Code 0}}magenta{{end}}',
+]
 
 [[blocks]]
-  type = 'prompt'
-  alignment = 'left'
-  newline = true
+type = 'prompt'
+alignment = 'left'
+newline = false
 
-  [[blocks.segments]]
-    style = 'plain'
-    template = '{{ .Path }}'
-    foreground = 'blue'
-    background = 'transparent'
-    type = 'path'
+[[blocks.segments]]
+style = 'plain'
+template = '{{ .Path }}'
+foreground = 'blue'
+background = 'transparent'
+type = 'path'
 
-    [blocks.segments.properties]
-      style = 'full'
+[blocks.segments.properties]
+style = 'full'
 
-  [[blocks.segments]]
-    style = 'plain'
-    template = ' {{ .UpstreamIcon }} {{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }}'
-    foreground = 'p:grey'
-    background = 'transparent'
-    type = 'git'
+[[blocks.segments]]
+style = 'plain'
+template = ' {{ .UpstreamIcon }} {{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }}'
+foreground = 'p:grey'
+background = 'transparent'
+type = 'git'
 
-    [blocks.segments.properties]
-      branch_icon = ''
-      commit_icon = '@'
-      fetch_status = true
-      fetch_upstream_icon = true
+[blocks.segments.properties]
+branch_icon = ''
+commit_icon = '@'
+fetch_status = true
+fetch_upstream_icon = true
 
-  [[blocks.segments]]
-    style = 'plain'
-    template = ' |  {{ .Full }}'
-    foreground = 'red'
-    type = 'ruby'
+[[blocks.segments]]
+style = 'plain'
+template = ' |  {{ .Full }}'
+foreground = 'red'
+type = 'ruby'
 
-  [[blocks.segments]]
-    style = 'plain'
-    template = ' |  {{ .Full }} '
-    type = 'go'
+[[blocks.segments]]
+style = 'plain'
+template = ' |  {{ .Full }} '
+type = 'go'
 
-  [[blocks.segments]]
-    style = 'plain'
-    template = ' |  {{ .Full }}'
-    foreground = 'green'
-    type = 'node'
+[[blocks.segments]]
+style = 'plain'
+template = ' |  {{ .Full }}'
+foreground = 'green'
+type = 'node'
 
-  [[blocks.segments]]
-    style = 'plain'
-    template = ' | 󱁢 {{ .Version }}'
-    foreground = 'blue'
-    type = 'terraform'
-
-[[blocks]]
-  type = 'rprompt'
-  overflow = 'hidden'
-
-  [[blocks.segments]]
-    style = 'plain'
-    template = '{{ .FormattedMs }}'
-    foreground = 'yellow'
-    background = 'transparent'
-    type = 'executiontime'
-
-    [blocks.segments.properties]
-      threshold = 5000
+[[blocks.segments]]
+style = 'plain'
+template = ' | 󱁢 {{ .Version }}'
+foreground = 'blue'
+type = 'terraform'
 
 [[blocks]]
-  type = 'prompt'
-  alignment = 'left'
-  newline = true
+type = 'rprompt'
+overflow = 'hidden'
 
-  [[blocks.segments]]
-    style = 'plain'
-    template = '❯'
-    background = 'transparent'
-    type = 'text'
-    foreground_templates = ['{{if gt .Code 0}}red{{end}}', '{{if eq .Code 0}}magenta{{end}}']
+[[blocks.segments]]
+style = 'plain'
+template = '{{ .FormattedMs }}'
+foreground = 'yellow'
+background = 'transparent'
+type = 'executiontime'
+
+[blocks.segments.properties]
+threshold = 5000
+
+[[blocks]]
+type = 'prompt'
+alignment = 'left'
+newline = true
+
+[[blocks.segments]]
+style = 'plain'
+template = '❯'
+background = 'transparent'
+type = 'text'
+foreground_templates = [
+  '{{if gt .Code 0}}red{{end}}',
+  '{{if eq .Code 0}}magenta{{end}}',
+]
