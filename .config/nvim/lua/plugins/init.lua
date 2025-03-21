@@ -1,32 +1,33 @@
 return {
-  {
-    "stevearc/conform.nvim",
-    -- event = 'BufWritePre', -- uncomment for format on save
-    opts = require "configs.conform",
-  },
+    {
+        "stevearc/conform.nvim",
+        event = 'BufWritePre', -- uncomment for format on save
+        opts = require "configs.conform",
+    },
 
-  -- These are some examples, uncomment them if you want to see them work!
-  {
-    "neovim/nvim-lspconfig",
-    config = function()
-      require "configs.lspconfig"
-    end,
-  },
-  {
-    "yetone/avante.nvim",
-    config = function()
-      require("avante").setup({
-        -- your configuration options here
-      })
-    end,
-  },
-  {
-  	"nvim-treesitter/nvim-treesitter",
-  	opts = {
-  		ensure_installed = {
-  			"vim", "lua", "vimdoc",
-       "html", "css", "tf", "tfvars",
-  		},
-  	},
-  },
+    -- These are some examples, uncomment them if you want to see them work!
+    {
+        "neovim/nvim-lspconfig",
+        config = function()
+            require "configs.lspconfig"
+        end,
+    },
+    {
+        "yetone/avante.nvim",
+        config = function()
+            require("avante").setup({
+                -- your configuration options here
+            })
+        end,
+    },
+    {
+        "nvim-treesitter/nvim-treesitter",
+        opts = {
+            ensure_installed = {
+                "vim", "lua", "vimdoc",
+                "html", "css", "terraform",
+                "go", "ruby", "python", "json", "yaml",
+            },
+        },
+    },
 }
