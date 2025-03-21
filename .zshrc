@@ -91,7 +91,8 @@ bindkey '^[[F' end-of-line
 alias explain="gh copilot explain"
 alias suggest="gh copilot suggest"
 alias lst="tree -auphgiADC -L 1 --du --dirsfirst"
-alias t="task -t ~/Taskfile.yml $1"
+alias task="task -t ~/Taskfile.yaml"
+# alias t="task -g $1"
 alias vim="nvim"
 
 eval "$(task --completion zsh)"
