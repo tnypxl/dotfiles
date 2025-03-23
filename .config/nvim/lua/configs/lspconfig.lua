@@ -12,10 +12,10 @@ local servers = {
     "pyright",
     "jsonls",
     "yamlls",
-    "jdtls",
     "ts_ls",
     "rust_analyzer"
 }
+
 local nvlsp = require "nvchad.configs.lspconfig"
 
 -- lsps with default config
