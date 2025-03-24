@@ -3,11 +3,10 @@ window-padding-x = 7
 window-padding-y = 7
 window-padding-balance = true
 window-decoration = false
-font-feature = calt
+font-feature = +liga +calt -liga-c0 -calt-c0
 font-family = JetBrainsMono Nerd Font
-font-size = 12.5
+font-size = 12.6
 font-style = medium
-font-feature = +liga
 font-thicken = false
 adjust-cell-width = 0
 adjust-cell-height = 1
@@ -22,5 +21,5 @@ mouse-scroll-multiplier = 1
 shell-integration = zsh
 
 # Keybinds
-keybind = cmd+backspace=text:\x15
+keybind = cmd+backspace=text:\x15 q
 
