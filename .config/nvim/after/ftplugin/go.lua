@@ -12,10 +12,10 @@ vim.keymap.set("n", "<leader>gi", "<cmd>GoImport<CR>", { buffer = true, desc = "
 
 -- Ensure gofmt is used on save if you have null-ls or conform.nvim
 -- This is often handled by your LSP config, but as a fallback:
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*.go",
-  callback = function()
-    vim.lsp.buf.format { async = false }
-  end,
-  buffer = 0,
-})
+-- vim.api.nvim_create_autocmd("BufWritePre", {
+--   pattern = "*.go",
+--   callback = function()
+--     vim.lsp.buf.format { async = false }
+--   end,
+--   buffer = 0,
+-- })
