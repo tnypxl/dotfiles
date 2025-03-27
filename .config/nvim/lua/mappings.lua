@@ -6,7 +6,7 @@ local map = vim.keymap.set
 
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
-map({ "i", "v", "n" }, "<C-s>", "<cmd>w<cr>")
+map({ "i", "v", "n" }, "<C-s>", "<cmd>w<cr><esc>")
 map({ "n", "v" }, "<Leader>q", "<cmd>qa<cr>")
 
 -- NvimTree
