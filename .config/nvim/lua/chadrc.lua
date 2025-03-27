@@ -19,7 +19,12 @@ M.ui = {
   tabufline = {
     lazyload = false,
   },
+  statusline = {
+    theme = "default",
+    separator_style = "round",
+  },
 }
+
 M.lsp = { signature = false }
 
 return M
