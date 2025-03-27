@@ -35,7 +35,7 @@ keybinds {
         bind "z" { TogglePaneFrames; SwitchToMode "Normal"; }
         bind "w" { ToggleFloatingPanes; SwitchToMode "Normal"; }
         bind "e" { TogglePaneEmbedOrFloating; SwitchToMode "Normal"; }
-        bind "c" { SwitchToMode "RenamePane"; PaneNameInput 0;}
+        bind "c" { SwitchToMode "RenamePane"; PaneNameInput 0; }
     }
     move {
         bind "Ctrl h" { SwitchToMode "Normal"; }
@@ -191,14 +191,10 @@ keybinds {
 plugins {
     tab-bar location="zellij:tab-bar"
     status-bar location="zellij:status-bar"
-    strider location="zellij:strider"
     compact-bar location="zellij:compact-bar"
     session-manager location="zellij:session-manager"
     welcome-screen location="zellij:session-manager" {
         welcome_screen true
-    }
-    filepicker location="zellij:strider" {
-        cwd "/"
     }
     zjstatus location="file:~/dotfiles/.config/zellij/plugins/zjstatus.wasm" {
         // -- Catppuccin Mocha --
