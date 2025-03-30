@@ -9,12 +9,21 @@ map("i", "jk", "<ESC>")
 map({ "i", "v", "n" }, "<C-s>", "<cmd>w<cr><esc>")
 map({ "n", "v" }, "<Leader>q", "<cmd>qa<cr>")
 
+-- Line Manipulation
+map({ "n", "v" }, "<A-j>", "<cmd>m .+1<cr>==", { noremap = true, silent = true })
+map({ "n", "v" }, "<A-k>", "<cmd>m .-2<cr>==", { noremap = true, silent = true })
+map({ "n", "v" }, "<A-Up>", "<cmd>m .-2<cr>==", { noremap = true, silent = true })
+map({ "n", "v" }, "<A-Down>", "<cmd>m .+1<cr>==", { noremap = true, silent = true })
+
 -- NvimTree
 map("n", "<Leader>e", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
 
--- CodeCompanion
-map({ "n", "v" }, "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
-map({ "n", "v" }, "<LocalLeader>a", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
-map("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })
+-- Split right and move current buffer to the right
+map("n", "<Leader>r", ":sp<CR>", { noremap = true, silent = true })
+map("n", "<Leader>R", ":vsp<CR>", { noremap = true, silent = true })
 
-vim.cmd [[cab cc CodeCompanion]]
+-- CodeCompanion
+
+map({ "n", "v" }, "<Leader>ca", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
+map({ "n", "v" }, "<Leader>cc", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
+map({ "n", "v" }, "<Leader>ci", "<cmd>CodeCompanion<cr>")

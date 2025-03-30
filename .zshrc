@@ -19,7 +19,7 @@ fi
 # Source/Load zinit
 source "${ZINIT_HOME}/zinit.zsh"
 
-# Load completions
+# Load zsh-completions
 autoload -Uz compinit && compinit
 
 # bun
@@ -68,11 +68,12 @@ setopt hist_find_no_dups
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:z:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Initialize zoxide and fzf completions
-eval "$(zoxide init --cmd cd zsh)"
+eval "$(zoxide init zsh --cmd z)"
 source <(fzf --zsh)
 
 bindkey '^[[A' history-substring-search-up
@@ -85,6 +86,10 @@ bindkey '^[[H' beginning-of-line
 # Jump to the end of the line
 bindkey '^[^[[F' end-of-line
 bindkey '^[[F' end-of-line
+
+# Skip words forwards and backwards
+bindkey '^[[1;5C' forward-word
+bindkey '^[[1;5D' backward-word
 
 
 # Aliases
