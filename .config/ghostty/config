@@ -2,6 +2,7 @@ theme = rose-pine-moon
 window-padding-x = 7
 window-padding-y = 7
 window-padding-balance = true
+window-padding-color = extend
 window-decoration = false
 font-feature = +liga +calt -liga-c0 -calt-c0
 font-family = JetBrainsMono Nerd Font

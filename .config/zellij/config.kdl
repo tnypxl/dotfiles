@@ -4,6 +4,14 @@ keybinds {
         // tmux
         bind "Ctrl f" { SwitchToMode "Tmux"; }
         unbind "Ctrl b"
+
+        // Navigate windows/panes
+        bind "Alt Shift Left" { MoveFocus "Left"; }
+        bind "Alt Shift Down" { MoveFocus "Down"; }
+        bind "Alt Shift Up" { MoveFocus "Up"; }
+        bind "Alt Shift Right" { MoveFocus "Right"; }
+        bind "Alt =" "Alt +" { Resize "Increase"; }
+        bind "Alt -" { Resize "Decrease"; }
     }
 
     tmux clear-defaults=true {
@@ -28,12 +36,12 @@ keybinds {
 plugins {
     tab-bar location="zellij:tab-bar"
     status-bar location="zellij:status-bar"
-    compact-bar location="zellij:compact-bar"
+    //compact-bar location="zellij:compact-bar"
     session-manager location="zellij:session-manager"
     welcome-screen location="zellij:session-manager" {
         welcome_screen true
     }
-    zjstatus location="file:~/dotfiles/.config/zellij/plugins/zjstatus.wasm" {
+    zjstatus location="https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm" {
         // -- Catppuccin Mocha --
         // color_rosewater "#f5e0dc"
         // color_flamingo "#f2cdcd"
@@ -119,34 +127,61 @@ plugins {
         //color_crust "#232634"
 
         // -- Catppuccin Macchiato --
-        color_rosewater "#f4dbd6"
-        color_flamingo "#f0c6c6"
-        color_pink "#f5bde6"
-        color_mauve "#c6a0f6"
-        color_red "#ed8796"
-        color_maroon "#ee99a0"
-        color_peach "#f5a97f"
-        color_yellow "#eed49f"
-        color_green "#a6da95"
-        color_teal "#8bd5ca"
-        color_sky "#91d7e3"
-        color_sapphire "#7dc4e4"
-        color_blue "#8aadf4"
-        color_lavender "#b7bdf8"
-        color_text "#cad3f5"
-        color_subtext1 "#b8c0e0"
-        color_subtext0 "#a5adcb"
-        color_overlay2 "#939ab7"
-        color_overlay1 "#8087a2"
-        color_overlay0 "#6e738d"
-        color_surface2 "#5b6078"
-        color_surface1 "#494d64"
-        color_surface0 "#363a4f"
-        color_base "#24273a"
-        color_mantle "#1e2030"
-        color_crust "#181926"
+        //color_rosewater "#f4dbd6"
+        //color_flamingo "#f0c6c6"
+        //color_pink "#f5bde6"
+        //color_mauve "#c6a0f6"
+        //color_red "#ed8796"
+        //color_maroon "#ee99a0"
+        //color_peach "#f5a97f"
+        //color_yellow "#eed49f"
+        //color_green "#a6da95"
+        //color_teal "#8bd5ca"
+        //color_sky "#91d7e3"
+        //color_sapphire "#7dc4e4"
+        //color_blue "#8aadf4"
+        //color_lavender "#b7bdf8"
+        //color_text "#cad3f5"
+        //color_subtext1 "#b8c0e0"
+        //color_subtext0 "#a5adcb"
+        //color_overlay2 "#939ab7"
+        //color_overlay1 "#8087a2"
+        //color_overlay0 "#6e738d"
+        //color_surface2 "#5b6078"
+        //color_surface1 "#494d64"
+        //color_surface0 "#363a4f"
+        //color_base "#24273a"
+        //color_mantle "#1e2030"
+        //color_crust "#181926"
 
-        // -- Rose Pine Moon --
+
+        // -- Rose Pine --
+        color_rosewater "#f2e9e1"
+        color_flamingo "#f2e9e1"
+        color_pink "#c4a7e7"
+        color_mauve "#c4a7e7"
+        color_red "#eb6f92"
+        color_maroon "#eb6f92"
+        color_peach "#f6c177"
+        color_yellow "#f6c177"
+        color_green "#a3be8c"
+        color_teal "#9ccfd8"
+        color_sky "#9ccfd8"
+        color_sapphire "#9ccfd8"
+        color_blue "#9ccfd8"
+        color_lavender "#c4a7e7"
+        color_text "#e0def4"
+        color_subtext1 "#e0def4"
+        color_subtext0 "#e0def4"
+        color_overlay2 "#6e6a86"
+        color_overlay1 "#6e6a86"
+        color_overlay0 "#6e6a86"
+        color_surface2 "#2e3440"
+        color_surface1 "#2e3440"
+        color_surface0 "#2e3440"
+        color_base "#191724"
+        color_mantle "#191724"
+        color_crust "#191724"
 
 
         format_left   "#[bg=$color_base,fg=$sapphire]#[bg=$sapphire,fg=$crust,bold] {session} #[bg=$color_base] {mode}#[bg=$color_base] {tabs}"
@@ -240,7 +275,6 @@ plugins {
 //   - false
 //
 // pane_frames true
-
 // Toggle between having Zellij lay out panes according to a predefined set of layouts whenever possible
 // Options:
 //   - true (default)
@@ -327,12 +361,26 @@ themes {
     black "#181825" // Mantle
     white "#cdd6f4"
   }
+
+  rose-pine-moon {
+    bg "#44415a"
+    fg "#e0def4"
+    red "#eb6f92"
+    green "#3e8fb0"
+    blue "#9ccfd8"
+    yellow "#f6c177"
+    magenta "#c4a7e7"
+    orange "#fe640b"
+    cyan "#ea9a97"
+    black "#393552"
+    white "#e0def4"
+  }
 }
 
 // Choose the theme that is specified in the themes section.
 // Default: default
 //
-theme "catppuccin-mocha"
+theme "rose-pine-moon"
 
 ui {
   pane_frames {
