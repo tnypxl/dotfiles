@@ -17,6 +17,7 @@ map({ "n", "v" }, "<A-Down>", "<cmd>m .+1<cr>==", { noremap = true, silent = tru
 
 -- NvimTree
 map("n", "<Leader>e", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
+map({ "n", "v" }, "<Leader>o", ":NvimTreeFocus<CR>", { noremap = true, silent = true })
 
 -- Split right and move current buffer to the right
 map("n", "<Leader>r", ":sp<CR>", { noremap = true, silent = true })
