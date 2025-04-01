@@ -6,12 +6,16 @@ keybinds {
         unbind "Ctrl b"
 
         // Navigate windows/panes
-        bind "Alt Shift Left" { MoveFocus "Left"; }
+        bind "Alt Shift Left" { MoveFocusOrTab "Left"; }
         bind "Alt Shift Down" { MoveFocus "Down"; }
         bind "Alt Shift Up" { MoveFocus "Up"; }
-        bind "Alt Shift Right" { MoveFocus "Right"; }
+        bind "Alt Shift Right" { MoveFocusOrTab "Right"; }
+
+        // Resize panes
         bind "Alt =" "Alt +" { Resize "Increase"; }
         bind "Alt -" { Resize "Decrease"; }
+        bind "Alt Shift =" "Alt Shift +" { Resize "Right"; }
+        bind "Alt Shift -" { Resize "Left"; }
     }
 
     tmux clear-defaults=true {
@@ -26,17 +30,11 @@ keybinds {
         bind "o" { SwitchToMode "Session"; }
         bind "q" { Quit; }
     }
-
-    unbind "Alt Right"
-    unbind "Alt Left"
-    unbind "Alt f"
-    unbind "Ctrl s"
 }
 
 plugins {
     tab-bar location="zellij:tab-bar"
     status-bar location="zellij:status-bar"
-    //compact-bar location="zellij:compact-bar"
     session-manager location="zellij:session-manager"
     welcome-screen location="zellij:session-manager" {
         welcome_screen true
