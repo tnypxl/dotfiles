@@ -1,4 +1,3 @@
--- ~/.config/nvim/after/ftplugin/typescript.lua
 -- TypeScript can inherit from JavaScript settings
 vim.cmd "runtime! after/ftplugin/javascript.lua"
 

@@ -1,5 +1,3 @@
--- ~/.config/nvim/after/ftplugin/lua.lua
-
 -- Indentation settings
 vim.opt_local.expandtab = true -- Use spaces instead of tabs
 vim.opt_local.tabstop = 2 -- A tab is 2 spaces
