@@ -6,7 +6,8 @@ local map = vim.keymap.set
 
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
-map({ "i", "v", "n" }, "<C-s>", "<cmd>w<cr><esc>")
+map({ "i", "v", "n" }, "<C-s>", "<CMD>w<CR><ESC>")
+map({ "i", "v", "n" }, "<Leader>W", ":noautocmd w<CR><ESC>")
 map({ "n", "v" }, "<Leader>q", "<cmd>qa<cr>")
 
 -- Line Manipulation
