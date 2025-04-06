@@ -8,6 +8,11 @@ autocmd({ "BufRead", "BufNewFile" }, {
   end,
 })
 
+autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = { "Brewfile" },
+  command = "set filetype=ruby",
+})
+
 autocmd("BufDelete", {
   callback = function()
     local bufs = vim.t.bufs
@@ -16,3 +21,4 @@ autocmd("BufDelete", {
     end
   end,
 })
+
