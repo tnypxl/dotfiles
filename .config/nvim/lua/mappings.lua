@@ -25,7 +25,8 @@ map("n", "<Leader>r", ":sp<CR>", { noremap = true, silent = true })
 map("n", "<Leader>R", ":vsp<CR>", { noremap = true, silent = true })
 
 -- CodeCompanion
+-- map({ "n", "v" }, "<Leader>cA", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
+-- map({ "n", "v" }, "<Leader>cc", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
+-- map({ "n", "v" }, "<Leader>ci", "<cmd>CodeCompanion<cr>")
 
-map({ "n", "v" }, "<Leader>ca", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
-map({ "n", "v" }, "<Leader>cc", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
-map({ "n", "v" }, "<Leader>ci", "<cmd>CodeCompanion<cr>")
+-- Telescope Finder
