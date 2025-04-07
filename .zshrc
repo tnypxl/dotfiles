@@ -93,22 +93,20 @@ bindkey '^[[1;5D' backward-word
 
 
 # Aliases
-alias explain="gh copilot explain"
-alias suggest="gh copilot suggest"
-alias lst="tree -auphgiADC -L 1 --du --dirsfirst"
 alias task="task -t ~/Taskfile.yaml"
 # alias t="task -g $1"
 alias vim="nvim"
 
 # ls to eza aliases
 alias ls='eza $eza_params'
+alias lsdf='eza -lah --group-directories-first $eza_params'
 alias l='eza --git-ignore $eza_params'
 alias ll='eza --all --header --long $eza_params'
 alias llm='eza --all --header --long --sort=modified $eza_params'
 alias la='eza -lbhHigUmuSa'
 alias lx='eza -lbhHigUmuSa@'
-alias lt='eza --tree $eza_params'
-alias tree='eza --tree $eza_params'
+alias lt='eza --tree --group-directories-first $eza_params'
+alias tree='eza --tree --group-directories-first $eza_params'
 
 eval "$(task --completion zsh)"
 
@@ -116,3 +114,22 @@ eval "$(task --completion zsh)"
 . ~/.asdf/plugins/golang/set-env.zsh
 
 [ -f $HOME/.zprofile ] && source ~/.zprofile
+
+# Only start Zellij if not already in a Zellij session and not in VSCode or Zed terminal
+if [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM" != "zed" ]]; then
+    # Check if Zellij is installed
+    if command -v zellij >/dev/null 2>&1; then
+        if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
+            zellij attach -c
+        else
+            zellij
+        fi
+
+        if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
+            exit
+        fi
+    else
+        echo "Zellij is not installed. Please install it first."
+    fi
+fi
+
