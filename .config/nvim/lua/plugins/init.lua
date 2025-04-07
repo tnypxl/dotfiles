@@ -26,6 +26,7 @@ return {
         "ruby",
         "python",
         "json",
+        "kdl",
         "yaml",
       },
     },

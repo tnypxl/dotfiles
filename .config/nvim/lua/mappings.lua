@@ -28,5 +28,3 @@ map("n", "<Leader>R", ":vsp<CR>", { noremap = true, silent = true })
 -- map({ "n", "v" }, "<Leader>cA", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
 -- map({ "n", "v" }, "<Leader>cc", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
 -- map({ "n", "v" }, "<Leader>ci", "<cmd>CodeCompanion<cr>")
-
--- Telescope Finder
