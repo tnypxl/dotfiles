@@ -21,4 +21,3 @@ autocmd("BufDelete", {
     end
   end,
 })
-

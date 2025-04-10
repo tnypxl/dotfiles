@@ -6,25 +6,29 @@
 local M = {}
 
 M.base46 = {
-  theme = "rosepine",
-
-  -- hl_override = {
-  -- 	Comment = { italic = true },
-  -- 	["@comment"] = { italic = true },
-  -- },
+    theme = "rosepine",
+    integrations = { "avante" },
+    hl_override = {
+        NvimTreeWinSeparator = {
+            fg = "black",
+            bg = "black",
+        },
+    },
 }
 
 M.nvdash = { load_on_startup = true }
+
 M.ui = {
-  tabufline = {
-    lazyload = false,
-  },
-  statusline = {
-    theme = "default",
-    separator_style = "round",
-  },
+    tabufline = {
+        lazyload = false,
+    },
+
+    statusline = {
+        theme = "default",
+        separator_style = "round",
+    },
 }
 
-M.lsp = { signature = false }
+-- M.lsp = { signature = false }
 
 return M
