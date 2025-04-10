@@ -2,8 +2,11 @@ local M = {}
 
 M.setup = function()
   require("mcphub").setup {
-    cmd = "MCPHub",
-    build = "npm install -g mcp-hub@latest",
+    port = 37373,
+    auto_approve = true,
+    extensions = {
+      avante = {},
+    },
   }
 end
 
