@@ -7,7 +7,28 @@ layout {
         children
     }
 
-    tab name="Main" {
-        pane
+    tab name="Main" split_direction="vertical" {
+        pane split_direction="horizontal" stacked=true {
+            pane {
+                name "Dotfiles"
+                cwd "~/dotfiles/.config"
+                command "nvim"
+            }
+
+            pane {
+                start_suspended true
+                name "Obsidian - BKE"
+                cwd "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/BKE"
+                command "nvim"
+            }
+
+            pane {
+                start_suspended true
+                name "Obsidian - TNYPXL"
+                cwd "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/TNYPXL"
+                command "nvim"
+            }
+        }
+
     }
 }

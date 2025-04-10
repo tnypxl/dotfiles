@@ -25,6 +25,8 @@ keybinds {
         bind "Alt 4" { GoToTab 4; SwitchToMode "Normal"; }
         bind "Alt 5" { GoToTab 5; SwitchToMode "Normal"; }
         bind "Alt 6" { GoToTab 6; SwitchToMode "Normal"; }
+
+        bind "Super k" { Clear; }
     }
 
     tmux clear-defaults=true {
