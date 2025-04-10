@@ -24,6 +24,10 @@ map({ "n", "v" }, "<Leader>o", ":NvimTreeFocus<CR>", { noremap = true, silent = 
 map("n", "<Leader>r", ":sp<CR>", { noremap = true, silent = true })
 map("n", "<Leader>R", ":vsp<CR>", { noremap = true, silent = true })
 
+-- LSP-related
+map("n", "<Leader>d", ":lua vim.diagnostic.open_float()<CR>", { noremap = true, silent = true })
+map("n", "<Leader>ca", ":lua vim.lsp.buf.code_action()<CR>", { noremap = true, silent = true })
+
 -- CodeCompanion
 -- map({ "n", "v" }, "<Leader>cA", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
 -- map({ "n", "v" }, "<Leader>cc", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
