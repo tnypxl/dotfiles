@@ -25,6 +25,18 @@ M.setup = function()
       "delete_dir",
       "bash",
     },
+    behavior = {
+      enable_token_counting = false,
+    },
+    windows = {
+      sidebar_header = {
+        enabled = true,
+        -- align = "left",
+        rounded = true,
+      },
+    },
+
+    auto_set_highlight_group = false,
   }
 
   M.set_keymaps()

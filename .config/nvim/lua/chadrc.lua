@@ -6,10 +6,23 @@
 local M = {}
 
 M.base46 = {
-  theme = "rosepine",
-  integrations = { "avante" },
+  theme = "catppuccin",
+  integrations = { "avante", "nvimtree", "telescope" },
   hl_add = {
-    ["AvanteSidebarWinSeparator"] = { fg = "black", bg = "black", link = "NONE" },
+    ["AvanteSidebarWinSeparator"] = {
+      fg = "one_bg2",
+      bg = "black",
+    },
+    -- ["AvanteVertSplit"] = {
+    --   fg = "darker_black",
+    --   bg = "darker_black",
+    -- },
+    ["AvanteSidebarNormal"] = {
+      bg = "black",
+    },
+    ["AvanteSidebarWinHorizontalSeparator"] = {
+      fg = "black",
+    },
   },
   hl_override = {
     NvimTreeWinSeparator = {
