@@ -6,27 +6,30 @@
 local M = {}
 
 M.base46 = {
-    theme = "rosepine",
-    integrations = { "avante" },
-    hl_override = {
-        NvimTreeWinSeparator = {
-            fg = "black",
-            bg = "black",
-        },
+  theme = "rosepine",
+  integrations = { "avante" },
+  hl_add = {
+    ["AvanteSidebarWinSeparator"] = { fg = "black", bg = "black", link = "NONE" },
+  },
+  hl_override = {
+    NvimTreeWinSeparator = {
+      fg = "black",
+      bg = "black",
     },
+  },
 }
 
 M.nvdash = { load_on_startup = true }
 
 M.ui = {
-    tabufline = {
-        lazyload = false,
-    },
+  tabufline = {
+    lazyload = false,
+  },
 
-    statusline = {
-        theme = "default",
-        separator_style = "round",
-    },
+  statusline = {
+    theme = "default",
+    separator_style = "round",
+  },
 }
 
 -- M.lsp = { signature = false }
