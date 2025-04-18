@@ -9,6 +9,7 @@
       ]
     },
     "github.com/mendableai/firecrawl-mcp-server": {
+      "command": "npx",
       "disabled": true,
       "env": {
         "FIRECRAWL_CREDIT_WARNING_THRESHOLD": "2000",
@@ -22,8 +23,7 @@
       "args": [
         "-y",
         "firecrawl-mcp"
-      ],
-      "command": "npx"
+      ]
     },
     "github.com/modelcontextprotocol/servers/tree/main/src/sequentialthinking": {
       "command": "npx",
@@ -33,7 +33,5 @@
       ]
     }
   },
-  "nativeMCPServers": [
-    
-  ]
+  "nativeMCPServers": []
 }

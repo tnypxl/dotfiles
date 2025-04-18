@@ -8,6 +8,10 @@ layout {
     }
 
     tab name="Main" split_direction="vertical" {
+       pane 
+    }
+
+    tab name="Dotfiles & Notes" {
         pane split_direction="horizontal" stacked=true {
             pane {
                 name "Dotfiles"
@@ -29,6 +33,5 @@ layout {
                 command "nvim"
             }
         }
-
     }
 }

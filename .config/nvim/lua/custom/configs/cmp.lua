@@ -1,6 +1,8 @@
 local M = {}
 
 M.setup = function(opts)
+  local cmp = require "cmp"
+
   -- Get the current sources table
   local sources = opts.sources or {}
 
@@ -20,6 +22,21 @@ M.setup = function(opts)
 
   -- Update the sources in the options
   opts.sources = new_sources
+
+  opts.mapping["<CR>"] = cmp.mapping {
+    i = function(fallback)
+      if cmp.visible() then
+        fallback()
+      else
+        fallback()
+      end
+    end,
+  }
+
+  opts.mapping["<M-CR>"] = cmp.mapping.confirm {
+    behavior = cmp.ConfirmBehavior.Insert,
+    select = true,
+  }
 
   return opts
 end

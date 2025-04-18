@@ -45,6 +45,6 @@ M.ui = {
   },
 }
 
--- M.lsp = { signature = false }
+M.lsp = { signature = false }
 
 return M
