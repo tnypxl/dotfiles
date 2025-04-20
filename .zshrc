@@ -93,10 +93,8 @@ bindkey '^[[1;5D' backward-word
 
 bindkey "^[[3~" delete-char
 
-
 # Aliases
 alias task="task -t ~/Taskfile.yaml"
-# alias t="task -g $1"
 alias vim="nvim"
 
 # ls to eza aliases
