@@ -115,12 +115,14 @@ eval "$(task --completion zsh)"
 
 [ -f $HOME/.zprofile ] && source ~/.zprofile
 
+export ZELLIJ_AUTO_ATTACH=true
+
 # Only start Zellij if not already in a Zellij session and not in VSCode or Zed terminal
 if [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM" != "zed" ]]; then
     # Check if Zellij is installed
     if command -v zellij >/dev/null 2>&1; then
         if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
-            zellij attach -c
+            zellij attach -c $(zellij list-sessions -s | head -n 1)
         else
             zellij
         fi
