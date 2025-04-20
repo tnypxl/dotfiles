@@ -15,7 +15,7 @@ layout {
         pane split_direction="horizontal" stacked=true {
             pane {
                 name "Dotfiles"
-                cwd "~/dotfiles/.config"
+                cwd "~/dotfiles/"
                 command "nvim"
             }
 
