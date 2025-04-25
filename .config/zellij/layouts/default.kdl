@@ -21,8 +21,8 @@ layout {
 
             pane {
                 start_suspended true
-                name "Obsidian - BKE"
-                cwd "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/BKE"
+                name "Obsidian - BLKPXL"
+                cwd "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/BLKPXL"
                 command "nvim"
             }
 
