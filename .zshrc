@@ -109,7 +109,6 @@ alias lt='eza --tree --group-directories-first $eza_params'
 alias tree='eza --tree --group-directories-first $eza_params'
 
 eval "$(task --completion zsh)"
-
 # Dynamically set GO env vars
 . ~/.asdf/plugins/golang/set-env.zsh
 
@@ -117,21 +116,32 @@ eval "$(task --completion zsh)"
 
 export ZELLIJ_AUTO_ATTACH=true
 
+
+ZJ_SESSIONS=$(zellij list-sessions --reverse)
+NO_SESSIONS=$(echo "${ZJ_SESSIONS}" | wc -l)
+
 # Only start Zellij if not already in a Zellij session and not in VSCode or Zed terminal
 if [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM" != "zed" ]]; then
-    # Check if Zellij is installed
-    if command -v zellij >/dev/null 2>&1; then
-        if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
-            zellij attach -c $(zellij list-sessions -s | head -n 1)
-        else
-            zellij
-        fi
-
-        if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
-            exit
-        fi
+    if [ "${NO_SESSIONS}" -ge 2 ]; then
+        SELECTED_SESSION="$(echo "${ZJ_SESSIONS}" | sk --ansi --reverse | sed 's/ \[.*\].*$//')"
+        zellij attach $SELECTED_SESSION
     else
-        echo "Zellij is not installed. Please install it first."
+        zellij attach -c
     fi
-fi
 
+#     # Check if Zellij is installed
+#     if command -v zellij >/dev/null 2>&1; then
+#         if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
+#             zellij attach -c $(zellij list-sessions -s | head -n 1)
+#         else
+#             zellij
+#         fi
+#
+#         if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
+#             exit
+#         fi
+#     else
+#         echo "Zellij is not installed. Please install it first."
+#     fi
+# fi
+fi

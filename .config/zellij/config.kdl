@@ -40,6 +40,7 @@ keybinds {
         bind "s" { SwitchToMode "Scroll"; }
         bind "o" { SwitchToMode "Session"; }
         bind "q" { Detach; }
+        bind "Q" { Quit; }
     }
 }
 
