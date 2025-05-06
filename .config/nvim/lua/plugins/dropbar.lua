@@ -1,7 +1,7 @@
 return {
   {
     "Bekaboo/dropbar.nvim",
-    lazy = false,
+    event = { "VeryLazy" },
     dependencies = {
       "nvim-telescope/telescope.nvim",
       "nvim-tree/nvim-web-devicons", -- Optional but recommended for icons
