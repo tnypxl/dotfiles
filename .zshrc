@@ -116,7 +116,6 @@ eval "$(task --completion zsh)"
 
 export ZELLIJ_AUTO_ATTACH=true
 
-
 ZJ_SESSIONS=$(zellij list-sessions --reverse)
 NO_SESSIONS=$(echo "${ZJ_SESSIONS}" | wc -l)
 
@@ -128,20 +127,4 @@ if [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM"
     else
         zellij attach -c
     fi
-
-#     # Check if Zellij is installed
-#     if command -v zellij >/dev/null 2>&1; then
-#         if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
-#             zellij attach -c $(zellij list-sessions -s | head -n 1)
-#         else
-#             zellij
-#         fi
-#
-#         if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
-#             exit
-#         fi
-#     else
-#         echo "Zellij is not installed. Please install it first."
-#     fi
-# fi
 fi
