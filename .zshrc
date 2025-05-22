@@ -108,6 +108,8 @@ alias lx='eza -lbhHigUmuSa@'
 alias lt='eza --tree --group-directories-first $eza_params'
 alias tree='eza --tree --group-directories-first $eza_params'
 
+alias zclear='zellij action clear'
+
 eval "$(task --completion zsh)"
 # Dynamically set GO env vars
 . ~/.asdf/plugins/golang/set-env.zsh
