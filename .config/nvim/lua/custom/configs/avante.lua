@@ -2,7 +2,14 @@ local M = {}
 
 M.setup = function()
   require("avante").setup {
-    provider = "claude",
+    provider = "openrouter",
+    vendors = {
+      openrouter = {
+        __inherited_from = "openai",
+        endpoint = "https://openrouter.ai/api/v1",
+        model = "google/gemini-2.5-pro-preview",
+      },
+    },
     system_prompt = function()
       local hub = require("mcphub").get_hub_instance()
       return hub:get_active_servers_prompt()

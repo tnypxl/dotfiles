@@ -26,7 +26,7 @@ keybinds {
         bind "Alt 5" { GoToTab 5; SwitchToMode "Normal"; }
         bind "Alt 6" { GoToTab 6; SwitchToMode "Normal"; }
 
-        bind "Super k" { Clear; }
+        // bind "Super k" { Run "zellij action clear"; }
     }
     
     tmux clear-defaults=true {
