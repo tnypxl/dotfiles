@@ -123,6 +123,8 @@ NO_SESSIONS=$(echo "${ZJ_SESSIONS}" | wc -l)
 
 # Only start Zellij if not already in a Zellij session and not in VSCode or Zed terminal
 if [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM" != "zed" ]]; then
+    alias clear="zellij action clear"
+
     if [ "${NO_SESSIONS}" -ge 2 ]; then
         SELECTED_SESSION="$(echo "${ZJ_SESSIONS}" | sk --ansi --reverse | sed 's/ \[.*\].*$//')"
         zellij attach $SELECTED_SESSION
