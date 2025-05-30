@@ -46,24 +46,24 @@ M.setup = function()
     auto_set_highlight_group = false,
   }
 
-  M.set_keymaps()
+  -- M.set_keymaps()
 end
 
-M.set_keymaps = function()
-  local keymap = vim.keymap.set
-  local opts = { noremap = true, silent = true }
-
-  -- Main Avante commands
-  keymap("n", "<leader>aa", "<cmd>AvanteAsk<CR>", { desc = "Avante Ask", noremap = true, silent = true })
-  keymap("n", "<leader>ac", "<cmd>AvanteChat<CR>", { desc = "Avante Chat", noremap = true, silent = true })
-  keymap("n", "<leader>ad", "<cmd>AvanteDiff<CR>", { desc = "Avante Diff", noremap = true, silent = true })
-  keymap("n", "<leader>at", "<cmd>AvanteToggle<CR>", { desc = "Avante Toggle", noremap = true, silent = true })
-  keymap("n", "<leader>ax", "<cmd>AvanteClear<CR>", { desc = "Avante Clear", noremap = true, silent = true })
-
-  -- Visual mode commands
-  keymap("v", "<leader>aa", ":<C-u>AvanteAsk<CR>", { desc = "Avante Ask selection", noremap = true, silent = true })
-  keymap("v", "<leader>ac", ":<C-u>AvanteChat<CR>", { desc = "Avante Chat selection", noremap = true, silent = true })
-  keymap("v", "<leader>ad", ":<C-u>AvanteDiff<CR>", { desc = "Avante Diff selection", noremap = true, silent = true })
-end
+-- M.set_keymaps = function()
+--   local keymap = vim.keymap.set
+--   local opts = { noremap = true, silent = true }
+--
+--   -- Main Avante commands
+--   keymap("n", "<leader>aa", "<cmd>AvanteAsk<CR>", { desc = "Avante Ask", noremap = true, silent = true })
+--   keymap("n", "<leader>ac", "<cmd>AvanteChat<CR>", { desc = "Avante Chat", noremap = true, silent = true })
+--   keymap("n", "<leader>ad", "<cmd>AvanteDiff<CR>", { desc = "Avante Diff", noremap = true, silent = true })
+--   keymap("n", "<leader>at", "<cmd>AvanteToggle<CR>", { desc = "Avante Toggle", noremap = true, silent = true })
+--   keymap("n", "<leader>ax", "<cmd>AvanteClear<CR>", { desc = "Avante Clear", noremap = true, silent = true })
+--
+--   -- Visual mode commands
+--   keymap("v", "<leader>aa", ":<C-u>AvanteAsk<CR>", { desc = "Avante Ask selection", noremap = true, silent = true })
+--   keymap("v", "<leader>ac", ":<C-u>AvanteChat<CR>", { desc = "Avante Chat selection", noremap = true, silent = true })
+--   keymap("v", "<leader>ad", ":<C-u>AvanteDiff<CR>", { desc = "Avante Diff selection", noremap = true, silent = true })
+-- end
 
 return M
