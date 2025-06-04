@@ -2,12 +2,12 @@ local M = {}
 
 M.setup = function()
   require("avante").setup {
-    provider = "openrouter",
-    vendors = {
+    providers = {
       openrouter = {
         __inherited_from = "openai",
         endpoint = "https://openrouter.ai/api/v1",
         model = "google/gemini-2.5-pro-preview",
+        timeout = 600000,
       },
     },
 
