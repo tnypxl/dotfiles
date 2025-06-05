@@ -2,6 +2,7 @@ local M = {}
 
 M.setup = function()
   require("avante").setup {
+    provider = "openrouter",
     providers = {
       openrouter = {
         __inherited_from = "openai",
