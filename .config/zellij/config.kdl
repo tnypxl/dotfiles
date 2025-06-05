@@ -5,6 +5,22 @@ keybinds {
         bind "Ctrl f" { SwitchToMode "Tmux"; }
         unbind "Ctrl b"
 
+        bind "Alt Right" { NewPane "Right"; }
+        bind "Alt Down" { NewPane "Down"; }
+        bind "Alt x" { CloseFocus; SwitchToMode "Normal"; }
+        bind "Alt w" { ToggleFloatingPanes;}
+        bind "Alt t" { NewTab;}
+        bind "Alt h" { MoveFocusOrTab "Left"; }
+        bind "Alt l" { MoveFocusOrTab "Right"; }
+        bind "Alt j" { MoveFocus "Down"; }
+        bind "Alt k" { MoveFocus "Up"; }
+        bind "Alt =" { Resize "Increase"; }
+        bind "Alt -" { Resize "Decrease"; }
+        bind "Alt [" { PreviousSwapLayout; }
+        bind "Alt ]" { NextSwapLayout; }
+        bind "Alt i" { MoveTab "Left"; }
+        bind "Alt o" { MoveTab "Right"; } 
+
         // Navigate windows/panes
         bind "Alt Shift Left" { MoveFocusOrTab "Left"; }
         bind "Alt Shift Down" { MoveFocus "Down"; }
@@ -12,8 +28,6 @@ keybinds {
         bind "Alt Shift Right" { MoveFocusOrTab "Right"; }
 
         // Resize panes
-        bind "Alt =" "Alt +" { Resize "Increase"; }
-        bind "Alt -" { Resize "Decrease"; }
         bind "Alt Shift =" "Alt Shift +" "Alt Shift l" { Resize "Right"; }
         bind "Alt Shift k" { Resize "Up"; }
         bind "Alt Shift j" { Resize "Down"; }
@@ -25,6 +39,10 @@ keybinds {
         bind "Alt 4" { GoToTab 4; SwitchToMode "Normal"; }
         bind "Alt 5" { GoToTab 5; SwitchToMode "Normal"; }
         bind "Alt 6" { GoToTab 6; SwitchToMode "Normal"; }
+        bind "Alt 7" { GoToTab 7; SwitchToMode "Normal"; }
+        bind "Alt 8" { GoToTab 8; SwitchToMode "Normal"; }
+        bind "Alt 9" { GoToTab 9; SwitchToMode "Normal"; }
+        bind "Alt 0" { GoToTab 10; SwitchToMode "Normal"; }
 
         // bind "Super k" { Run "zellij action clear"; }
     }
@@ -51,7 +69,7 @@ plugins {
     welcome-screen location="zellij:session-manager" {
         welcome_screen true
     }
-    zjstatus location="https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm" {
+    zjstatus location="zellij:zjstatus"  {
         // -- Rose Pine --
         color_rosewater "#f2e9e1"
         color_flamingo "#f2e9e1"
