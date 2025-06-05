@@ -8,12 +8,12 @@ keybinds {
         bind "Alt Right" { NewPane "Right"; }
         bind "Alt Down" { NewPane "Down"; }
         bind "Alt x" { CloseFocus; SwitchToMode "Normal"; }
-        bind "Alt w" { ToggleFloatingPanes; }
-        bind "Alt t" { NewTab; }
-        bind "Alt h" { MoveFocusOrTab "Left"; }
-        bind "Alt l" { MoveFocusOrTab "Right"; }
-        bind "Alt j" { MoveFocus "Down"; }
-        bind "Alt k" { MoveFocus "Up"; }
+        bind "Alt Shift w" { ToggleFloatingPanes; }
+        bind "Alt Shift t" { NewTab; }
+        // bind "Alt h" { MoveFocusOrTab "Left"; }
+        // bind "Alt l" { MoveFocusOrTab "Right"; }
+        // bind "Alt j" { MoveFocus "Down"; }
+        // bind "Alt k" { MoveFocus "Up"; }
         bind "Alt =" { Resize "Increase"; }
         bind "Alt -" { Resize "Decrease"; }
         bind "Alt [" { GoToPreviousTab; }

@@ -7,7 +7,7 @@ M.setup = function()
       openrouter = {
         __inherited_from = "openai",
         endpoint = "https://openrouter.ai/api/v1",
-        model = "google/gemini-2.5-pro-preview",
+        model = "google/gemini-2.5-pro-preview-06-05",
         timeout = 600000,
       },
     },
