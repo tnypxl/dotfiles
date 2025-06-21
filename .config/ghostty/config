@@ -20,5 +20,5 @@ cursor-style = bar
 mouse-scroll-multiplier = 1
 
 # Keybinds
-keybind = cmd+backspace=text:\x15 
+keybind = cmd+backspace=text:\x15
 

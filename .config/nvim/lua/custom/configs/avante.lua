@@ -7,7 +7,9 @@ M.setup = function()
       openrouter = {
         __inherited_from = "openai",
         endpoint = "https://openrouter.ai/api/v1",
-        model = "google/gemini-2.5-pro-preview-06-05",
+        api_key_name = "OPENROUTER_API_KEY",
+        model = "google/gemini-2.5-pro-preview",
+        max_tokens = 65536,
         timeout = 600000,
       },
     },
@@ -38,7 +40,7 @@ M.setup = function()
     },
 
     behavior = {
-      enable_token_counting = false,
+      enable_token_counting = true,
     },
 
     windows = {

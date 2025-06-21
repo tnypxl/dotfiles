@@ -45,6 +45,8 @@ zinit snippet OMZP::command-not-found
 
 zinit cdreplay -q
 
+export WORDCHARS='*?[]~=&;!#$%^(){}<>' 
+
 bindkey -e
 
 HISTSIZE=100000

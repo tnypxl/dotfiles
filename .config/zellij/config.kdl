@@ -5,9 +5,9 @@ keybinds {
         bind "Ctrl f" { SwitchToMode "Tmux"; }
         unbind "Ctrl b"
 
-        bind "Alt Right" { NewPane "Right"; }
-        bind "Alt Down" { NewPane "Down"; }
-        bind "Alt x" { CloseFocus; SwitchToMode "Normal"; }
+        // bind "Alt Right" { NewPane "Right"; }
+        // bind "Alt Down" { NewPane "Down"; }
+        // bind "Alt x" { CloseFocus; SwitchToMode "Normal"; }
         bind "Alt Shift w" { ToggleFloatingPanes; }
         bind "Alt Shift t" { NewTab; }
         // bind "Alt h" { MoveFocusOrTab "Left"; }
