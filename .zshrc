@@ -26,7 +26,7 @@ autoload -Uz compinit && compinit
 export BUN_INSTALL="$HOME/.bun"
 
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$BUN_INSTALL/bin:$PATH"
-export EDITOR="nvim"
+export EDITOR="zed -n"
 export TERM=xterm-256color
 
 zinit light zsh-users/zsh-syntax-highlighting
@@ -45,7 +45,7 @@ zinit snippet OMZP::command-not-found
 
 zinit cdreplay -q
 
-export WORDCHARS='*?[]~=&;!#$%^(){}<>' 
+export WORDCHARS='*?[]~=&;!#$%^(){}<>'
 
 bindkey -e
 
@@ -64,9 +64,9 @@ setopt hist_find_no_dups
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
-zstyle ':fzf-tab:complete:z:*' fzf-preview 'ls --color $realpath'
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:z:*' fzf-preview 'ls $realpath'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls $realpath'
 
 eval "$(zoxide init zsh --cmd z)"
 source <(fzf --zsh)
@@ -101,6 +101,7 @@ alias tree='eza --tree --group-directories-first $eza_params'
 alias zclear='zellij action clear'
 
 eval "$(task --completion zsh)"
+eval "$(direnv hook zsh)"
 
 . ~/.asdf/plugins/golang/set-env.zsh
 
@@ -108,7 +109,7 @@ eval "$(task --completion zsh)"
 
 export ZELLIJ_AUTO_ATTACH=true
 
-ZJ_SESSIONS=$(zellij list-sessions --reverse)
+ZJ_SESSIONS=$(zellij list-sessions | grep -v EXITED)
 NO_SESSIONS=$(echo "${ZJ_SESSIONS}" | wc -l)
 
 if [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM" != "zed" ]]; then
