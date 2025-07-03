@@ -8,7 +8,7 @@ layout {
     }
 
     tab name="Main" split_direction="vertical" {
-       pane focused=true
+       pane focus=true
     }
 
     tab name="Dotfiles & Notes" {
