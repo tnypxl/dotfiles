@@ -12,13 +12,13 @@ download_plugin() {
     local plugin_url="$1"
     local plugin_name=$(basename "$plugin_url")
     local plugin_path="$HOME/dotfiles/.config/zellij/plugins/$plugin_name"
-    
+
     echo "Processing $plugin_url"
-    
+
     if [[ -f "$plugin_path" ]]; then
         local checksum=$(sha256sum "$plugin_path" | awk '{print $1}')
         local expected_checksum=$(curl -sL "$plugin_url" | sha256sum | awk '{print $1}')
-        
+
         if [[ "$checksum" != "$expected_checksum" ]]; then
             echo "Plugin has been updated, downloading new version"
             curl -L "$plugin_url" -o "$plugin_path"
@@ -35,4 +35,3 @@ download_plugin() {
 for plugin in "${plugins[@]}"; do
     download_plugin "$plugin"
 done
-

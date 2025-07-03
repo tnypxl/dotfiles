@@ -5,15 +5,8 @@ keybinds {
         bind "Ctrl f" { SwitchToMode "Tmux"; }
         unbind "Ctrl b"
 
-        // bind "Alt Right" { NewPane "Right"; }
-        // bind "Alt Down" { NewPane "Down"; }
-        // bind "Alt x" { CloseFocus; SwitchToMode "Normal"; }
         bind "Alt Shift w" { ToggleFloatingPanes; }
         bind "Alt Shift t" { NewTab; }
-        // bind "Alt h" { MoveFocusOrTab "Left"; }
-        // bind "Alt l" { MoveFocusOrTab "Right"; }
-        // bind "Alt j" { MoveFocus "Down"; }
-        // bind "Alt k" { MoveFocus "Up"; }
         bind "Alt =" { Resize "Increase"; }
         bind "Alt -" { Resize "Decrease"; }
         bind "Alt [" { GoToPreviousTab; }
@@ -46,7 +39,7 @@ keybinds {
 
         // bind "Super k" { Run "zellij action clear"; }
     }
-    
+
     tmux clear-defaults=true {
         bind "Ctrl f" { Write 2; SwitchToMode "Normal"; }
         bind "Esc" { SwitchToMode "Normal"; }
@@ -62,14 +55,22 @@ keybinds {
     }
 }
 
+// load_plugins {
+//     "https://github.com/dj95/zjstatus/releases/latest/download/zjframes.wasm" {
+//         hide_frame_for_single_pane       "false"
+//         hide_frame_except_for_search     "true"
+//         hide_frame_except_for_fullscreen "true"
+//     }
+// }
+
 plugins {
-    tab-bar location="zellij:tab-bar"
-    status-bar location="zellij:status-bar"
+    // tab-bar location="zellij:tab-bar"
+    // status-bar location="zellij:status-bar"
     session-manager location="zellij:session-manager"
     welcome-screen location="zellij:session-manager" {
         welcome_screen true
     }
-    zjstatus location="zellij:zjstatus"  {
+    zjstatus location="https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm" {
         // -- Rose Pine --
         color_rosewater "#f2e9e1"
         color_flamingo "#f2e9e1"
@@ -140,7 +141,7 @@ plugins {
         tab_fullscreen_indicator "  "
         tab_floating_indicator   " 󰹙 "
 
-        notification_format_unread "#[bg=$color_base,fg=$yellow]#[bg=$yellow,fg=$crust] #[bg=$surface1,fg=$yellow] {message}#[bg=$color_base,fg=$yellow]"
+        notification_format_unread "#[bg=$color_base,fg=$yellow,blink]#[bg=$yellow,fg=$crust] #[bg=$surface1,fg=$yellow] {message}#[bg=$color_base,fg=$yellow]"
         notification_format_no_notifications ""
         notification_show_interval "10"
 
