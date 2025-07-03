@@ -8,7 +8,7 @@ layout {
     }
 
     tab name="Main" split_direction="vertical" {
-       pane
+       pane focused=true
     }
 
     tab name="Dotfiles & Notes" {
@@ -16,21 +16,18 @@ layout {
             pane {
                 name "Dotfiles"
                 cwd "~/dotfiles/"
-                command "nvim"
+                command "zed ."
             }
 
             pane {
                 start_suspended true
-                name "Obsidian - BLKPXL"
-                cwd "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/BLKPXL"
-                command "nvim"
+                name "Obsidian"
+                cwd "~/Obsidian/BLKPXL"
+                command "zed ."
             }
 
             pane {
-                start_suspended true
-                name "Obsidian - TNYPXL"
-                cwd "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/TNYPXL"
-                command "nvim"
+
             }
         }
     }
