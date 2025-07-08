@@ -6,17 +6,18 @@ return {
         theme = {
           all = {
             ui = {
-              bg_gutter = "none"
-            }
-          }
-        }
-      }
-    }
+              bg_gutter = "none",
+            },
+          },
+        },
+      },
+    },
   },
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "kanagawa-dragon"
-    }
-  }
+      colorscheme = "kanagawa-wave",
+    },
+  },
 }
+

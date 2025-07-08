@@ -14,16 +14,17 @@ layout {
     tab name="Dotfiles & Notes" {
         pane split_direction="horizontal" stacked=true {
             pane {
+                start_suspended true
                 name "Dotfiles"
                 cwd "~/dotfiles/"
-                command "zed ."
+                command "nvim"
             }
 
             pane {
                 start_suspended true
                 name "Obsidian"
                 cwd "~/Obsidian/BLKPXL"
-                command "zed ."
+                command "nvim"
             }
 
             pane {
