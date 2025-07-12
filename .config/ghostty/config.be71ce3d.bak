@@ -22,4 +22,3 @@ mouse-scroll-multiplier = 1
 # Keybinds
 keybind = cmd+backspace=text:\x15
 
-keybind = shift+enter=text:\n
