@@ -1,26 +1,15 @@
 {
-  "typescript": {
-  },
-  "json": {
-  },
-  "markdown": {
-  },
-  "toml": {
-  },
-  "dockerfile": {
-  },
-  "ruff": {
-  },
-  "jupyter": {
-  },
-  "malva": {
-  },
-  "markup": {
-  },
-  "yaml": {
-  },
-  "graphql": {
-  },
+  "typescript": {},
+  "json": {},
+  "markdown": {},
+  "toml": {},
+  "dockerfile": {},
+  "ruff": {},
+  "jupyter": {},
+  "malva": {},
+  "markup": {},
+  "yaml": {},
+  "graphql": {},
   "excludes": [
     "**/node_modules",
     "**/*-lock.json"

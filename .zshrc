@@ -22,12 +22,11 @@ source "${ZINIT_HOME}/zinit.zsh"
 # Load zsh-completions
 autoload -Uz compinit && compinit
 
-# bun
 export BUN_INSTALL="$HOME/.bun"
-
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$BUN_INSTALL/bin:$PATH"
 export EDITOR="zed -n"
 export TERM=xterm-256color
+export WORDCHARS='*?[]~=&;!#$%^(){}<>'
 
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
@@ -35,17 +34,18 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-history-substring-search
 zinit light Aloxaf/fzf-tab
 
-fpath=($HOME/.config/completions $fpath)
 
 zinit snippet OMZP::git
 zinit snippet OMZP::sudo
 zinit snippet OMZP::aws
 zinit snippet OMZP::ruby
+
 zinit snippet OMZP::command-not-found
 
 zinit cdreplay -q
 
-export WORDCHARS='*?[]~=&;!#$%^(){}<>'
+
+fpath=($HOME/.config/completions $fpath)
 
 bindkey -e
 
@@ -99,6 +99,7 @@ alias lt='eza --tree --group-directories-first $eza_params'
 alias tree='eza --tree --group-directories-first $eza_params'
 
 alias zclear='zellij action clear'
+alias claude-mcp-config='cd /Users/arikj/Library/Application\ Support/Claude && nvim claude_desktop_config.json'
 
 eval "$(task --completion zsh)"
 eval "$(direnv hook zsh)"
@@ -109,17 +110,36 @@ eval "$(direnv hook zsh)"
 
 export ZELLIJ_AUTO_ATTACH=true
 
-ZJ_SESSIONS=$(zellij list-sessions | grep -v EXITED)
-NO_SESSIONS=$(echo "${ZJ_SESSIONS}" | wc -l)
-
 if [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM" != "zed" ]]; then
-    if [ "${NO_SESSIONS}" -ge 2 ]; then
-        SELECTED_SESSION="$(echo "${ZJ_SESSIONS}" | sk --ansi --reverse | sed 's/ \[.*\].*$//')"
-        zellij attach $SELECTED_SESSION
+    ZJ_SESSIONS=$(zellij list-sessions)
+
+    if [[ -n "$ZJ_SESSIONS" ]]; then
+        SELECTED_SESSION="$(echo -e "${ZJ_SESSIONS}\n[NEW SESSION]" | sk --ansi --reverse --prompt="Select session: ")"
+        if [[ "$SELECTED_SESSION" == "[NEW SESSION]" ]]; then
+            zellij attach -c
+        elif [[ -n "$SELECTED_SESSION" ]]; then
+            # Extract the actual session name (everything before the first space or bracket)
+            SESSION_NAME=$(echo "$SELECTED_SESSION" | awk '{print $1}')
+
+            # Check if this is an exited session that can be resurrected
+            if echo "$SELECTED_SESSION" | grep -q "EXITED"; then
+                echo "Attaching to exited session: $SESSION_NAME"
+                zellij attach "$SESSION_NAME"
+            elif echo "$ZJ_SESSIONS" | grep -q "^$SESSION_NAME"; then
+                # Active session
+                zellij attach "$SESSION_NAME"
+            else
+                # Session doesn't exist, create it
+                echo "Creating new session: $SESSION_NAME"
+                zellij -s "$SESSION_NAME"
+            fi
+        fi
     else
         zellij attach -c
     fi
 fi
+
+
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath=(/Users/arikj/.docker/completions $fpath)
 autoload -Uz compinit
