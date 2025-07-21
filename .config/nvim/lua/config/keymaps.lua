@@ -5,5 +5,3 @@
 -- Insert mode keybindings
 vim.keymap.set({ "i", "v" }, "jk", "<ESC>", { noremap = true, silent = true, desc = "Exit insert mode" })
 
--- Terminal mode keybindings
-vim.keymap.set("t", "<S-CR>", "<C-J>", { noremap = true, silent = true, desc = "Terminal: Literal Newline" })

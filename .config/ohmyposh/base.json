@@ -66,7 +66,7 @@
           "foreground": "p:white",
           "background": "p:blue",
           "background_templates": [
-            "{{ if gt .Code 0 }}p:red{{ end }}"
+            "{{ if gt .Codeaws ec2 describe-security-groups --query 'SecurityGroups[*].[GroupId,GroupName]' describe-security-groups --query 'SecurityGroups[*].[GroupId,GroupName] 0 }}p:red{{ end }}"
           ],
           "leading_diamond": "<transparent,background>\ue0b0</>",
           "trailing_diamond": "\ue0b4",

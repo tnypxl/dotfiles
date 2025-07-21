@@ -126,8 +126,8 @@ if [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM"
                 zellij attach -c
             fi
         elif [[ -n "$SELECTED_SESSION" ]]; then
-            # Extract the actual session name (strip ANSI codes and get first word)
-            SESSION_NAME=$(echo "$SELECTED_SESSION" | sed 's/\x1b\[[0-9;]*m//g' | awk '{print $1}')
+            # Extract the actual session name (strip ANSI codes and preserve full name)
+            SESSION_NAME=$(echo "$SELECTED_SESSION" | sed 's/\x1b\[[0-9;]*m//g' | sed 's/ \[Created.*$//' | sed 's/^ *//' | sed 's/ *$//')
 
             # Check if this is an exited session that can be resurrected
             if echo "$SELECTED_SESSION" | grep -q "EXITED"; then
