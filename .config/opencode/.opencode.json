@@ -1,0 +1,19 @@
+{
+  "data": {
+    "directory": "$HOME/.opencode"
+  },
+  "agents": {
+    "coder": {
+      "model": "google/gemini-2.5-pro"
+    }
+  },
+  "mcpServers": {
+    "context-7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp@latest"
+      ]
+    }
+  }
+}
