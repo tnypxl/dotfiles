@@ -47,6 +47,10 @@ zinit cdreplay -q
 
 fpath=($HOME/.config/completions $fpath)
 
+fpath=(/Users/arikj/.docker/completions $fpath)
+
+
+
 bindkey -e
 
 HISTSIZE=100000
@@ -101,10 +105,14 @@ alias tree='eza --tree --group-directories-first $eza_params'
 alias zclear='zellij action clear'
 alias claude-mcp-config='cd /Users/arikj/Library/Application\ Support/Claude && nvim claude_desktop_config.json'
 
+
+# opencode
+# export PATH=/Users/arik/.opencode/bin:$PATH
+
 eval "$(task --completion zsh)"
 eval "$(direnv hook zsh)"
 
-. ~/.asdf/plugins/golang/set-env.zsh
+source ~/.asdf/plugins/golang/set-env.zsh
 
 [ -f $HOME/.zprofile ] && source ~/.zprofile
 
@@ -143,13 +151,3 @@ if [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM"
         zellij attach -c
     fi
 fi
-
-
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/arikj/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
-# End of Docker CLI completions
-
-# opencode
-export PATH=/Users/arik/.opencode/bin:$PATH
