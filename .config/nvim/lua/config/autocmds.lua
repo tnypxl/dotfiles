@@ -8,12 +8,19 @@
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 --
 
--- Markdown soft wrap at 80 columns
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "markdown",
-  callback = function()
-    vim.opt_local.wrap = true
-    vim.opt_local.textwidth = 120
-    vim.opt_local.linebreak = true
+local filetype_settings = {
+  md = function()
+    vim.g.autoformat = true
   end,
-})
+
+  go = function()
+    vim.b.autoformat = true
+  end,
+}
+
+for filetype, callback_func in pairs(filetype_settings) do
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = filetype,
+    callback = callback_func,
+  })
+end

@@ -1,28 +1,5 @@
 {
   "mcpServers": {
-    "github.com/mendableai/firecrawl-mcp-server": {
-      "env": {
-        "FIRECRAWL_RETRY_MAX_DELAY": "30000",
-        "FIRECRAWL_CREDIT_WARNING_THRESHOLD": "2000",
-        "FIRECRAWL_RETRY_INITIAL_DELAY": "2000",
-        "FIRECRAWL_API_KEY": "",
-        "FIRECRAWL_RETRY_BACKOFF_FACTOR": "3",
-        "FIRECRAWL_CREDIT_CRITICAL_THRESHOLD": "500",
-        "FIRECRAWL_RETRY_MAX_ATTEMPTS": "5"
-      },
-      "disabled": false,
-      "args": [
-        "-y",
-        "firecrawl-mcp"
-      ],
-      "autoApprove": [
-        "firecrawl_search"
-      ],
-      "custom_instructions": {
-        "text": "Use firecrawl_search to fill in knowledge gaps or to get the latest information over and against hallucinating."
-      },
-      "command": "npx"
-    },
     "github.com/modelcontextprotocol/servers/tree/main/src/filesystem": {
       "args": [
         "-y",
@@ -37,31 +14,20 @@
         "directory_tree",
         "get_file_info"
       ],
-      "disabled_tools": [
-        
-      ],
-      "command": "npx"
+      "command": "npx",
+      "disabled_tools": []
     },
     "github.com/modelcontextprotocol/servers/tree/main/src/sequentialthinking": {
       "args": [
         "-y",
         "@modelcontextprotocol/server-sequential-thinking"
       ],
-      "disabled": false,
-      "command": "npx"
-    },
-    "github.com/modelcontextprotocol/servers/tree/main/src/memory": {
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-memory"
+      "autoApprove": [
+        "sequentialthinking"
       ],
-      "env": {
-        "MEMORY_FILE_PATH": "/Users/arikj/.mcphub/servers/memory/memory.json"
-      },
-      "command": "npx"
+      "command": "npx",
+      "disabled": false
     }
   },
-  "nativeMCPServers": [
-    
-  ]
+  "nativeMCPServers": []
 }

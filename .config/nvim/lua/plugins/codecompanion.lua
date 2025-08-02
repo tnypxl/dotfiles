@@ -12,7 +12,7 @@ return {
 
       local function select_model()
         vim.ui.select(available_models, {
-          prompt = "Select  Model:",
+          prompt = "Select Model:",
         }, function(choice)
           if choice then
             current_model = choice
@@ -62,7 +62,7 @@ return {
       vim.keymap.set({ "n", "v" }, "<C-a>t", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
       vim.keymap.set("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })
 
-      vim.keymap.set("n", "<C-a>m", select_model, { desc = "Select Gemini Model" })
+      vim.keymap.set("n", "<C-a>m", select_model, { desc = "Select Model" })
       -- Expand 'cc' into 'CodeCompanion' in the command line
       vim.cmd([[cab cc CodeCompanion]])
     end,

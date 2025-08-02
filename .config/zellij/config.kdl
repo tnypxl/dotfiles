@@ -11,8 +11,8 @@ keybinds {
         bind "Alt -" { Resize "Decrease"; }
         bind "Alt [" { GoToPreviousTab; }
         bind "Alt ]" { GoToNextTab; }
-        bind "Super Shift [" { MoveTab "Left"; }
-        bind "Super Shift ]" { MoveTab "Right"; }
+        bind "Super Alt [" { MoveTab "Left"; }
+        bind "Super Alt ]" { MoveTab "Right"; }
 
         // Navigate windows/panes
         bind "Alt Shift Left" { MoveFocusOrTab "Left"; }

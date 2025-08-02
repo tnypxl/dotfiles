@@ -116,6 +116,22 @@ source ~/.asdf/plugins/golang/set-env.zsh
 
 [ -f $HOME/.zprofile ] && source ~/.zprofile
 
+function terminal_title_preexec() {
+  local cmd_name=$(basename ${(q)1})
+  local folder_name=$(basename $(pwd))
+  print -Pn -- "\e]2;${cmd_name} * ${folder_name}\a"
+}
+function terminal_title_precmd() {
+  local folder_name=$(basename $(pwd))
+  print -Pn -- "\e]2;${folder_name}\a"
+}
+
+preexec_functions+=(terminal_title_preexec)
+precmd_functions+=(terminal_title_precmd)
+
+add-zsh-hook -Uz precmd terminal_title_precmd
+add-zsh-hook -Uz preexec terminal_title_preexec
+
 export ZELLIJ_AUTO_ATTACH=true
 
 if [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM" != "zed" ]]; then
@@ -124,7 +140,7 @@ if [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM"
     if [[ -n "$ZJ_SESSIONS" ]]; then
         SELECTED_SESSION="$(echo -e "${ZJ_SESSIONS}\n[NEW SESSION]\n[NEW NAMED SESSION]" | sk --ansi --reverse --prompt="Select session: ")"
         if [[ "$SELECTED_SESSION" == "[NEW SESSION]" ]]; then
-            zellij attach -c
+            zellij
         elif [[ "$SELECTED_SESSION" == "[NEW NAMED SESSION]" ]]; then
             echo -n "Enter session name: "
             read SESSION_NAME

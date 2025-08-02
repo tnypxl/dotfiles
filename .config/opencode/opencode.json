@@ -14,27 +14,9 @@
       }
     },
     "build": {
-      "model": "anthropic/claude-4-sonnet",
-      "tools": {
-        "write": true,
-        "edit": true,
-        "bash": true
-      }
-    },
-    "discuss": {
-      "prompt": "{file:./discuss_mode_prompt.txt}",
       "model": "google/gemini-2.5-pro",
       "tools": {
-        "write": false,
-        "edit": false,
-        "bash": false
-      }
-    },
-    "homelab": {
-      "prompt": "{file:./homelab_mode_prompt.txt}",
-      "model": "anthropic/claude-4-sonnet",
-      "tools": {
-        "write": false,
+        "write": true,
         "edit": true,
         "bash": true
       }
