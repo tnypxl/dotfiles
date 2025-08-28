@@ -1,8 +1,9 @@
 ---
+model: openrouter/qwen/qwen3-coder
 description: >-
   Use this agent when you need to write new Go code, refactor existing Go code
   for better performance or maintainability, implement Go functions or packages,
-  create Go data structures, or need guidance on Go best practices and idioms.
+  create Go data structures, are working in a Go-based project, or need guidance on Go best practices and idioms.
   Examples:
 
   - <example>

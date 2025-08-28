@@ -4,24 +4,6 @@
     "openai"
   ],
   "theme": "kanagawa",
-  "mode": {
-    "plan": {
-      "model": "google/gemini-2.5-pro",
-      "tools": {
-        "write": false,
-        "edit": false,
-        "bash": false
-      }
-    },
-    "build": {
-      "model": "google/gemini-2.5-pro",
-      "tools": {
-        "write": true,
-        "edit": true,
-        "bash": true
-      }
-    }
-  },
   "mcp": {
     "context7": {
       "type": "local",
@@ -29,6 +11,16 @@
         "npx",
         "-y",
         "@upstash/context7-mcp"
+      ],
+      "enabled": true
+    },
+    "serena": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "--from","git+https://github.com/oraios/serena",
+        "serena",
+        "start-mcp-server"
       ],
       "enabled": true
     }
