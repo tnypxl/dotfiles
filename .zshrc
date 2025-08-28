@@ -49,8 +49,6 @@ fpath=($HOME/.config/completions $fpath)
 
 fpath=(/Users/arikj/.docker/completions $fpath)
 
-
-
 bindkey -e
 
 HISTSIZE=100000
@@ -116,25 +114,27 @@ source ~/.asdf/plugins/golang/set-env.zsh
 
 [ -f $HOME/.zprofile ] && source ~/.zprofile
 
-function terminal_title_preexec() {
-  local cmd_name=$(basename ${(q)1})
-  local folder_name=$(basename $(pwd))
-  print -Pn -- "\e]2;${cmd_name} * ${folder_name}\a"
-}
-function terminal_title_precmd() {
-  local folder_name=$(basename $(pwd))
-  print -Pn -- "\e]2;${folder_name}\a"
-}
+if [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" == "ghostty" ]]; then
+    function terminal_title_preexec() {
+      local cmd_name=$(basename ${(q)1})
+      local folder_name=$(basename $(pwd))
+      print -Pn -- "\e]2;${cmd_name} * ${folder_name}\a"
+    }
+    function terminal_title_precmd() {
+      local folder_name=$(basename $(pwd))
+      print -Pn -- "\e]2;${folder_name}\a"
+    }
 
-preexec_functions+=(terminal_title_preexec)
-precmd_functions+=(terminal_title_precmd)
+    preexec_functions+=(terminal_title_preexec)
+    precmd_functions+=(terminal_title_precmd)
 
-add-zsh-hook -Uz precmd terminal_title_precmd
-add-zsh-hook -Uz preexec terminal_title_preexec
+    add-zsh-hook -Uz precmd terminal_title_precmd
+    add-zsh-hook -Uz preexec terminal_title_preexeci
+fi
 
 export ZELLIJ_AUTO_ATTACH=true
 
-if [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM" != "zed" ]]; then
+if [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM" != "zed" ]] && [[ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]]; then
     ZJ_SESSIONS=$(zellij list-sessions)
 
     if [[ -n "$ZJ_SESSIONS" ]]; then
