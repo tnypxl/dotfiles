@@ -114,22 +114,22 @@ source ~/.asdf/plugins/golang/set-env.zsh
 
 [ -f $HOME/.zprofile ] && source ~/.zprofile
 
-if [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" == "ghostty" ]]; then
-    function terminal_title_preexec() {
-      local cmd_name=$(basename ${(q)1})
-      local folder_name=$(basename $(pwd))
-      print -Pn -- "\e]2;${cmd_name} * ${folder_name}\a"
-    }
-    function terminal_title_precmd() {
-      local folder_name=$(basename $(pwd))
-      print -Pn -- "\e]2;${folder_name}\a"
-    }
+if [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM" != "zed" ]] && [[ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]]; then
+  function terminal_title_preexec() {
+    local cmd_name=$(basename ${(q)1})
+    local folder_name=$(basename $(pwd))
+    print -Pn -- "\e]2;${cmd_name} * ${folder_name}\a"
+  }
+  function terminal_title_precmd() {
+    local folder_name=$(basename $(pwd))
+    print -Pn -- "\e]2;${folder_name}\a"
+  }
 
-    preexec_functions+=(terminal_title_preexec)
-    precmd_functions+=(terminal_title_precmd)
+  preexec_functions+=(terminal_title_preexec)
+  precmd_functions+=(terminal_title_precmd)
 
-    add-zsh-hook -Uz precmd terminal_title_precmd
-    add-zsh-hook -Uz preexec terminal_title_preexeci
+  add-zsh-hook -Uz precmd terminal_title_precmd
+  add-zsh-hook -Uz preexec terminal_title_preexec
 fi
 
 export ZELLIJ_AUTO_ATTACH=true

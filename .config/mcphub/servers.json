@@ -1,5 +1,16 @@
 {
   "mcpServers": {
+    "context7": {
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ],
+      "autoApprove": [
+        "resolve-library-id",
+        "get-library-docs"
+      ],
+      "command": "npx"
+    },
     "filesystem": {
       "args": [
         "-y",
@@ -7,12 +18,20 @@
         "/Users/arikj/Buckle"
       ],
       "autoApprove": [
-        "list_directory",
         "read_file",
+        "read_text_file",
+        "read_media_file",
         "read_multiple_files",
-        "search_files",
+        "write_file",
+        "edit_file",
+        "create_directory",
+        "list_directory",
+        "list_directory_with_sizes",
         "directory_tree",
-        "get_file_info"
+        "move_file",
+        "search_files",
+        "get_file_info",
+        "list_allowed_directories"
       ],
       "command": "npx",
       "disabled_tools": []
@@ -28,13 +47,13 @@
       "command": "npx",
       "disabled": false
     },
-    "context7": {
-      "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp"]
-    },
-    "serena": {
-      "command": "uvx",
-      "args": ["--from","git+https://github.com/oraios/serena","serena","start-mcp-server"]
+    "time": {
+      "args": [
+        "mcp-server-time",
+        "--local-timezone=America/Chicago",
+        "--native-tls"
+      ],
+      "command": "uvx"
     }
   },
   "nativeMCPServers": []

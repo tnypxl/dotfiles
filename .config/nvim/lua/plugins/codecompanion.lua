@@ -2,11 +2,10 @@ return {
   {
     "olimorris/codecompanion.nvim",
     config = function()
-      local default_model = "google/gemini-2.5-flash"
+      local default_model = "qwen/qwen3-coder"
       local available_models = {
-        "google/gemini-2.5-flash",
-        "google/gemini-2.5-pro",
-        "anthropic/claude-4-sonnet",
+        "qwen/qwen3-coder",
+        "anthropic/claude-sonnet-4",
       }
       local current_model = default_model
 
