@@ -128,7 +128,7 @@ When working with specific programming languages:
 - **TypeScript**: Leverage type system for safety, proper interface definitions
 - **Java**: Utilize modern Java features appropriately, proper exception handling
 - **C/C++**: Emphasize memory safety, RAII, and modern C++ practices
-- If there is a mode available for a given language, use it.
+- If there is a mode available for a given language, use it for instructions
 
 ## Critical Reminders
 

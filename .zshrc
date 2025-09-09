@@ -44,7 +44,6 @@ zinit snippet OMZP::command-not-found
 
 zinit cdreplay -q
 
-
 fpath=($HOME/.config/completions $fpath)
 
 fpath=(/Users/arikj/.docker/completions $fpath)
@@ -87,7 +86,6 @@ bindkey '^[[1;5D' backward-word
 
 bindkey "^[[3~" delete-char
 
-alias task="task -t ~/Taskfile.yaml"
 alias vim="nvim"
 
 alias ls='eza $eza_params'

@@ -17,12 +17,15 @@
     "serena": {
       "type": "local",
       "command": [
-        "uvx",
-        "--from","git+https://github.com/oraios/serena",
+        "uv",
+        "run",
+        "--directory",
+        "/Users/arikj/Buckle/.uv/serena",
         "serena",
         "start-mcp-server"
       ],
       "enabled": true
+
     }
   }
 }
