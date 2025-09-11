@@ -1,18 +1,15 @@
-
 if [[ -f "/opt/homebrew/bin/brew" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
-  eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/zen.toml)"
-fi
+eval "$(oh-my-posh init zsh --config ${HOME}/.config/ohmyposh/zen.toml)"
 
 # Set the directory we want to store zinit and plugins
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
 # Download Zinit, if it's not there yet
 if [ ! -d "$ZINIT_HOME" ]; then
-   mkdir -p "$(dirname $ZINIT_HOME)"
+   mkdir -p "$(dirname "$ZINIT_HOME")"
    git clone https://github.com/zdharma-continuum/zinit.git q "$ZINIT_HOME"
 fi
 
@@ -27,6 +24,8 @@ export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$GOPATH/bin:$GOROOT/bin:$HOME/.
 export EDITOR="zed -n"
 export TERM=xterm-256color
 export WORDCHARS='*?[]~=&;!#$%^(){}<>'
+
+
 
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
@@ -52,7 +51,9 @@ bindkey -e
 
 HISTSIZE=100000
 HISTFILE=~/.zsh_history
+# shellcheck disable=SC2034
 SAVEHIST=$HISTSIZE
+# shellcheck disable=SC2034
 HISTDUP=erase
 setopt appendhistory
 setopt sharehistory
@@ -70,6 +71,7 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls $realpath'
 
 eval "$(zoxide init zsh --cmd z)"
+# shellcheck disable=SC1090
 source <(fzf --zsh)
 
 bindkey '^[[A' history-substring-search-up
@@ -98,35 +100,30 @@ alias lx='eza -lbhHigUmuSa@'
 alias lt='eza --tree --group-directories-first $eza_params'
 alias tree='eza --tree --group-directories-first $eza_params'
 
-alias zclear='zellij action clear'
-alias claude-mcp-config='cd /Users/arikj/Library/Application\ Support/Claude && nvim claude_desktop_config.json'
+
+alias claude-mcp-config='cd /Users/arikj/Library/Application\ Support/Claude && vim claude_desktop_config.json'
 
 
 # opencode
 # export PATH=/Users/arik/.opencode/bin:$PATH
 
-eval "$(task --completion zsh)"
-eval "$(direnv hook zsh)"
-
 source ~/.asdf/plugins/golang/set-env.zsh
 
 [ -f $HOME/.zprofile ] && source ~/.zprofile
 
+eval "$(task --completion zsh)"
+eval "$(direnv hook zsh)"
+
 if [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM" != "zed" ]] && [[ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]]; then
   function terminal_title_preexec() {
+    # Arguments are the command line split into an array.
+    # ${(q)1} gets the first element (the command) and quotes it.
     local cmd_name=$(basename ${(q)1})
     local folder_name=$(basename $(pwd))
     print -Pn -- "\e]2;${cmd_name} * ${folder_name}\a"
   }
-  function terminal_title_precmd() {
-    local folder_name=$(basename $(pwd))
-    print -Pn -- "\e]2;${folder_name}\a"
-  }
 
-  preexec_functions+=(terminal_title_preexec)
-  precmd_functions+=(terminal_title_precmd)
-
-  add-zsh-hook -Uz precmd terminal_title_precmd
+  # Only add the preexec hook. OMP handles the precmd behavior now.
   add-zsh-hook -Uz preexec terminal_title_preexec
 fi
 
@@ -138,8 +135,10 @@ if [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM"
     if [[ -n "$ZJ_SESSIONS" ]]; then
         SELECTED_SESSION="$(echo -e "${ZJ_SESSIONS}\n[NEW SESSION]\n[NEW NAMED SESSION]" | sk --ansi --reverse --prompt="Select session: ")"
         if [[ "$SELECTED_SESSION" == "[NEW SESSION]" ]]; then
+            alias zclear='zellij action clear'
             zellij
         elif [[ "$SELECTED_SESSION" == "[NEW NAMED SESSION]" ]]; then
+            alias zclear='zellij action clear'
             echo -n "Enter session name: "
             read SESSION_NAME
             if [[ -n "$SESSION_NAME" ]]; then
@@ -148,6 +147,7 @@ if [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM"
                 zellij attach -c
             fi
         elif [[ -n "$SELECTED_SESSION" ]]; then
+            alias zclear='zellij action clear'
             # Extract the actual session name (strip ANSI codes and preserve full name)
             SESSION_NAME=$(echo "$SELECTED_SESSION" | sed 's/\x1b\[[0-9;]*m//g' | sed 's/ \[Created.*$//' | sed 's/^ *//' | sed 's/ *$//')
 
@@ -164,4 +164,4 @@ if [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM"
     else
         zellij attach -c
     fi
-fi
+ fi

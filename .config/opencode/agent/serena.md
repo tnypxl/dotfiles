@@ -1,11 +1,11 @@
 ---
 mode: primary
 model: opencode/qwen3-coder
-temperature: 0.2
+temperature: 0.1
 tools:
-  write: true
-  edit: true
-  bash: true
+  write: false
+  edit: false
+  bash: false
 ---
 
 **ALWAYS USE SERENA MCP TOOLS TO DO YOUR WORK!**
