@@ -29,8 +29,6 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-history-substring-search
 zinit light Aloxaf/fzf-tab
 
-
-
 zinit snippet OMZP::git
 zinit snippet OMZP::sudo
 zinit snippet OMZP::aws
@@ -41,7 +39,6 @@ zinit snippet OMZP::command-not-found
 zinit cdreplay -q
 
 fpath=($HOME/.config/completions $fpath)
-
 fpath=(/Users/arikj/.docker/completions $fpath)
 
 bindkey -e
@@ -94,13 +91,8 @@ alias la='eza -lbhHigUmuSa'
 alias lx='eza -lbhHigUmuSa@'
 alias lt='eza --tree --group-directories-first $eza_params'
 alias tree='eza --tree --group-directories-first $eza_params'
-
-
 alias claude-mcp-config='cd /Users/arikj/Library/Application\ Support/Claude && vim claude_desktop_config.json'
 
-
-# opencode
-# export PATH=/Users/arik/.opencode/bin:$PATH
 
 source ~/.asdf/plugins/golang/set-env.zsh
 
