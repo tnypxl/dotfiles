@@ -1,20 +1,18 @@
+# shellcheck disable=SC2034
+# shellcheck disable=SC1090
+
 if [[ -f "/opt/homebrew/bin/brew" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
+
+# Load Zinit
+source /opt/homebrew/opt/zinit/zinit.zsh
+
 
 eval "$(oh-my-posh init zsh --config ${HOME}/.config/ohmyposh/zen.toml)"
 
 # Set the directory we want to store zinit and plugins
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-
-# Download Zinit, if it's not there yet
-if [ ! -d "$ZINIT_HOME" ]; then
-   mkdir -p "$(dirname "$ZINIT_HOME")"
-   git clone https://github.com/zdharma-continuum/zinit.git q "$ZINIT_HOME"
-fi
-
-# Source/Load zinit
-source "${ZINIT_HOME}/zinit.zsh"
 
 # Load zsh-completions
 autoload -Uz compinit && compinit
@@ -25,13 +23,12 @@ export EDITOR="zed -n"
 export TERM=xterm-256color
 export WORDCHARS='*?[]~=&;!#$%^(){}<>'
 
-
-
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-history-substring-search
 zinit light Aloxaf/fzf-tab
+
 
 
 zinit snippet OMZP::git
@@ -51,9 +48,8 @@ bindkey -e
 
 HISTSIZE=100000
 HISTFILE=~/.zsh_history
-# shellcheck disable=SC2034
+
 SAVEHIST=$HISTSIZE
-# shellcheck disable=SC2034
 HISTDUP=erase
 setopt appendhistory
 setopt sharehistory
@@ -71,7 +67,6 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls $realpath'
 
 eval "$(zoxide init zsh --cmd z)"
-# shellcheck disable=SC1090
 source <(fzf --zsh)
 
 bindkey '^[[A' history-substring-search-up
@@ -111,7 +106,6 @@ source ~/.asdf/plugins/golang/set-env.zsh
 
 [ -f $HOME/.zprofile ] && source ~/.zprofile
 
-eval "$(task --completion zsh)"
 eval "$(direnv hook zsh)"
 
 if [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM" != "zed" ]] && [[ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]]; then
