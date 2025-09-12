@@ -1,7 +1,7 @@
 # console_title_template = '{{ .Shell }} in {{ .Folder }} '
 version = 3
 final_space = true
-console_title_template = '{{ .Folder }}'
+console_title_template = ' {{.UserName }}:{{.PWD}}'
 
 [secondary_prompt]
 template = '❯❯ '
@@ -52,7 +52,8 @@ type = 'ruby'
 
 [[blocks.segments]]
 style = 'plain'
-template = ' |  {{ .Full }} '
+template = ' |  {{ .Full }}'
+foreground = 'blue'
 type = 'go'
 
 [[blocks.segments]]
@@ -66,6 +67,18 @@ style = 'plain'
 template = ' | 󱁢 {{ .Version }}'
 foreground = 'blue'
 type = 'terraform'
+
+[[blocks.segments]]
+style = 'plain'
+template = ' |  {{ .Version }}'
+foreground = 'yellow'
+type = 'python'
+
+# [[blocks.segments]]
+# style = 'plain'
+# template = ' | 🦀 {{ .Version }}'
+# foreground = 'red'
+# type = 'rust'
 
 [[blocks]]
 type = 'rprompt'

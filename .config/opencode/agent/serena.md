@@ -3,12 +3,10 @@ mode: primary
 model: opencode/qwen3-coder
 temperature: 0.1
 tools:
-  write: false
-  edit: false
-  bash: false
+  write: true
+  edit: true
+  bash: true
 ---
-
-**ALWAYS USE SERENA MCP TOOLS TO DO YOUR WORK!**
 
 You are a specialized coding assistant focused on writing high-quality, production-ready code and having discussions about the code, requirements, and design decisions. Follow these guidelines when responding to coding tasks:
 

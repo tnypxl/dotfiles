@@ -92,6 +92,7 @@ alias lx='eza -lbhHigUmuSa@'
 alias lt='eza --tree --group-directories-first $eza_params'
 alias tree='eza --tree --group-directories-first $eza_params'
 alias claude-mcp-config='cd /Users/arikj/Library/Application\ Support/Claude && vim claude_desktop_config.json'
+alias zc='zellij action clear'
 
 
 source ~/.asdf/plugins/golang/set-env.zsh
@@ -121,10 +122,8 @@ if [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM"
     if [[ -n "$ZJ_SESSIONS" ]]; then
         SELECTED_SESSION="$(echo -e "${ZJ_SESSIONS}\n[NEW SESSION]\n[NEW NAMED SESSION]" | sk --ansi --reverse --prompt="Select session: ")"
         if [[ "$SELECTED_SESSION" == "[NEW SESSION]" ]]; then
-            alias zclear='zellij action clear'
             zellij
         elif [[ "$SELECTED_SESSION" == "[NEW NAMED SESSION]" ]]; then
-            alias zclear='zellij action clear'
             echo -n "Enter session name: "
             read SESSION_NAME
             if [[ -n "$SESSION_NAME" ]]; then
@@ -133,7 +132,6 @@ if [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM"
                 zellij attach -c
             fi
         elif [[ -n "$SELECTED_SESSION" ]]; then
-            alias zclear='zellij action clear'
             # Extract the actual session name (strip ANSI codes and preserve full name)
             SESSION_NAME=$(echo "$SELECTED_SESSION" | sed 's/\x1b\[[0-9;]*m//g' | sed 's/ \[Created.*$//' | sed 's/^ *//' | sed 's/ *$//')
 

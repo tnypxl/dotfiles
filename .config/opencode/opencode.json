@@ -22,7 +22,7 @@
         "--directory",
         "/Users/arikj/Buckle/.uv/serena",
         "serena",
-        "start-mcp-server"
+        "start-mcp-server
       ],
       "enabled": true
     }
