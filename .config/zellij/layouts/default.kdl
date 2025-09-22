@@ -23,7 +23,7 @@ layout {
             pane {
                 start_suspended true
                 name "Obsidian"
-                cwd "~/Obsidian/BLKPXL"
+                cwd "~/Obsidian/TNYPXL"
                 command "nvim"
             }
 

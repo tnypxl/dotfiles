@@ -13,6 +13,15 @@ local filetype_settings = {
     vim.g.autoformat = true
   end,
 
+  json = function()
+    vim.g.autoformat = false
+    vim.diagnostic.enable(false)
+  end,
+
+  yaml = function()
+    vim.g.autoformat = false
+  end,
+
   go = function()
     vim.b.autoformat = true
   end,
@@ -24,3 +33,4 @@ for filetype, callback_func in pairs(filetype_settings) do
     callback = callback_func,
   })
 end
+

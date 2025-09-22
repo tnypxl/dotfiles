@@ -1,7 +1,5 @@
 ---
-mode: subagent
-model: openrouter/anthropic/claude-sonnet-4
-description: >-
+description: |-
   Use this agent when you need straightforward, working code solutions that
   prioritize functionality and clarity over complexity. Examples include:
 

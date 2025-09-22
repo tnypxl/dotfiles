@@ -43,7 +43,7 @@ fpath=(/Users/arikj/.docker/completions $fpath)
 
 bindkey -e
 
-HISTSIZE=100000
+HISTSIZE=250000
 HISTFILE=~/.zsh_history
 
 SAVEHIST=$HISTSIZE
@@ -101,6 +101,8 @@ source ~/.asdf/plugins/golang/set-env.zsh
 
 eval "$(direnv hook zsh)"
 
+eval "$(task --completion zsh)"
+
 if [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM" != "zed" ]] && [[ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]]; then
   function terminal_title_preexec() {
     # Arguments are the command line split into an array.
@@ -113,6 +115,8 @@ if [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM" != "zed" ]] && [[ "$T
   # Only add the preexec hook. OMP handles the precmd behavior now.
   add-zsh-hook -Uz preexec terminal_title_preexec
 fi
+
+
 
 export ZELLIJ_AUTO_ATTACH=true
 
