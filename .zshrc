@@ -30,11 +30,17 @@ zinit light zsh-users/zsh-history-substring-search
 zinit light Aloxaf/fzf-tab
 
 zinit snippet OMZP::git
+zinit snippet OMZP::git-commit
 zinit snippet OMZP::sudo
 zinit snippet OMZP::aws
 zinit snippet OMZP::ruby
-
+zinit snippet OMZP::docker
+zinit snippet OMZP::docker-compose
 zinit snippet OMZP::command-not-found
+zinit snippet OMZP::eza
+zinit snippet OMZP::dotenv
+zinit snippet OMZP::1password
+
 
 zinit cdreplay -q
 
@@ -80,19 +86,54 @@ bindkey '^[[1;5D' backward-word
 
 bindkey "^[[3~" delete-char
 
-alias vim="nvim"
+# Option+Delete to delete word backward
+bindkey '^[^?' backward-kill-word
 
-alias ls='eza $eza_params'
-alias lsdf='eza -lah --group-directories-first $eza_params'
-alias l='eza --git-ignore $eza_params'
-alias ll='eza --all --header --group-directories-first --long $eza_params'
-alias llm='eza --all --header --group-directories-first --long --sort=modified $eza_params'
-alias la='eza -lbhHigUmuSa'
-alias lx='eza -lbhHigUmuSa@'
-alias lt='eza --tree --group-directories-first $eza_params'
-alias tree='eza --tree --group-directories-first $eza_params'
-alias claude-mcp-config='cd /Users/arikj/Library/Application\ Support/Claude && vim claude_desktop_config.json'
+# Option+Left/Right to move by word (alternative keycodes for some terminals)
+bindkey '^[^[[C' forward-word
+bindkey '^[^[[D' backward-word
+
+# Fn+Delete to delete word forward
+bindkey '^[[3;5~' kill-word
+
+# Command+Left/Right to move to beginning/end of line (terminal dependent)
+bindkey '^[[1;9D' beginning-of-line
+bindkey '^[[1;9C' end-of-line
+
+# Command+Backspace to delete to beginning of line
+bindkey '^[^H' backward-kill-line
+
+# Control+U to delete entire line
+bindkey '^U' kill-whole-line
+
+# Control+K to delete from cursor to end of line
+bindkey '^K' kill-line
+
+# Control+W to delete word backward
+bindkey '^W' backward-kill-word
+
+nv() {
+    if [[ "$1" == "--sync" ]]; then
+        echo "Syncing plugins..."
+        nvim --headless "+Lazy! sync" +qa
+        shift
+    fi
+    nvim "$@"
+}
+
+alias vim="nv"
+# alias ls='eza $eza_params'
+# alias lsdf='eza -lah --group-directories-first $eza_params'
+# alias l='eza --git-ignore $eza_params'
+# alias ll='eza --all --header --group-directories-first --long $eza_params'
+# alias llm='eza --all --header --group-directories-first --long --sort=modified $eza_params'
+# alias la='eza -lbhHigUmuSa'
+# alias lx='eza -lbhHigUmuSa@'
+# alias lt='eza --tree --group-directories-first $eza_params'
+# alias tree='eza --tree --group-directories-first $eza_params'
+alias claude-mcp-config='cd /Users/arikj/Library/Application\ Support/Claude && zed claude_desktop_config.json'
 alias zc='zellij action clear'
+alias ps='sudo procs'
 
 
 source ~/.asdf/plugins/golang/set-env.zsh
@@ -102,6 +143,10 @@ source ~/.asdf/plugins/golang/set-env.zsh
 eval "$(direnv hook zsh)"
 
 eval "$(task --completion zsh)"
+
+source <(procs --gen-completion-out zsh)
+
+eval "$(complete -C /opt/homebrew/bin/syncthing syncthing)"
 
 if [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM" != "zed" ]] && [[ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]]; then
   function terminal_title_preexec() {
@@ -115,8 +160,6 @@ if [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM" != "zed" ]] && [[ "$T
   # Only add the preexec hook. OMP handles the precmd behavior now.
   add-zsh-hook -Uz preexec terminal_title_preexec
 fi
-
-
 
 export ZELLIJ_AUTO_ATTACH=true
 

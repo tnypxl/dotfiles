@@ -5,3 +5,5 @@
 /**/*.backup
 .config/nvim/lazy-lock.json
 /**/.DS_Store
+.serena/logs/*
+/.serena/language_servers
