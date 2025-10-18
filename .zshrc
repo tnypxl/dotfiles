@@ -16,6 +16,8 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
 # Load zsh-completions
 autoload -Uz compinit && compinit
+autoload -Uz bashcompinit && bashcompinit
+
 
 export BUN_INSTALL="$HOME/.bun"
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$BUN_INSTALL/bin:$PATH"
@@ -35,12 +37,11 @@ zinit snippet OMZP::sudo
 zinit snippet OMZP::aws
 zinit snippet OMZP::ruby
 zinit snippet OMZP::docker
-zinit snippet OMZP::docker-compose
+# zinit snippet OMZP::docker-compose
 zinit snippet OMZP::command-not-found
 zinit snippet OMZP::eza
 zinit snippet OMZP::dotenv
-zinit snippet OMZP::1password
-
+# zinit snippet OMZP::1password
 
 zinit cdreplay -q
 
