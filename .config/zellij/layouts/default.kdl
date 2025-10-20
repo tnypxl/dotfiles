@@ -7,11 +7,11 @@ layout {
         children
     }
 
-    tab name="Main" split_direction="vertical" {
+    tab name="MAIN" split_direction="vertical" {
        pane focus=true
     }
 
-    tab name="Dotfiles & Notes" {
+    tab name="DOTFILES + NOTES" {
         pane split_direction="horizontal" stacked=true {
             pane {
                 start_suspended true
