@@ -37,11 +37,11 @@ zinit snippet OMZP::sudo
 zinit snippet OMZP::aws
 zinit snippet OMZP::ruby
 zinit snippet OMZP::docker
-# zinit snippet OMZP::docker-compose
+zinit snippet OMZP::docker-compose
 zinit snippet OMZP::command-not-found
-zinit snippet OMZP::eza
+# zinit snippet OMZP::eza
 zinit snippet OMZP::dotenv
-# zinit snippet OMZP::1password
+zinit snippet OMZP::1password
 
 zinit cdreplay -q
 
@@ -123,15 +123,15 @@ nv() {
 }
 
 alias vim="nv"
-# alias ls='eza $eza_params'
-# alias lsdf='eza -lah --group-directories-first $eza_params'
-# alias l='eza --git-ignore $eza_params'
-# alias ll='eza --all --header --group-directories-first --long $eza_params'
-# alias llm='eza --all --header --group-directories-first --long --sort=modified $eza_params'
-# alias la='eza -lbhHigUmuSa'
-# alias lx='eza -lbhHigUmuSa@'
-# alias lt='eza --tree --group-directories-first $eza_params'
-# alias tree='eza --tree --group-directories-first $eza_params'
+alias ls='eza $eza_params'
+alias lsdf='eza -lah --group-directories-first $eza_params'
+alias l='eza --git-ignore $eza_params'
+alias ll='eza -A --header --group-directories-first --long $eza_params'
+alias llm='eza -A --header --group-directories-first --long --sort=modified $eza_params'
+alias la='eza -lbhHigUmua --group-directories-first'
+alias lx='eza -lbhHigUmua@ --group-directories-first'
+alias lt='eza --tree --group-directories-first $eza_params'
+alias tree='eza --tree --group-directories-first $eza_params'
 alias claude-mcp-config='cd /Users/arikj/Library/Application\ Support/Claude && zed claude_desktop_config.json'
 alias zc='zellij action clear'
 alias ps='sudo procs'
