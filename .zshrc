@@ -16,7 +16,7 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
 # Load zsh-completions
 autoload -Uz compinit && compinit
-autoload -Uz bashcompinit && bashcompinit
+# autoload -Uz bashcompinit && bashcompinit
 
 
 export BUN_INSTALL="$HOME/.bun"
@@ -70,8 +70,9 @@ zstyle ':fzf-tab:complete:z:*' fzf-preview 'ls $realpath'
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls $realpath'
 
-eval "$(zoxide init zsh --cmd z)"
 source <(fzf --zsh)
+
+eval "$(zoxide init zsh --cmd z)"
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
@@ -149,7 +150,7 @@ source <(procs --gen-completion-out zsh)
 
 eval "$(complete -C /opt/homebrew/bin/syncthing syncthing)"
 
-if [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM" != "zed" ]] && [[ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]]; then
+if [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM" != "zed" ]] && [[ "$TERM_PROGRAM" != "WarpTerminal" ]] && [[ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]]; then
   function terminal_title_preexec() {
     # Arguments are the command line split into an array.
     # ${(q)1} gets the first element (the command) and quotes it.
@@ -164,7 +165,7 @@ fi
 
 export ZELLIJ_AUTO_ATTACH=true
 
-if [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM" != "zed" ]] && [[ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]]; then
+if [[ $- == *i* ]] && [[ -t 0 ]] && [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM" != "zed" ]] && [[ "$TERM_PROGRAM" != "WarpTerminal" ]] && [[ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]]; then
     ZJ_SESSIONS=$(zellij list-sessions)
 
     if [[ -n "$ZJ_SESSIONS" ]]; then
