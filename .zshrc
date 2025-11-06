@@ -1,12 +1,15 @@
 # shellcheck disable=SC2034
 # shellcheck disable=SC1090
+# shellcheck disable=SC1094
 
 if [[ -f "/opt/homebrew/bin/brew" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 # Load Zinit
-source /opt/homebrew/opt/zinit/zinit.zsh
+if [[ -f "/opt/homebrew/opt/zinit/zinit.zsh" ]]; then
+    source '/opt/homebrew/opt/zinit/zinit.zsh'
+fi
 
 
 eval "$(oh-my-posh init zsh --config ${HOME}/.config/ohmyposh/zen.toml)"
@@ -39,14 +42,13 @@ zinit snippet OMZP::ruby
 zinit snippet OMZP::docker
 zinit snippet OMZP::docker-compose
 zinit snippet OMZP::command-not-found
-# zinit snippet OMZP::eza
 zinit snippet OMZP::dotenv
 zinit snippet OMZP::1password
 
 zinit cdreplay -q
 
-fpath=($HOME/.config/completions $fpath)
-fpath=(/Users/arikj/.docker/completions $fpath)
+fpath=("$HOME/.config/completions" "${fpath[@]}")
+fpath=("$HOME/.docker/completions" "${fpath[@]}")
 
 bindkey -e
 
@@ -66,9 +68,9 @@ setopt hist_find_no_dups
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
-zstyle ':fzf-tab:complete:z:*' fzf-preview 'ls $realpath'
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls $realpath'
-zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls $realpath'
+zstyle ':fzf-tab:complete:z:*' fzf-preview "ls $(realpath)"
+zstyle ':fzf-tab:complete:cd:*' fzf-preview "ls $(realpath)"
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview "ls $(realpath)"
 
 source <(fzf --zsh)
 
@@ -123,16 +125,19 @@ nv() {
     nvim "$@"
 }
 
+
+eza_params="--icons --color=always --group-directories-first --git --classify"
+
 alias vim="nv"
-alias ls='eza $eza_params'
-alias lsdf='eza -lah --group-directories-first $eza_params'
-alias l='eza --git-ignore $eza_params'
-alias ll='eza -A --header --group-directories-first --long $eza_params'
-alias llm='eza -A --header --group-directories-first --long --sort=modified $eza_params'
-alias la='eza -lbhHigUmua --group-directories-first'
-alias lx='eza -lbhHigUmua@ --group-directories-first'
-alias lt='eza --tree --group-directories-first $eza_params'
-alias tree='eza --tree --group-directories-first $eza_params'
+alias ls="eza $eza_params"
+alias lsdf="eza -lah $eza_params"
+alias l="eza --git-ignore $eza_params"
+alias ll="eza -A --header --long $eza_params"
+alias llm="eza -A --header --long --sort=modified $eza_params"
+alias la="eza -lbhHigUmua $eza_params"
+alias lx="eza -lbhHigUmua@ $eza_params"
+alias lt="eza --tree $eza_params"
+alias tree="eza --tree $eza_params"
 alias claude-mcp-config='cd /Users/arikj/Library/Application\ Support/Claude && zed claude_desktop_config.json'
 alias zc='zellij action clear'
 alias ps='sudo procs'
@@ -140,7 +145,7 @@ alias ps='sudo procs'
 
 source ~/.asdf/plugins/golang/set-env.zsh
 
-[ -f $HOME/.zprofile ] && source ~/.zprofile
+[ -f "$HOME"/.zprofile ] && source ~/.zprofile
 
 eval "$(direnv hook zsh)"
 
@@ -150,7 +155,7 @@ source <(procs --gen-completion-out zsh)
 
 eval "$(complete -C /opt/homebrew/bin/syncthing syncthing)"
 
-if [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM" != "zed" ]] && [[ "$TERM_PROGRAM" != "WarpTerminal" ]] && [[ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]]; then
+if [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" == "ghostty" ]]; then
   function terminal_title_preexec() {
     # Arguments are the command line split into an array.
     # ${(q)1} gets the first element (the command) and quotes it.
@@ -165,7 +170,7 @@ fi
 
 export ZELLIJ_AUTO_ATTACH=true
 
-if [[ $- == *i* ]] && [[ -t 0 ]] && [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM_PROGRAM" != "zed" ]] && [[ "$TERM_PROGRAM" != "WarpTerminal" ]] && [[ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]]; then
+if [[ $- == *i* ]] && [[ -t 0 ]] && [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" == "ghostty" ]]; then
     ZJ_SESSIONS=$(zellij list-sessions)
 
     if [[ -n "$ZJ_SESSIONS" ]]; then
