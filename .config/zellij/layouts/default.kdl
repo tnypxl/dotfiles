@@ -17,14 +17,16 @@ layout {
                 start_suspended true
                 name "Dotfiles"
                 cwd "~/dotfiles/"
-                command "nvim"
+                command "nv"
+                args "--sync"
             }
 
             pane {
                 start_suspended true
                 name "Obsidian"
                 cwd "~/Obsidian/TNYPXL"
-                command "nvim"
+                command "nv"
+                args "--sync"
             }
 
             pane {

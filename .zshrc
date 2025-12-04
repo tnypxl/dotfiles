@@ -23,7 +23,7 @@ autoload -Uz compinit && compinit
 
 
 export BUN_INSTALL="$HOME/.bun"
-export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$BUN_INSTALL/bin:$PATH"
+export PATH="/opt/homebrew/bin:${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$BUN_INSTALL/bin:$PATH"
 export EDITOR="zed -n"
 export TERM=xterm-256color
 export WORDCHARS='*?[]~=&;!#$%^(){}<>'
@@ -37,7 +37,7 @@ zinit light Aloxaf/fzf-tab
 zinit snippet OMZP::git
 zinit snippet OMZP::git-commit
 zinit snippet OMZP::sudo
-zinit snippet OMZP::aws
+# zinit snippet OMZP::aws
 zinit snippet OMZP::ruby
 zinit snippet OMZP::docker
 zinit snippet OMZP::docker-compose
@@ -88,47 +88,7 @@ bindkey '^[[F' end-of-line
 bindkey '^[[1;5C' forward-word
 bindkey '^[[1;5D' backward-word
 
-bindkey "^[[3~" delete-char
 
-# Option+Delete to delete word backward
-bindkey '^[^?' backward-kill-word
-
-# Option+Left/Right to move by word (alternative keycodes for some terminals)
-bindkey '^[^[[C' forward-word
-bindkey '^[^[[D' backward-word
-
-# Fn+Delete to delete word forward
-bindkey '^[[3;5~' kill-word
-
-# Command+Left/Right to move to beginning/end of line (terminal dependent)
-bindkey '^[[1;9D' beginning-of-line
-bindkey '^[[1;9C' end-of-line
-
-# Command+Backspace to delete to beginning of line
-bindkey '^[^H' backward-kill-line
-
-# Control+U to delete entire line
-bindkey '^U' kill-whole-line
-
-# Control+K to delete from cursor to end of line
-bindkey '^K' kill-line
-
-# Control+W to delete word backward
-bindkey '^W' backward-kill-word
-
-nv() {
-    if [[ "$1" == "--sync" ]]; then
-        echo "Syncing plugins..."
-        nvim --headless "+Lazy! sync" +qa
-        shift
-    fi
-    nvim "$@"
-}
-
-
-eza_params="--icons --color=always --group-directories-first --git --classify"
-
-alias vim="nv"
 alias ls="eza $eza_params"
 alias lsdf="eza -lah $eza_params"
 alias l="eza --git-ignore $eza_params"
@@ -140,8 +100,6 @@ alias lt="eza --tree $eza_params"
 alias tree="eza --tree $eza_params"
 alias claude-mcp-config='cd /Users/arikj/Library/Application\ Support/Claude && zed claude_desktop_config.json'
 alias zc='zellij action clear'
-alias ps='sudo procs'
-
 
 source ~/.asdf/plugins/golang/set-env.zsh
 
@@ -149,18 +107,13 @@ source ~/.asdf/plugins/golang/set-env.zsh
 
 eval "$(direnv hook zsh)"
 
-eval "$(task --completion zsh)"
-
 source <(procs --gen-completion-out zsh)
 
-eval "$(complete -C /opt/homebrew/bin/syncthing syncthing)"
-
-if [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" == "ghostty" ]]; then
+if [[ -n "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" == "ghostty" ]]; then
   function terminal_title_preexec() {
-    # Arguments are the command line split into an array.
-    # ${(q)1} gets the first element (the command) and quotes it.
-    local cmd_name=$(basename ${(q)1})
-    local folder_name=$(basename $(pwd))
+    # Extract command name: ${1%% *} gets first word, :t gets basename
+    local cmd_name="${${1%% *}:t}"
+    local folder_name="${PWD:t}"
     print -Pn -- "\e]2;${cmd_name} * ${folder_name}\a"
   }
 
