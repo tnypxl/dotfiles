@@ -76,18 +76,25 @@ source <(fzf --zsh)
 
 eval "$(zoxide init zsh --cmd z)"
 
+# Up Arrow for history substring search up
 bindkey '^[[A' history-substring-search-up
+# Down Arrow for history substring search down
 bindkey '^[[B' history-substring-search-down
 
+# Option+Home / Home to go to beginning of line
 bindkey '^[^[[H' beginning-of-line
 bindkey '^[[H' beginning-of-line
 
+# Option+End / End to go to end of line
 bindkey '^[^[[F' end-of-line
 bindkey '^[[F' end-of-line
 
+# Ctrl+Right to move forward by word
 bindkey '^[[1;5C' forward-word
+# Ctrl+Left to move backward by word
 bindkey '^[[1;5D' backward-word
 
+# Delete key to delete character under cursor
 bindkey "^[[3~" delete-char
 
 # Option+Delete to delete word backward
