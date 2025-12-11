@@ -15,7 +15,7 @@ return {
         sources = {
           explorer = {
             hidden = true,
-            ignored = true,
+            ignored = false,
             follow = true,
           },
         },
