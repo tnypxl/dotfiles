@@ -88,7 +88,46 @@ bindkey '^[[F' end-of-line
 bindkey '^[[1;5C' forward-word
 bindkey '^[[1;5D' backward-word
 
+bindkey "^[[3~" delete-char
 
+# Option+Delete to delete word backward
+bindkey '^[^?' backward-kill-word
+
+# Option+Left/Right to move by word (alternative keycodes for some terminals)
+bindkey '^[^[[C' forward-word
+bindkey '^[^[[D' backward-word
+
+# Fn+Delete to delete word forward
+bindkey '^[[3;5~' kill-word
+
+# Command+Left/Right to move to beginning/end of line (terminal dependent)
+bindkey '^[[1;9D' beginning-of-line
+bindkey '^[[1;9C' end-of-line
+
+# Command+Backspace to delete to beginning of line
+bindkey '^[^H' backward-kill-line
+
+# Control+U to delete entire line
+bindkey '^U' kill-whole-line
+
+# Control+K to delete from cursor to end of line
+bindkey '^K' kill-line
+
+# Control+W to delete word backward
+bindkey '^W' backward-kill-word
+
+nv() {
+    if [[ "$1" == "--sync" ]]; then
+        echo "Syncing plugins..."
+        nvim --headless "+Lazy! sync" +qa
+        shift
+    fi
+    nvim "$@"
+}
+
+eza_params="--icons --group-directories-first --git --classify"
+
+alias vim="nv"
 alias ls="eza $eza_params"
 alias lsdf="eza -lah $eza_params"
 alias l="eza --git-ignore $eza_params"
