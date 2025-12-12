@@ -1,7 +1,6 @@
-# console_title_template = '{{ .Shell }} in {{ .Folder }} '
-version = 3
-final_space = true
 console_title_template = '{{.UserName }} @ {{.PWD}}'
+version = 4
+final_space = true
 
 [secondary_prompt]
 template = '❯❯ '
@@ -19,79 +18,72 @@ foreground_templates = [
 [[blocks]]
 type = 'prompt'
 alignment = 'left'
-newline = false
 
 [[blocks.segments]]
-style = 'plain'
 template = '  {{ .Folder }}'
 foreground = 'blue'
 background = 'transparent'
 type = 'path'
+style = 'plain'
 
-[blocks.segments.properties]
+[blocks.segments.options]
 style = 'full'
 
 [[blocks.segments]]
-style = 'plain'
 template = ' {{ .UpstreamIcon }} {{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }}'
 foreground = 'p:grey'
 background = 'transparent'
 type = 'git'
+style = 'plain'
 
-[blocks.segments.properties]
+[blocks.segments.options]
 branch_icon = ''
 commit_icon = '@'
 fetch_status = true
 fetch_upstream_icon = true
 
 [[blocks.segments]]
-style = 'plain'
 template = ' |  {{ .Full }}'
 foreground = 'red'
 type = 'ruby'
+style = 'plain'
 
 [[blocks.segments]]
-style = 'plain'
 template = ' |  {{ .Full }}'
 foreground = 'blue'
 type = 'go'
+style = 'plain'
 
 [[blocks.segments]]
-style = 'plain'
 template = ' |  {{ .Full }}'
 foreground = 'green'
 type = 'node'
+style = 'plain'
 
 [[blocks.segments]]
-style = 'plain'
 template = ' | 󱁢 {{ .Version }}'
 foreground = 'blue'
 type = 'terraform'
+style = 'plain'
 
 [[blocks.segments]]
-style = 'plain'
 template = ' |  {{ .Version }}'
 foreground = 'yellow'
 type = 'python'
-
-# [[blocks.segments]]
-# style = 'plain'
-# template = ' | 🦀 {{ .Version }}'
-# foreground = 'red'
-# type = 'rust'
+style = 'plain'
 
 [[blocks]]
 type = 'rprompt'
 overflow = 'hidden'
 
 [[blocks.segments]]
-style = 'plain'
 template = '{{ .FormattedMs }}'
 foreground = 'yellow'
 background = 'transparent'
 type = 'executiontime'
+style = 'plain'
 
-[blocks.segments.properties]
+[blocks.segments.options]
 threshold = 5000
 
 [[blocks]]
@@ -100,10 +92,10 @@ alignment = 'left'
 newline = true
 
 [[blocks.segments]]
-style = 'plain'
 template = '❯'
 background = 'transparent'
 type = 'text'
+style = 'plain'
 foreground_templates = [
   '{{if gt .Code 0}}red{{end}}',
   '{{if eq .Code 0}}magenta{{end}}',

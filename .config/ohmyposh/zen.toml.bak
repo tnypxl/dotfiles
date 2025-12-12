@@ -1,33 +1,42 @@
-#:schema https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
-
-version = 2
+# console_title_template = '{{ .Shell }} in {{ .Folder }} '
+version = 3
 final_space = true
-console_title_template = '{{ .Shell }} in {{ .Folder }} '
-insert_new_line = false
+console_title_template = '{{.UserName }} @ {{.PWD}}'
+
+[secondary_prompt]
+template = '❯❯ '
+foreground = 'magenta'
+background = 'transparent'
+
+[transient_prompt]
+template = '❯ '
+background = 'transparent'
+foreground_templates = [
+  '{{if gt .Code 0}}red{{end}}',
+  '{{if eq .Code 0}}magenta{{end}}',
+]
 
 [[blocks]]
 type = 'prompt'
 alignment = 'left'
-newline = true
-enable_cursor_positioning = true
+newline = false
 
 [[blocks.segments]]
-type = 'path'
 style = 'plain'
-background = 'transparent'
+template = '  {{ .Folder }}'
 foreground = 'blue'
-template = '{{ .Path }}'
+background = 'transparent'
+type = 'path'
 
 [blocks.segments.properties]
 style = 'full'
 
 [[blocks.segments]]
-type = 'git'
 style = 'plain'
+template = ' {{ .UpstreamIcon }} {{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }}'
 foreground = 'p:grey'
 background = 'transparent'
-template = " {{ .UpstreamIcon }} {{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }}"
-# template = ' {{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }} <cyan>{{ if gt .Behind 0 }}⇣{{ end }}{{ if gt .Ahead 0 }}⇡{{ end }}</>'
+type = 'git'
 
 [blocks.segments.properties]
 branch_icon = ''
@@ -36,39 +45,51 @@ fetch_status = true
 fetch_upstream_icon = true
 
 [[blocks.segments]]
-type = 'ruby'
 style = 'plain'
-template = " |  {{ .Full }}"
+template = ' |  {{ .Full }}'
 foreground = 'red'
+type = 'ruby'
 
 [[blocks.segments]]
-type = "go"
 style = 'plain'
-template = " | \ue626 {{ .Full }} "
+template = ' |  {{ .Full }}'
+foreground = 'blue'
+type = 'go'
 
 [[blocks.segments]]
-type = "node"
-style = "plain"
-foreground = "green"
-template = " |  {{ .Full }}"
+style = 'plain'
+template = ' |  {{ .Full }}'
+foreground = 'green'
+type = 'node'
 
 [[blocks.segments]]
-type = "terraform"
-style = "plain"
-foreground = "blue"
-fetch_version = true
-template = " | 󱁢 {{ .Version }}"
+style = 'plain'
+template = ' | 󱁢 {{ .Version }}'
+foreground = 'blue'
+type = 'terraform'
+
+[[blocks.segments]]
+style = 'plain'
+template = ' |  {{ .Version }}'
+foreground = 'yellow'
+type = 'python'
+
+# [[blocks.segments]]
+# style = 'plain'
+# template = ' | 🦀 {{ .Version }}'
+# foreground = 'red'
+# type = 'rust'
 
 [[blocks]]
 type = 'rprompt'
 overflow = 'hidden'
 
 [[blocks.segments]]
-type = 'executiontime'
 style = 'plain'
+template = '{{ .FormattedMs }}'
 foreground = 'yellow'
 background = 'transparent'
-template = '{{ .FormattedMs }}'
+type = 'executiontime'
 
 [blocks.segments.properties]
 threshold = 5000
@@ -79,24 +100,11 @@ alignment = 'left'
 newline = true
 
 [[blocks.segments]]
-type = 'text'
 style = 'plain'
-foreground_templates = [
-  "{{if gt .Code 0}}red{{end}}",
-  "{{if eq .Code 0}}magenta{{end}}",
-]
-background = 'transparent'
 template = '❯'
-
-[transient_prompt]
+background = 'transparent'
+type = 'text'
 foreground_templates = [
-  "{{if gt .Code 0}}red{{end}}",
-  "{{if eq .Code 0}}magenta{{end}}",
+  '{{if gt .Code 0}}red{{end}}',
+  '{{if eq .Code 0}}magenta{{end}}',
 ]
-background = 'transparent'
-template = '❯ '
-
-[secondary_prompt]
-foreground = 'magenta'
-background = 'transparent'
-template = '❯❯ '
