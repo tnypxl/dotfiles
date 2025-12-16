@@ -1,10 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
 # Download and install (e.g, *.wasm files) and place them in ~/dotfiles/.config/zellij/plugins
 
 # Array of plugin urls to install from. Must be raw wasm files.
 declare -a plugins=(
     "https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm"
+    "https://github.com/dj95/zjstatus/releases/latest/download/zjframes.wasm"
 )
 
 # Use curl to download the plugins
