@@ -17,6 +17,10 @@ eval "$(oh-my-posh init zsh --config ${HOME}/.config/ohmyposh/zen.toml)"
 # Set the directory we want to store zinit and plugins
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
+# Add custom completion directories to fpath BEFORE compinit
+fpath=("$HOME/.config/completions" "${fpath[@]}")
+fpath=("$HOME/.docker/completions" "${fpath[@]}")
+
 # Load zsh-completions
 autoload -Uz compinit && compinit
 # autoload -Uz bashcompinit && bashcompinit
@@ -46,9 +50,6 @@ zinit snippet OMZP::dotenv
 zinit snippet OMZP::1password
 
 zinit cdreplay -q
-
-fpath=("$HOME/.config/completions" "${fpath[@]}")
-fpath=("$HOME/.docker/completions" "${fpath[@]}")
 
 bindkey -e
 
