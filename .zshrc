@@ -156,6 +156,8 @@ eval "$(direnv hook zsh)"
 
 source <(procs --gen-completion-out zsh)
 
+eval "$(mise activate zsh)"
+
 if [[ -n "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" == "ghostty" ]]; then
   function terminal_title_preexec() {
     # Extract command name: ${1%% *} gets first word, :t gets basename
