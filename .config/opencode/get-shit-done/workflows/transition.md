@@ -1,6 +1,6 @@
 <required_reading>
 
-**read these files NOW:**
+**Read these files NOW:**
 
 1. `.planning/STATE.md`
 2. `.planning/PROJECT.md`
@@ -165,7 +165,7 @@ The `completed/` subfolder pattern from create-meta-prompts handles archival.
 
 Evolve PROJECT.md to reflect learnings from completed phase.
 
-**read phase summaries:**
+**Read phase summaries:**
 
 ```bash
 cat .planning/phases/XX-current/*-SUMMARY.md
@@ -394,9 +394,9 @@ Resume file: None
 
 **MANDATORY: Verify milestone status before presenting next steps.**
 
-**Step 1: read ROADMAP.md and identify phases in current milestone**
+**Step 1: Read ROADMAP.md and identify phases in current milestone**
 
-read the ROADMAP.md file and extract:
+Read the ROADMAP.md file and extract:
 1. Current phase number (the phase just transitioned from)
 2. All phase numbers in the current milestone section
 
@@ -419,7 +419,7 @@ State: "Current phase is {X}. Milestone has {N} phases (highest: {Y})."
 
 **Route A: More phases remain in milestone**
 
-read ROADMAP.md to get the next phase's name and goal.
+Read ROADMAP.md to get the next phase's name and goal.
 
 **If next phase exists:**
 
@@ -433,7 +433,7 @@ Next: Phase [X+1] — [Name]
 ⚡ Auto-continuing: Plan Phase [X+1] in detail
 ```
 
-Exit skill and invoke "/gsd-plan-phase [X+1]"
+Exit skill and invoke skill("/gsd-plan-phase [X+1]")
 
 </if>
 
@@ -450,7 +450,7 @@ Exit skill and invoke "/gsd-plan-phase [X+1]"
 
 `/gsd-plan-phase [X+1]`
 
-*`/new` first → fresh context window*
+<sub>`/clear` first → fresh context window</sub>
 
 ---
 
@@ -478,7 +478,7 @@ Phase {X} marked complete.
 ⚡ Auto-continuing: Complete milestone and archive
 ```
 
-Exit skill and invoke "/gsd-complete-milestone {version}"
+Exit skill and invoke skill("/gsd-complete-milestone {version}")
 
 </if>
 
@@ -497,7 +497,7 @@ Exit skill and invoke "/gsd-complete-milestone {version}"
 
 `/gsd-complete-milestone {version}`
 
-*`/new` first → fresh context window*
+<sub>`/clear` first → fresh context window</sub>
 
 ---
 
@@ -514,15 +514,7 @@ Exit skill and invoke "/gsd-complete-milestone {version}"
 </process>
 
 <implicit_tracking>
-
-Progress tracking is IMPLICIT:
-
-- "Plan phase 2" → Phase 1 must be done (or ask)
-- "Plan phase 3" → Phases 1-2 must be done (or ask)
-- Transition workflow makes it explicit in ROADMAP.md
-
-No separate "update progress" step. Forward motion IS progress.
-
+Progress tracking is IMPLICIT: planning phase N implies phases 1-(N-1) complete. No separate progress step—forward motion IS progress.
 </implicit_tracking>
 
 <partial_completion>

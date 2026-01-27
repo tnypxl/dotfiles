@@ -13,7 +13,7 @@ You are a thinking partner, not an interviewer. The user is the visionary — yo
 
 2. **gsd-planner** — Reads CONTEXT.md to know WHAT decisions are locked
    - "Pull-to-refresh on mobile" → planner includes that in task specs
-   - "OpenCode's Discretion: loading skeleton" → planner can decide approach
+   - "Claude's Discretion: loading skeleton" → planner can decide approach
 
 **Your job:** Capture decisions clearly enough that downstream agents can act on them without asking the user again.
 
@@ -21,7 +21,7 @@ You are a thinking partner, not an interviewer. The user is the visionary — yo
 </downstream_awareness>
 
 <philosophy>
-**User = founder/visionary. OpenCode = builder.**
+**User = founder/visionary. Claude = builder.**
 
 The user knows:
 - How they imagine it working
@@ -71,7 +71,7 @@ Gray areas are **implementation decisions the user cares about** — things that
 
 **How to identify gray areas:**
 
-1. **read the phase goal** from ROADMAP.md
+1. **Read the phase goal** from ROADMAP.md
 2. **Understand the domain** — What kind of thing is being built?
    - Something users SEE → visual presentation, interactions, states matter
    - Something users CALL → interface contracts, responses, errors matter
@@ -98,7 +98,7 @@ Phase: "API documentation"
 
 **The key question:** What decisions would change the outcome that the user should weigh in on?
 
-**OpenCode handles these (don't ask):**
+**Claude handles these (don't ask):**
 - Technical implementation details
 - Architecture patterns
 - Performance optimization
@@ -111,7 +111,7 @@ Phase: "API documentation"
 Phase number from argument (required).
 
 Load and validate:
-- read `.planning/ROADMAP.md`
+- Read `.planning/ROADMAP.md`
 - Find phase entry
 - Extract: number, name, description, status
 
@@ -132,7 +132,7 @@ Check if CONTEXT.md already exists:
 ```bash
 # Match both zero-padded (05-*) and unpadded (5-*) folders
 PADDED_PHASE=$(printf "%02d" ${PHASE})
-ls .planning/phases/${PADDED_PHASE}-*/CONTEXT.md .planning/phases/${PADDED_PHASE}-*/${PADDED_PHASE}-CONTEXT.md .planning/phases/${PHASE}-*/CONTEXT.md .planning/phases/${PHASE}-*/${PHASE}-CONTEXT.md 2>/dev/null
+ls .planning/phases/${PADDED_PHASE}-*/*-CONTEXT.md .planning/phases/${PHASE}-*/*-CONTEXT.md 2>/dev/null
 ```
 
 **If exists:**
@@ -154,7 +154,7 @@ If "Skip": Exit workflow
 <step name="analyze_phase">
 Analyze the phase to identify gray areas worth discussing.
 
-**read the phase description from ROADMAP.md and determine:**
+**Read the phase description from ROADMAP.md and determine:**
 
 1. **Domain boundary** — What capability is this phase delivering? State it clearly.
 
@@ -244,7 +244,7 @@ Ask 4 questions per area before offering to continue or move on. Each answer oft
    - header: "[Area]"
    - question: Specific decision for this area
    - options: 2-3 concrete choices (question adds "Other" automatically)
-   - Include "You decide" as an option when reasonable — captures OpenCode discretion
+   - Include "You decide" as an option when reasonable — captures Claude discretion
 
 3. **After 4 questions, check:**
    - header: "[Area]"
@@ -320,8 +320,8 @@ fi
 ### [Category 2 that was discussed]
 - [Decision or preference captured]
 
-### OpenCode's Discretion
-[Areas where user said "you decide" — note that OpenCode has flexibility here]
+### Claude's Discretion
+[Areas where user said "you decide" — note that Claude has flexibility here]
 
 </decisions>
 
@@ -349,7 +349,7 @@ fi
 *Context gathered: [date]*
 ```
 
-write file.
+Write file.
 </step>
 
 <step name="confirm_creation">
@@ -378,7 +378,7 @@ Created: .planning/phases/${PADDED_PHASE}-${SLUG}/${PADDED_PHASE}-CONTEXT.md
 
 `/gsd-plan-phase ${PHASE}`
 
-*`/new` first → fresh context window*
+<sub>`/clear` first → fresh context window</sub>
 
 ---
 
@@ -392,6 +392,17 @@ Created: .planning/phases/${PADDED_PHASE}-${SLUG}/${PADDED_PHASE}-CONTEXT.md
 
 <step name="git_commit">
 Commit phase context:
+
+**Check planning config:**
+
+```bash
+COMMIT_PLANNING_DOCS=$(cat .planning/config.json 2>/dev/null | grep -o '"commit_docs"[[:space:]]*:[[:space:]]*[^,}]*' | grep -o 'true\|false' || echo "true")
+git check-ignore -q .planning 2>/dev/null && COMMIT_PLANNING_DOCS=false
+```
+
+**If `COMMIT_PLANNING_DOCS=false`:** Skip git operations
+
+**If `COMMIT_PLANNING_DOCS=true` (default):**
 
 ```bash
 git add "${PHASE_DIR}/${PADDED_PHASE}-CONTEXT.md"

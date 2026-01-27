@@ -1,13 +1,13 @@
 ---
-name: gsd-audit-milestone
 description: Audit milestone completion against original intent before archiving
 argument-hint: "[version]"
 tools:
-  - read
-  - glob
-  - grep
-  - bash
-  - write
+  read: true
+  glob: true
+  grep: true
+  bash: true
+  task: true
+  write: true
 ---
 
 <objective>
@@ -32,11 +32,29 @@ Version: $ARGUMENTS (optional — defaults to current milestone)
 @.planning/config.json (if exists)
 
 **Completed Work:**
-glob: .planning/phases/*/*-SUMMARY.md
-glob: .planning/phases/*/*-VERIFICATION.md
+Glob: .planning/phases/*/*-SUMMARY.md
+Glob: .planning/phases/*/*-VERIFICATION.md
 </context>
 
 <process>
+
+## 0. Resolve Model Profile
+
+Read model profile for agent spawning:
+
+```bash
+MODEL_PROFILE=$(cat .planning/config.json 2>/dev/null | grep -o '"model_profile"[[:space:]]*:[[:space:]]*"[^"]*"' | grep -o '"[^"]*"$' | tr -d '"' || echo "balanced")
+```
+
+Default to "balanced" if not set.
+
+**Model lookup table:**
+
+| Agent | quality | balanced | budget |
+|-------|---------|----------|--------|
+| gsd-integration-checker | sonnet | sonnet | haiku |
+
+Store resolved model for use in Task call below.
 
 ## 1. Determine Milestone Scope
 
@@ -50,7 +68,7 @@ ls -d .planning/phases/*/ | sort -V
 - Extract milestone definition of done from ROADMAP.md
 - Extract requirements mapped to this milestone from REQUIREMENTS.md
 
-## 2. read All Phase Verifications
+## 2. Read All Phase Verifications
 
 For each phase directory, read the VERIFICATION.md:
 
@@ -82,7 +100,8 @@ Phase exports: {from SUMMARYs}
 API routes: {routes created}
 
 Verify cross-phase wiring and E2E user flows.",
-  subagent_type="gsd-integration-checker"
+  subagent_type="gsd-integration-checker",
+  model="{integration_checker_model}"
 )
 ```
 
@@ -163,7 +182,7 @@ All requirements covered. Cross-phase integration verified. E2E flows complete.
 
 /gsd-complete-milestone {version}
 
-*/new first → fresh context window*
+<sub>/clear first → fresh context window</sub>
 
 ───────────────────────────────────────────────────────────────
 
@@ -200,7 +219,7 @@ All requirements covered. Cross-phase integration verified. E2E flows complete.
 
 /gsd-plan-milestone-gaps
 
-*/new first → fresh context window*
+<sub>/clear first → fresh context window</sub>
 
 ───────────────────────────────────────────────────────────────
 
@@ -242,7 +261,7 @@ All requirements met. No critical blockers. Accumulated tech debt needs review.
 
 /gsd-plan-milestone-gaps
 
-*/new first → fresh context window*
+<sub>/clear first → fresh context window</sub>
 
 ───────────────────────────────────────────────────────────────
 </offer_next>

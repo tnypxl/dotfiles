@@ -8,7 +8,7 @@ This is the ritual that separates "development" from "shipped."
 
 <required_reading>
 
-**read these files NOW:**
+**Read these files NOW:**
 
 1. templates/milestone.md
 2. templates/milestone-archive.md
@@ -29,12 +29,7 @@ When a milestone completes, this workflow:
 5. Performs full PROJECT.md evolution review
 6. Offers to create next milestone inline
 
-**Context Efficiency:**
-
-- Completed milestones: One line each (~50 tokens)
-- Full details: In archive files (loaded only when needed)
-- Result: ROADMAP.md stays constant size forever
-- Result: REQUIREMENTS.md is always milestone-scoped (not cumulative)
+**Context Efficiency:** Archives keep ROADMAP.md constant-size and REQUIREMENTS.md milestone-scoped.
 
 **Archive Format:**
 
@@ -159,7 +154,7 @@ Milestone Stats:
 
 <step name="extract_accomplishments">
 
-read all phase SUMMARY.md files in milestone range:
+Read all phase SUMMARY.md files in milestone range:
 
 ```bash
 cat .planning/phases/01-*/01-*-SUMMARY.md
@@ -229,7 +224,7 @@ Use template from `templates/milestone.md`:
 
 Perform full PROJECT.md evolution review at milestone completion.
 
-**read all phase summaries in this milestone:**
+**Read all phase summaries in this milestone:**
 
 ```bash
 cat .planning/phases/*-*/*-SUMMARY.md
@@ -238,7 +233,7 @@ cat .planning/phases/*-*/*-SUMMARY.md
 **Full review checklist:**
 
 1. **"What This Is" accuracy:**
-   - read current description
+   - Read current description
    - Compare to what was actually built
    - Update if the product has meaningfully changed
 
@@ -423,7 +418,7 @@ Extract completed milestone details and create archive file.
 
 1. Create archive file path: `.planning/milestones/v[X.Y]-ROADMAP.md`
 
-2. read `~/.config/opencode/get-shit-done/templates/milestone-archive.md` template
+2. Read `~/.config/opencode/get-shit-done/templates/milestone-archive.md` template
 
 3. Extract data from current ROADMAP.md:
    - All phases belonging to this milestone (by phase number range)
@@ -446,7 +441,7 @@ Extract completed milestone details and create archive file.
    - {{DECISIONS_FROM_PROJECT}} — Key decisions from PROJECT.md
    - {{ISSUES_RESOLVED_DURING_MILESTONE}} — From summaries
 
-6. write filled template to `.planning/milestones/v[X.Y]-ROADMAP.md`
+6. Write filled template to `.planning/milestones/v[X.Y]-ROADMAP.md`
 
 7. Delete ROADMAP.md (fresh one created for next milestone):
    ```bash
@@ -475,7 +470,7 @@ Archive requirements and prepare for fresh requirements in next milestone.
 
 **Process:**
 
-1. read current REQUIREMENTS.md:
+1. Read current REQUIREMENTS.md:
    ```bash
    cat .planning/REQUIREMENTS.md
    ```
@@ -491,7 +486,7 @@ Archive requirements and prepare for fresh requirements in next milestone.
      - Any requirements that changed scope during milestone
      - Any requirements dropped and why
 
-4. write archive file with header:
+4. Write archive file with header:
    ```markdown
    # Requirements Archive: v[X.Y] [Milestone Name]
 
@@ -620,6 +615,17 @@ git push origin v[X.Y]
 
 Commit milestone completion including archive files and deletions.
 
+**Check planning config:**
+
+```bash
+COMMIT_PLANNING_DOCS=$(cat .planning/config.json 2>/dev/null | grep -o '"commit_docs"[[:space:]]*:[[:space:]]*[^,}]*' | grep -o 'true\|false' || echo "true")
+git check-ignore -q .planning 2>/dev/null && COMMIT_PLANNING_DOCS=false
+```
+
+**If `COMMIT_PLANNING_DOCS=false`:** Skip git operations
+
+**If `COMMIT_PLANNING_DOCS=true` (default):**
+
 ```bash
 # Stage archive files (new)
 git add .planning/milestones/v[X.Y]-ROADMAP.md
@@ -685,7 +691,7 @@ Tag: v[X.Y]
 
 `/gsd-new-milestone`
 
-*`/new` first → fresh context window*
+<sub>`/clear` first → fresh context window</sub>
 
 ---
 ```

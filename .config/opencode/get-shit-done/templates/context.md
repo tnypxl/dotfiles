@@ -40,8 +40,8 @@ Template for `.planning/phases/XX-name/{phase}-CONTEXT.md` - captures implementa
 ### [Area 3 that was discussed]
 - [Specific decision made]
 
-### OpenCode's Discretion
-[Areas where user explicitly said "you decide" — OpenCode has flexibility here during planning/implementation]
+### Claude's Discretion
+[Areas where user explicitly said "you decide" — Claude has flexibility here during planning/implementation]
 
 </decisions>
 
@@ -103,7 +103,7 @@ Display posts from followed users in a scrollable feed. Users can view posts and
 - Friendly illustration + "Follow people to see posts here"
 - Suggest 3-5 accounts to follow based on interests
 
-### OpenCode's Discretion
+### Claude's Discretion
 - Loading skeleton design
 - Exact spacing and typography
 - Error state handling
@@ -165,7 +165,7 @@ CLI command to backup database to local file or S3. Supports full and incrementa
 - --no-retry flag to fail fast
 - Partial backups are deleted on failure (no corrupt files)
 
-### OpenCode's Discretion
+### Claude's Discretion
 - Exact progress bar implementation
 - Compression algorithm choice
 - Temp file handling
@@ -227,7 +227,7 @@ Organize existing photo library into structured folders. Handle duplicates and a
 - Preserve original filename as suffix for searchability
 - Handle name collisions with incrementing suffix
 
-### OpenCode's Discretion
+### Claude's Discretion
 - Exact clustering algorithm
 - How to handle photos with no EXIF data
 - Folder emoji usage
@@ -274,14 +274,6 @@ The output should answer: "What does the researcher need to investigate? What ch
 - "Good user experience"
 - "Fast and responsive"
 - "Easy to use"
-
-**Sections explained:**
-
-- **Domain** — The scope anchor. Copied/derived from ROADMAP.md. Fixed boundary.
-- **Decisions** — Organized by areas discussed (NOT predefined categories). Section headers come from the actual discussion — "Layout style", "Flag design", "Grouping criteria", etc.
-- **OpenCode's Discretion** — Explicit acknowledgment of what OpenCode can decide during implementation.
-- **Specifics** — Product references, examples, "like X but..." statements.
-- **Deferred** — Ideas captured but explicitly out of scope. Prevents scope creep while preserving good ideas.
 
 **After creation:**
 - File lives in phase directory: `.planning/phases/XX-name/{phase}-CONTEXT.md`

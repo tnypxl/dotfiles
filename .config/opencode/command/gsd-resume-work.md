@@ -1,11 +1,11 @@
 ---
-name: gsd-resume-work
 description: Resume work from previous session with full context restoration
 tools:
-  - read
-  - bash
-  - write
-  - question
+  read: true
+  bash: true
+  write: true
+  question: true
+  skill: true
 ---
 
 <objective>
@@ -21,11 +21,11 @@ Routes to the resume-project workflow which handles:
   </objective>
 
 <execution_context>
-@~/.config/opencode/get-shit-done/workflows/resume-project.md
+@/Users/arikj/.config/opencode/get-shit-done/workflows/resume-project.md
 </execution_context>
 
 <process>
-**Follow the resume-project workflow** from `@~/.config/opencode/get-shit-done/workflows/resume-project.md`.
+**Follow the resume-project workflow** from `@/Users/arikj/.config/opencode/get-shit-done/workflows/resume-project.md`.
 
 The workflow handles all resumption logic including:
 

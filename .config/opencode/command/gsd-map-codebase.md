@@ -1,14 +1,13 @@
 ---
-name: gsd-map-codebase
 description: Analyze codebase with parallel mapper agents to produce .planning/codebase/ documents
 argument-hint: "[optional: specific area to map, e.g., 'api' or 'auth']"
 tools:
-  - read
-  - bash
-  - glob
-  - grep
-  - write
-
+  read: true
+  bash: true
+  glob: true
+  grep: true
+  write: true
+  task: true
 ---
 
 <objective>
@@ -20,7 +19,7 @@ Output: .planning/codebase/ folder with 7 structured documents about the codebas
 </objective>
 
 <execution_context>
-@~/.config/opencode/get-shit-done/workflows/map-codebase.md
+@/Users/arikj/.config/opencode/get-shit-done/workflows/map-codebase.md
 </execution_context>
 
 <context>

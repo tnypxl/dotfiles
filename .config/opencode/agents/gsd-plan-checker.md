@@ -1,12 +1,11 @@
 ---
-name: gsd-plan-checker
 description: Verifies plans will achieve phase goal before execution. Goal-backward analysis of plan quality. Spawned by /gsd-plan-phase orchestrator.
+color: "#00FF00"
 tools:
   read: true
   bash: true
   glob: true
   grep: true
-color: "#008000"
 ---
 
 <role>
@@ -269,7 +268,7 @@ ls "$PHASE_DIR"/*-BRIEF.md 2>/dev/null
 
 ## Step 2: Load All Plans
 
-read each PLAN.md file in the phase directory.
+Read each PLAN.md file in the phase directory.
 
 ```bash
 for plan in "$PHASE_DIR"/*-PLAN.md; do
@@ -725,7 +724,7 @@ issues:
 
 **DO NOT verify implementation details.** Check that plans describe what to build, not that code exists.
 
-**DO NOT trust task names alone.** read the action, verify, done fields. A well-named task can be empty.
+**DO NOT trust task names alone.** Read the action, verify, done fields. A well-named task can be empty.
 
 </anti_patterns>
 

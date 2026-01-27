@@ -1,12 +1,11 @@
 ---
-name: gsd-add-todo
 description: Capture idea or task as todo from current conversation context
 argument-hint: [optional description]
 tools:
-  - read
-  - write
-  - bash
-  - glob
+  read: true
+  write: true
+  bash: true
+  glob: true
 ---
 
 <objective>
@@ -75,7 +74,7 @@ grep -l -i "[key words from title]" .planning/todos/pending/*.md 2>/dev/null
 ```
 
 If potential duplicate found:
-1. read the existing todo
+1. Read the existing todo
 2. Compare scope
 
 If overlapping, use question:
@@ -95,7 +94,7 @@ date_prefix=$(date "+%Y-%m-%d")
 
 Generate slug from title (lowercase, hyphens, no special chars).
 
-write to `.planning/todos/pending/${date_prefix}-${slug}.md`:
+Write to `.planning/todos/pending/${date_prefix}-${slug}.md`:
 
 ```markdown
 ---
@@ -108,7 +107,7 @@ files:
 
 ## Problem
 
-[problem description - enough context for future OpenCode to understand weeks later]
+[problem description - enough context for future Claude to understand weeks later]
 
 ## Solution
 
@@ -125,6 +124,17 @@ If `.planning/STATE.md` exists:
 
 <step name="git_commit">
 Commit the todo and any updated state:
+
+**Check planning config:**
+
+```bash
+COMMIT_PLANNING_DOCS=$(cat .planning/config.json 2>/dev/null | grep -o '"commit_docs"[[:space:]]*:[[:space:]]*[^,}]*' | grep -o 'true\|false' || echo "true")
+git check-ignore -q .planning 2>/dev/null && COMMIT_PLANNING_DOCS=false
+```
+
+**If `COMMIT_PLANNING_DOCS=false`:** Skip git operations, log "Todo saved (not committed - commit_docs: false)"
+
+**If `COMMIT_PLANNING_DOCS=true` (default):**
 
 ```bash
 git add .planning/todos/pending/[filename]
@@ -174,7 +184,7 @@ Would you like to:
 <success_criteria>
 - [ ] Directory structure exists
 - [ ] Todo file created with valid frontmatter
-- [ ] Problem section has enough context for future OpenCode
+- [ ] Problem section has enough context for future Claude
 - [ ] No duplicates (checked and resolved)
 - [ ] Area consistent with existing todos
 - [ ] STATE.md updated if exists

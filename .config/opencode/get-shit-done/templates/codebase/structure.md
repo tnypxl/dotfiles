@@ -146,7 +146,7 @@ get-shit-done/
 - Subdirectories: None
 
 **commands/gsd/**
-- Purpose: Slash command definitions for OpenCode
+- Purpose: Slash command definitions for Claude Code
 - Contains: *.md files (one per command)
 - Key files: new-project.md, plan-phase.md, execute-plan.md
 - Subdirectories: None (flat structure)
@@ -186,7 +186,7 @@ get-shit-done/
 
 **Documentation:**
 - `README.md` - User-facing installation and usage guide
-- `CLAUDE.md` - Instructions for OpenCode when working in this repo
+- `CLAUDE.md` - Instructions for Claude Code when working in this repo
 
 ## Naming Conventions
 

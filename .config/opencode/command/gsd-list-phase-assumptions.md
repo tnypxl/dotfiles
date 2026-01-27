@@ -1,23 +1,22 @@
 ---
-name: gsd-list-phase-assumptions
-description: Surface OpenCode's assumptions about a phase approach before planning
+description: Surface Claude's assumptions about a phase approach before planning
 argument-hint: "[phase]"
 tools:
-  - read
-  - bash
-  - grep
-  - glob
+  read: true
+  bash: true
+  grep: true
+  glob: true
 ---
 
 <objective>
-Analyze a phase and present OpenCode's assumptions about technical approach, implementation order, scope boundaries, risk areas, and dependencies.
+Analyze a phase and present Claude's assumptions about technical approach, implementation order, scope boundaries, risk areas, and dependencies.
 
-Purpose: Help users see what OpenCode thinks BEFORE planning begins - enabling course correction early when assumptions are wrong.
+Purpose: Help users see what Claude thinks BEFORE planning begins - enabling course correction early when assumptions are wrong.
 Output: Conversational output only (no file creation) - ends with "What do you think?" prompt
 </objective>
 
 <execution_context>
-@~/.config/opencode/get-shit-done/workflows/list-phase-assumptions.md
+@/Users/arikj/.config/opencode/get-shit-done/workflows/list-phase-assumptions.md
 </execution_context>
 
 <context>

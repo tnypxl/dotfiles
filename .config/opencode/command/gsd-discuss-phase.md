@@ -1,8 +1,13 @@
 ---
-name: gsd-discuss-phase
 description: Gather phase context through adaptive questioning before planning
 argument-hint: "<phase>"
-tools: [read, write, bash, glob, grep, question]
+tools:
+  read: true
+  write: true
+  bash: true
+  glob: true
+  grep: true
+  question: true
 ---
 
 <objective>
@@ -18,8 +23,8 @@ Extract implementation decisions that downstream agents need — researcher and 
 </objective>
 
 <execution_context>
-@~/.config/opencode/get-shit-done/workflows/discuss-phase.md
-@~/.config/opencode/get-shit-done/templates/context.md
+@/Users/arikj/.config/opencode/get-shit-done/workflows/discuss-phase.md
+@/Users/arikj/.config/opencode/get-shit-done/templates/context.md
 </execution_context>
 
 <context>
@@ -38,7 +43,7 @@ Phase number: $ARGUMENTS (required)
 3. **Analyze phase** — Identify domain and generate phase-specific gray areas
 4. **Present gray areas** — Multi-select: which to discuss? (NO skip option)
 5. **Deep-dive each area** — 4 questions per area, then offer more/next
-6. **write CONTEXT.md** — Sections match areas discussed
+6. **Write CONTEXT.md** — Sections match areas discussed
 7. Offer next steps (research or plan)
 
 **CRITICAL: Scope guardrail**
@@ -63,7 +68,7 @@ Generate 3-4 **phase-specific** gray areas, not generic categories.
 - If more → ask 4 more, check again
 - After all areas → "Ready to create context?"
 
-**Do NOT ask about (OpenCode handles these):**
+**Do NOT ask about (Claude handles these):**
 - Technical implementation
 - Architecture choices
 - Performance concerns

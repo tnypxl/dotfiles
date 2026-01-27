@@ -1,13 +1,13 @@
 <purpose>
-Validate built features through conversational testing with persistent state. Creates UAT.md that tracks test progress, survives /new, and feeds gaps into /gsd-plan-phase --gaps.
+Validate built features through conversational testing with persistent state. Creates UAT.md that tracks test progress, survives /clear, and feeds gaps into /gsd-plan-phase --gaps.
 
-User tests, OpenCode records. One test at a time. Plain text responses.
+User tests, Claude records. One test at a time. Plain text responses.
 </purpose>
 
 <philosophy>
 **Show expected, ask if reality matches.**
 
-OpenCode presents what SHOULD happen. User confirms or describes what's different.
+Claude presents what SHOULD happen. User confirms or describes what's different.
 - "yes" / "y" / "next" / empty → pass
 - Anything else → logged as issue, severity inferred
 
@@ -20,6 +20,25 @@ No Pass/Fail buttons. No severity questions. Just: "Here's what should happen. D
 
 <process>
 
+<step name="resolve_model_profile" priority="first">
+Read model profile for agent spawning:
+
+```bash
+MODEL_PROFILE=$(cat .planning/config.json 2>/dev/null | grep -o '"model_profile"[[:space:]]*:[[:space:]]*"[^"]*"' | grep -o '"[^"]*"$' | tr -d '"' || echo "balanced")
+```
+
+Default to "balanced" if not set.
+
+**Model lookup table:**
+
+| Agent | quality | balanced | budget |
+|-------|---------|----------|--------|
+| gsd-planner | opus | opus | sonnet |
+| gsd-plan-checker | sonnet | sonnet | haiku |
+
+Store resolved models for use in Task calls below.
+</step>
+
 <step name="check_active_session">
 **First: Check for active UAT sessions**
 
@@ -29,7 +48,7 @@ find .planning/phases -name "*-UAT.md" -type f 2>/dev/null | head -5
 
 **If active sessions exist AND no $ARGUMENTS provided:**
 
-read each file's frontmatter (status, phase) and Current Test section.
+Read each file's frontmatter (status, phase) and Current Test section.
 
 Display inline:
 
@@ -81,7 +100,7 @@ PHASE_DIR=$(ls -d .planning/phases/${PADDED_PHASE}-* .planning/phases/${PHASE_AR
 ls "$PHASE_DIR"/*-SUMMARY.md 2>/dev/null
 ```
 
-read each SUMMARY.md to extract testable deliverables.
+Read each SUMMARY.md to extract testable deliverables.
 </step>
 
 <step name="extract_tests">
@@ -159,7 +178,7 @@ skipped: 0
 [none yet]
 ```
 
-write to `.planning/phases/XX-name/{phase}-UAT.md`
+Write to `.planning/phases/XX-name/{phase}-UAT.md`
 
 Proceed to `present_test`.
 </step>
@@ -167,7 +186,7 @@ Proceed to `present_test`.
 <step name="present_test">
 **Present current test to user:**
 
-read Current Test section from UAT file.
+Read Current Test section from UAT file.
 
 Display using checkpoint box format:
 
@@ -254,7 +273,7 @@ If no more tests → Go to `complete_session`
 <step name="resume_from_file">
 **Resume testing from UAT file:**
 
-read the full UAT file.
+Read the full UAT file.
 
 Find first test with `result: [pending]`.
 
@@ -284,6 +303,17 @@ Clear Current Test section:
 
 [testing complete]
 ```
+
+**Check planning config:**
+
+```bash
+COMMIT_PLANNING_DOCS=$(cat .planning/config.json 2>/dev/null | grep -o '"commit_docs"[[:space:]]*:[[:space:]]*[^,}]*' | grep -o 'true\|false' || echo "true")
+git check-ignore -q .planning 2>/dev/null && COMMIT_PLANNING_DOCS=false
+```
+
+**If `COMMIT_PLANNING_DOCS=false`:** Skip git operations
+
+**If `COMMIT_PLANNING_DOCS=true` (default):**
 
 Commit the UAT file:
 ```bash
@@ -378,6 +408,7 @@ Plans must be executable prompts.
 </downstream_consumer>
 """,
   subagent_type="gsd-planner",
+  model="{planner_model}",
   description="Plan gap fixes for Phase {phase}"
 )
 ```
@@ -423,6 +454,7 @@ Return one of:
 </expected_output>
 """,
   subagent_type="gsd-plan-checker",
+  model="{checker_model}",
   description="Verify Phase {phase} fix plans"
 )
 ```
@@ -458,11 +490,12 @@ Task(
 </revision_context>
 
 <instructions>
-read existing PLAN.md files. Make targeted updates to address checker issues.
+Read existing PLAN.md files. Make targeted updates to address checker issues.
 Do NOT replan from scratch unless issues are fundamental.
 </instructions>
 """,
   subagent_type="gsd-planner",
+  model="{planner_model}",
   description="Revise Phase {phase} plans"
 )
 ```
@@ -505,7 +538,7 @@ Plans verified and ready for execution.
 
 **Execute fixes** — run fix plans
 
-`/new` then `/gsd-execute-phase {phase} --gaps-only`
+`/clear` then `/gsd-execute-phase {phase} --gaps-only`
 
 ───────────────────────────────────────────────────────────────
 ```
@@ -516,7 +549,7 @@ Plans verified and ready for execution.
 <update_rules>
 **Batched writes for efficiency:**
 
-Keep results in memory. write to file only when:
+Keep results in memory. Write to file only when:
 1. **Issue found** — Preserve the problem immediately
 2. **Session complete** — Final write before commit
 3. **Checkpoint** — Every 5 passed tests (safety net)

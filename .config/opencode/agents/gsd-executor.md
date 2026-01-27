@@ -1,6 +1,6 @@
 ---
-name: gsd-executor
 description: Executes GSD plans with atomic commits, deviation handling, checkpoint protocols, and state management. Spawned by execute-phase orchestrator or execute-plan command.
+color: "#FFFF00"
 tools:
   read: true
   write: true
@@ -8,7 +8,6 @@ tools:
   bash: true
   grep: true
   glob: true
-color: "#FFFF00"
 ---
 
 <role>
@@ -45,10 +44,22 @@ Options:
 ```
 
 **If .planning/ doesn't exist:** Error - project not initialized.
+
+**Load planning config:**
+
+```bash
+# Check if planning docs should be committed (default: true)
+COMMIT_PLANNING_DOCS=$(cat .planning/config.json 2>/dev/null | grep -o '"commit_docs"[[:space:]]*:[[:space:]]*[^,}]*' | grep -o 'true\|false' || echo "true")
+# Auto-detect gitignored (overrides config)
+git check-ignore -q .planning 2>/dev/null && COMMIT_PLANNING_DOCS=false
+```
+
+Store `COMMIT_PLANNING_DOCS` for use in git operations.
 </step>
 
+
 <step name="load_plan">
-read the plan file provided in your prompt context.
+Read the plan file provided in your prompt context.
 
 Parse:
 
@@ -107,7 +118,7 @@ Execute each task in the plan.
 
 **For each task:**
 
-1. **read task type**
+1. **Read task type**
 
 2. **If `type="auto"`:**
 
@@ -341,6 +352,21 @@ Type "done" when authenticated.
 </authentication_gates>
 
 <checkpoint_protocol>
+
+**CRITICAL: Automation before verification**
+
+Before any `checkpoint:human-verify`, ensure verification environment is ready. If plan lacks server startup task before checkpoint, ADD ONE (deviation Rule 3).
+
+For full automation-first patterns, server lifecycle, CLI handling, and error recovery:
+**See @~/.config/opencode/get-shit-done/references/checkpoints.md**
+
+**Quick reference:**
+- Users NEVER run CLI commands - Claude does all automation
+- Users ONLY visit URLs, click UI, evaluate visuals, provide secrets
+- Claude starts servers, seeds databases, configures env vars
+
+---
+
 When encountering `type="checkpoint:*"`:
 
 **STOP immediately.** Do not continue to next task.
@@ -495,18 +521,18 @@ When executing a task with `tdd="true"` attribute, follow RED-GREEN-REFACTOR cyc
 - Install minimal test framework if needed (Jest, pytest, Go testing, etc.)
 - This is part of the RED phase
 
-**2. RED - write failing test:**
+**2. RED - Write failing test:**
 
-- read `<behavior>` element for test specification
+- Read `<behavior>` element for test specification
 - Create test file if doesn't exist
-- write test(s) that describe expected behavior
+- Write test(s) that describe expected behavior
 - Run tests - MUST fail (if passes, test is wrong or feature exists)
 - Commit: `test({phase}-{plan}): add failing test for [feature]`
 
 **3. GREEN - Implement to pass:**
 
-- read `<implementation>` element for guidance
-- write minimal code to make test pass
+- Read `<implementation>` element for guidance
+- Write minimal code to make test pass
 - Run tests - MUST pass
 - Commit: `feat({phase}-{plan}): implement [feature]`
 
@@ -581,7 +607,7 @@ Track for SUMMARY.md generation.
 - Each task independently revertable
 - Git bisect finds exact failing task
 - Git blame traces line to specific task context
-- Clear history for OpenCode in future sessions
+- Clear history for Claude in future sessions
   </task_commit_protocol>
 
 <summary_creation>
@@ -680,9 +706,9 @@ Progress: [progress bar]
 
 **Extract decisions and issues:**
 
-- read SUMMARY.md "Decisions Made" section
+- Read SUMMARY.md "Decisions Made" section
 - Add each decision to STATE.md Decisions table
-- read "Next Phase Readiness" for blockers/concerns
+- Read "Next Phase Readiness" for blockers/concerns
 - Add to STATE.md if relevant
 
 **Update Session Continuity:**
@@ -697,6 +723,10 @@ Resume file: [path to .continue-here if exists, else "None"]
 
 <final_commit>
 After SUMMARY.md and STATE.md updates:
+
+**If `COMMIT_PLANNING_DOCS=false`:** Skip git operations for planning files, log "Skipping planning docs commit (commit_docs: false)"
+
+**If `COMMIT_PLANNING_DOCS=true` (default):**
 
 **1. Stage execution artifacts:**
 

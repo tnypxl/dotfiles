@@ -1,10 +1,10 @@
 ---
-name: gsd-research-phase
 description: Research how to implement a phase (standalone - usually use /gsd-plan-phase instead)
 argument-hint: "[phase]"
 tools:
-  - read
-  - bash
+  read: true
+  bash: true
+  task: true
 ---
 
 <objective>
@@ -19,7 +19,7 @@ Research how to implement a phase. Spawns gsd-phase-researcher agent with phase 
 
 **Orchestrator role:** Parse phase, validate against roadmap, check existing research, gather context, spawn researcher agent, present results.
 
-**Why subagent:** Research burns context fast (webfetch, Context7 queries, source verification). Fresh 200k context for investigation. Main context stays lean for user interaction.
+**Why subagent:** Research burns context fast (WebSearch, Context7 queries, source verification). Fresh 200k context for investigation. Main context stays lean for user interaction.
 </objective>
 
 <context>
@@ -29,6 +29,24 @@ Normalize phase input in step 1 before any directory lookups.
 </context>
 
 <process>
+
+## 0. Resolve Model Profile
+
+Read model profile for agent spawning:
+
+```bash
+MODEL_PROFILE=$(cat .planning/config.json 2>/dev/null | grep -o '"model_profile"[[:space:]]*:[[:space:]]*"[^"]*"' | grep -o '"[^"]*"$' | tr -d '"' || echo "balanced")
+```
+
+Default to "balanced" if not set.
+
+**Model lookup table:**
+
+| Agent | quality | balanced | budget |
+|-------|---------|----------|--------|
+| gsd-phase-researcher | opus | sonnet | haiku |
+
+Store resolved model for use in Task calls below.
 
 ## 1. Normalize and Validate Phase
 
@@ -62,13 +80,13 @@ ls .planning/phases/${PHASE}-*/RESEARCH.md 2>/dev/null
 ```bash
 grep -A20 "Phase ${PHASE}:" .planning/ROADMAP.md
 cat .planning/REQUIREMENTS.md 2>/dev/null
-cat .planning/phases/${PHASE}-*/${PHASE}-CONTEXT.md 2>/dev/null
+cat .planning/phases/${PHASE}-*/*-CONTEXT.md 2>/dev/null
 grep -A30 "### Decisions Made" .planning/STATE.md 2>/dev/null
 ```
 
 Present summary with phase description, requirements, prior decisions.
 
-## 4. Spawn gsd-researcher Agent
+## 4. Spawn gsd-phase-researcher Agent
 
 Research modes: ecosystem (default), feasibility, implementation, comparison.
 
@@ -86,7 +104,7 @@ For this phase, discover:
 - What's the established architecture pattern?
 - What libraries form the standard stack?
 - What problems do people commonly hit?
-- What's SOTA vs what OpenCode's training thinks is SOTA?
+- What's SOTA vs what Claude's training thinks is SOTA?
 - What should NOT be hand-rolled?
 </key_insight>
 
@@ -123,14 +141,15 @@ Before declaring complete, verify:
 </quality_gate>
 
 <output>
-write to: .planning/phases/${PHASE}-{slug}/${PHASE}-RESEARCH.md
+Write to: .planning/phases/${PHASE}-{slug}/${PHASE}-RESEARCH.md
 </output>
 ```
 
 ```
 Task(
-  prompt=filled_prompt,
-  subagent_type="gsd-phase-researcher",
+  prompt="First, read /Users/arikj/.config/opencode/agents/gsd-phase-researcher.md for your role and instructions.\n\n" + filled_prompt,
+  subagent_type="general-purpose",
+  model="{researcher_model}",
   description="Research Phase {phase}"
 )
 ```
@@ -162,8 +181,9 @@ Research file: @.planning/phases/${PHASE}-{slug}/${PHASE}-RESEARCH.md
 
 ```
 Task(
-  prompt=continuation_prompt,
-  subagent_type="gsd-phase-researcher",
+  prompt="First, read /Users/arikj/.config/opencode/agents/gsd-phase-researcher.md for your role and instructions.\n\n" + continuation_prompt,
+  subagent_type="general-purpose",
+  model="{researcher_model}",
   description="Continue research Phase {phase}"
 )
 ```

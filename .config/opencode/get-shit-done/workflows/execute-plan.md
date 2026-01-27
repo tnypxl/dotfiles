@@ -3,12 +3,33 @@ Execute a phase prompt (PLAN.md) and create the outcome summary (SUMMARY.md).
 </purpose>
 
 <required_reading>
-read STATE.md before any operation to load project context.
+Read STATE.md before any operation to load project context.
+Read config.json for planning behavior settings.
+
+@~/.config/opencode/get-shit-done/references/git-integration.md
 </required_reading>
 
 <process>
 
-<step name="load_project_state" priority="first">
+<step name="resolve_model_profile" priority="first">
+Read model profile for agent spawning:
+
+```bash
+MODEL_PROFILE=$(cat .planning/config.json 2>/dev/null | grep -o '"model_profile"[[:space:]]*:[[:space:]]*"[^"]*"' | grep -o '"[^"]*"$' | tr -d '"' || echo "balanced")
+```
+
+Default to "balanced" if not set.
+
+**Model lookup table:**
+
+| Agent | quality | balanced | budget |
+|-------|---------|----------|--------|
+| gsd-executor | opus | sonnet | sonnet |
+
+Store resolved model for use in Task calls below.
+</step>
+
+<step name="load_project_state">
 Before any operation, read project state:
 
 ```bash
@@ -34,6 +55,17 @@ Options:
 **If .planning/ doesn't exist:** Error - project not initialized.
 
 This ensures every execution has full project context.
+
+**Load planning config:**
+
+```bash
+# Check if planning docs should be committed (default: true)
+COMMIT_PLANNING_DOCS=$(cat .planning/config.json 2>/dev/null | grep -o '"commit_docs"[[:space:]]*:[[:space:]]*[^,}]*' | grep -o 'true\|false' || echo "true")
+# Auto-detect gitignored (overrides config)
+git check-ignore -q .planning 2>/dev/null && COMMIT_PLANNING_DOCS=false
+```
+
+Store `COMMIT_PLANNING_DOCS` for use in git operations.
 </step>
 
 <step name="identify_plan">
@@ -184,19 +216,7 @@ Tasks 2-5: Main context (need decision from checkpoint 1)
 No segmentation benefit - execute entirely in main
 ```
 
-**4. Why this works:**
-
-**Segmentation benefits:**
-
-- Fresh context for each autonomous segment (0% start every time)
-- Main context only for checkpoints (~10-20% total)
-- Can handle 10+ task plans if properly segmented
-- Quality impossible to degrade in autonomous segments
-
-**When segmentation provides no benefit:**
-
-- Checkpoint is decision/human-action and following tasks depend on outcome
-- Better to execute sequentially in main than break flow
+**4. Why segment:** Fresh context per subagent preserves peak quality. Main context stays lean (~15% usage).
 
 **5. Implementation:**
 
@@ -205,7 +225,7 @@ No segmentation benefit - execute entirely in main
 ```
 1. Run init_agent_tracking step first (see step below)
 
-2. Use Task tool with subagent_type="gsd-executor":
+2. Use Task tool with subagent_type="gsd-executor" and model="{executor_model}":
 
    Prompt: "Execute plan at .planning/phases/{phase}-{plan}-PLAN.md
 
@@ -217,7 +237,7 @@ No segmentation benefit - execute entirely in main
 
 3. After Task tool returns with agent_id:
 
-   a. write agent_id to current-agent-id.txt:
+   a. Write agent_id to current-agent-id.txt:
       echo "[agent_id]" > .planning/current-agent-id.txt
 
    b. Append spawn entry to agent-history.json:
@@ -253,7 +273,7 @@ No segmentation benefit - execute entirely in main
 Execute segment-by-segment:
 
 For each autonomous segment:
-  Spawn subagent with prompt: "Execute tasks [X-Y] from plan at .planning/phases/{phase}-{plan}-PLAN.md. read the plan for full context and deviation rules. Do NOT create SUMMARY or commit - just execute these tasks and report results."
+  Spawn subagent with prompt: "Execute tasks [X-Y] from plan at .planning/phases/{phase}-{plan}-PLAN.md. Read the plan for full context and deviation rules. Do NOT create SUMMARY or commit - just execute these tasks and report results."
 
   Wait for subagent completion
 
@@ -338,7 +358,7 @@ For Pattern A (fully autonomous) and Pattern C (decision-dependent), skip this s
 
 ````
 1. Parse plan to identify segments:
-   - read plan file
+   - Read plan file
    - Find checkpoint locations: grep -n "type=\"checkpoint" PLAN.md
    - Identify checkpoint types: grep "type=\"checkpoint" PLAN.md | grep -o 'checkpoint:[^"]*'
    - Build segment map:
@@ -357,12 +377,12 @@ For Pattern A (fully autonomous) and Pattern C (decision-dependent), skip this s
 
    B. If routing = Subagent:
       ```
-      Spawn Task tool with subagent_type="gsd-executor":
+      Spawn Task tool with subagent_type="gsd-executor" and model="{executor_model}":
 
       Prompt: "Execute tasks [task numbers/names] from plan at [plan path].
 
       **Context:**
-      - read the full plan for objective, context files, and deviation rules
+      - Read the full plan for objective, context files, and deviation rules
       - You are executing a SEGMENT of this plan (not the full plan)
       - Other segments will be executed separately
 
@@ -381,7 +401,7 @@ For Pattern A (fully autonomous) and Pattern C (decision-dependent), skip this s
 
       **After Task tool returns with agent_id:**
 
-      1. write agent_id to current-agent-id.txt:
+      1. Write agent_id to current-agent-id.txt:
          echo "[agent_id]" > .planning/current-agent-id.txt
 
       2. Append spawn entry to agent-history.json:
@@ -501,22 +521,11 @@ Committing...
 
 ````
 
-**Benefits of this pattern:**
-- Main context usage: ~20% (just orchestration + checkpoints)
-- Subagent 1: Fresh 0-30% (tasks 1-3)
-- Subagent 2: Fresh 0-30% (tasks 5-6)
-- Subagent 3: Fresh 0-20% (task 8)
-- All autonomous work: Peak quality
-- Can handle large plans with many tasks if properly segmented
-
-**When NOT to use segmentation:**
-- Plan has decision/human-action checkpoints that affect following tasks
-- Following tasks depend on checkpoint outcome
-- Better to execute in main sequentially in those cases
+**Benefit:** Each subagent starts fresh (~20-30% context), enabling larger plans without quality degradation.
 </step>
 
 <step name="load_prompt">
-read the plan prompt:
+Read the plan prompt:
 ```bash
 cat .planning/phases/XX-name/{phase}-{plan}-PLAN.md
 ````
@@ -550,7 +559,7 @@ Use question:
 <step name="execute">
 Execute each task in the prompt. **Deviations are normal** - handle them automatically using embedded rules below.
 
-1. read the @context files listed in the prompt
+1. Read the @context files listed in the prompt
 
 2. For each task:
 
@@ -908,16 +917,16 @@ If no test framework configured:
 - Verify: run empty test suite
 - This is part of the RED phase, not a separate task
 
-**2. RED - write failing test:**
-- read `<behavior>` element for test specification
+**2. RED - Write failing test:**
+- Read `<behavior>` element for test specification
 - Create test file if doesn't exist (follow project conventions)
-- write test(s) that describe expected behavior
+- Write test(s) that describe expected behavior
 - Run tests - MUST fail (if passes, test is wrong or feature exists)
 - Commit: `test({phase}-{plan}): add failing test for [feature]`
 
 **3. GREEN - Implement to pass:**
-- read `<implementation>` element for guidance
-- write minimal code to make test pass
+- Read `<implementation>` element for guidance
+- Write minimal code to make test pass
 - Run tests - MUST pass
 - Commit: `feat({phase}-{plan}): implement [feature]`
 
@@ -1036,19 +1045,12 @@ Store in array or list for SUMMARY generation:
 TASK_COMMITS+=("Task ${TASK_NUM}: ${TASK_COMMIT}")
 ```
 
-**Atomic commit benefits:**
-- Each task independently revertable
-- Git bisect finds exact failing task
-- Git blame traces line to specific task context
-- Clear history for OpenCode in future sessions
-- Better observability for AI-automated workflow
-
 </task_commit>
 
 <step name="checkpoint_protocol">
 When encountering `type="checkpoint:*"`:
 
-**Critical: OpenCode automates everything with CLI/API before checkpoints.** Checkpoints are for verification and decisions, not manual work.
+**Critical: Claude automates everything with CLI/API before checkpoints.** Checkpoints are for verification and decisions, not manual work.
 
 **Display checkpoint clearly:**
 
@@ -1104,7 +1106,7 @@ Options:
 **For checkpoint:human-action (1% - rare, only for truly unavoidable manual steps):**
 
 ```
-I automated: [what OpenCode already did via CLI/API]
+I automated: [what Claude already did via CLI/API]
 
 Need your help with: [the ONE thing with no CLI/API - email link, 2FA code]
 
@@ -1439,14 +1441,14 @@ Extract decisions, issues, and concerns from SUMMARY.md into STATE.md accumulate
 
 **Decisions Made:**
 
-- read SUMMARY.md "## Decisions Made" section
+- Read SUMMARY.md "## Decisions Made" section
 - If content exists (not "None"):
   - Add each decision to STATE.md Decisions table
   - Format: `| [phase number] | [decision summary] | [rationale] |`
 
 **Blockers/Concerns:**
 
-- read SUMMARY.md "## Next Phase Readiness" section
+- Read SUMMARY.md "## Next Phase Readiness" section
 - If contains blockers or concerns:
   - Add to STATE.md "Blockers/Concerns Carried Forward"
     </step>
@@ -1511,6 +1513,17 @@ Commit execution metadata (SUMMARY + STATE + ROADMAP):
 **Note:** All task code has already been committed during execution (one commit per task).
 PLAN.md was already committed during plan-phase. This final commit captures execution results only.
 
+**Check planning config:**
+
+If `COMMIT_PLANNING_DOCS=false` (set in load_project_state):
+- Skip all git operations for .planning/ files
+- Planning docs exist locally but are gitignored
+- Log: "Skipping planning docs commit (commit_docs: false)"
+- Proceed to next step
+
+If `COMMIT_PLANNING_DOCS=true` (default):
+- Continue with git operations below
+
 **1. Stage execution artifacts:**
 
 ```bash
@@ -1574,7 +1587,7 @@ lmn012o feat(08-02): create user registration endpoint
 
 Each task has its own commit, followed by one metadata commit documenting plan completion.
 
-For commit message conventions, see ~/.config/opencode/get-shit-done/references/git-integration.md
+See `git-integration.md` (loaded via required_reading) for commit message conventions.
 </step>
 
 <step name="update_codebase_map">
@@ -1673,7 +1686,7 @@ Compare the counts from Step 1:
 
 Identify the next unexecuted plan:
 - Find the first PLAN.md file that has no matching SUMMARY.md
-- read its `<objective>` section
+- Read its `<objective>` section
 
 <if mode="yolo">
 ```
@@ -1703,7 +1716,7 @@ Summary: .planning/phases/{phase-dir}/{phase}-{plan}-SUMMARY.md
 
 `/gsd-execute-phase {phase}`
 
-*`/new` first → fresh context window*
+<sub>`/clear` first → fresh context window</sub>
 
 ---
 
@@ -1723,7 +1736,7 @@ Wait for user to clear and run next command.
 
 **Step 3: Check milestone status (only when all plans in phase are complete)**
 
-read ROADMAP.md and extract:
+Read ROADMAP.md and extract:
 1. Current phase number (from the plan just completed)
 2. All phase numbers listed in the current milestone section
 
@@ -1746,7 +1759,7 @@ State: "Current phase is {X}. Milestone has {N} phases (highest: {Y})."
 
 **Route B: Phase complete, more phases remain in milestone**
 
-read ROADMAP.md to get the next phase's name and goal.
+Read ROADMAP.md to get the next phase's name and goal.
 
 ```
 Plan {phase}-{plan} complete.
@@ -1764,7 +1777,7 @@ All {Y} plans finished.
 
 `/gsd-plan-phase {Z+1}`
 
-*`/new` first → fresh context window*
+<sub>`/clear` first → fresh context window</sub>
 
 ---
 
@@ -1802,7 +1815,7 @@ All {Y} plans finished.
 
 `/gsd-complete-milestone`
 
-*`/new` first → fresh context window*
+<sub>`/clear` first → fresh context window</sub>
 
 ---
 

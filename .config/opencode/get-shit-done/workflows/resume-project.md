@@ -7,11 +7,12 @@ Use this workflow when:
 </trigger>
 
 <purpose>
-Instantly restore full project context and present clear status.
-Enables seamless session continuity for fully autonomous workflows.
-
-"Where were we?" should have an immediate, complete answer.
+Instantly restore full project context so "Where were we?" has an immediate, complete answer.
 </purpose>
+
+<required_reading>
+@~/.config/opencode/get-shit-done/references/continuation-format.md
+</required_reading>
 
 <process>
 
@@ -31,7 +32,7 @@ ls .planning/PROJECT.md 2>/dev/null && echo "Project file exists"
 
 <step name="load_state">
 
-read and parse STATE.md, then PROJECT.md:
+Read and parse STATE.md, then PROJECT.md:
 
 ```bash
 cat .planning/STATE.md
@@ -80,7 +81,7 @@ fi
 **If .continue-here file exists:**
 
 - This is a mid-plan resumption point
-- read the file for specific resumption context
+- Read the file for specific resumption context
 - Flag: "Found mid-plan checkpoint"
 
 **If PLAN without SUMMARY exists:**
@@ -91,7 +92,7 @@ fi
 **If interrupted agent found:**
 
 - Subagent was spawned but session ended before completion
-- read agent-history.json for task details
+- Read agent-history.json for task details
 - Flag: "Found interrupted agent"
   </step>
 
@@ -196,7 +197,7 @@ What would you like to do?
 **Note:** When offering phase planning, check for CONTEXT.md existence first:
 
 ```bash
-ls .planning/phases/XX-name/CONTEXT.md 2>/dev/null
+ls .planning/phases/XX-name/*-CONTEXT.md 2>/dev/null
 ```
 
 If missing, suggest discuss-phase before plan. If exists, offer plan directly.
@@ -217,7 +218,7 @@ Based on user selection, route to appropriate workflow:
 
   `/gsd-execute-phase {phase}`
 
-  *`/new` first → fresh context window*
+  <sub>`/clear` first → fresh context window</sub>
 
   ---
   ```
@@ -231,7 +232,7 @@ Based on user selection, route to appropriate workflow:
 
   `/gsd-plan-phase [phase-number]`
 
-  *`/new` first → fresh context window*
+  <sub>`/clear` first → fresh context window</sub>
 
   ---
 
@@ -242,8 +243,8 @@ Based on user selection, route to appropriate workflow:
   ---
   ```
 - **Transition** → ./transition.md
-- **Check todos** → read .planning/todos/pending/, present summary
-- **Review alignment** → read PROJECT.md, compare to current state
+- **Check todos** → Read .planning/todos/pending/, present summary
+- **Review alignment** → Read PROJECT.md, compare to current state
 - **Something else** → Ask what they need
 </step>
 
@@ -270,8 +271,8 @@ If STATE.md is missing but other artifacts exist:
 
 "STATE.md missing. Reconstructing from artifacts..."
 
-1. read PROJECT.md → Extract "What This Is" and Core Value
-2. read ROADMAP.md → Determine phases, find current position
+1. Read PROJECT.md → Extract "What This Is" and Core Value
+2. Read ROADMAP.md → Determine phases, find current position
 3. Scan \*-SUMMARY.md files → Extract decisions, concerns
 4. Count pending todos in .planning/todos/pending/
 5. Check for .continue-here files → Session continuity
@@ -286,17 +287,12 @@ This handles cases where:
   </reconstruction>
 
 <quick_resume>
-For users who want minimal friction:
-
-If user says just "continue" or "go":
-
+If user says "continue" or "go":
 - Load state silently
 - Determine primary action
 - Execute immediately without presenting options
 
 "Continuing from [state]... [action]"
-
-This enables fully autonomous "just keep going" workflow.
 </quick_resume>
 
 <success_criteria>

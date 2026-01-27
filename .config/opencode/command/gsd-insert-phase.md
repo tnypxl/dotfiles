@@ -1,11 +1,10 @@
 ---
-name: gsd-insert-phase
 description: Insert urgent work as decimal phase (e.g., 72.1) between existing phases
 argument-hint: <after> <description>
 tools:
-  - read
-  - write
-  - bash
+  read: true
+  write: true
+  bash: true
 ---
 
 <objective>
@@ -71,7 +70,7 @@ else
 fi
 ```
 
-read roadmap content for parsing.
+Read roadmap content for parsing.
 </step>
 
 <step name="verify_target_phase">
@@ -149,7 +148,7 @@ Insert the new phase entry into the roadmap:
    [To be added during planning]
    ```
 
-3. write updated roadmap back to file
+3. Write updated roadmap back to file
 
 The "(INSERTED)" marker helps identify decimal phases as urgent insertions.
 
@@ -159,7 +158,7 @@ Preserve all other content exactly (formatting, spacing, other phases).
 <step name="update_project_state">
 Update STATE.md to reflect the inserted phase:
 
-1. read `.planning/STATE.md`
+1. Read `.planning/STATE.md`
 2. Under "## Accumulated Context" → "### Roadmap Evolution" add entry:
    ```
    - Phase {decimal_phase} inserted after Phase {after_phase}: {description} (URGENT)
@@ -191,7 +190,7 @@ Project state updated: .planning/STATE.md
 
 `/gsd-plan-phase {decimal_phase}`
 
-*`/new` first → fresh context window*
+<sub>`/clear` first → fresh context window</sub>
 
 ---
 

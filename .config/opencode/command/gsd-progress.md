@@ -1,11 +1,11 @@
 ---
-name: gsd-progress
 description: Check project progress, show context, and route to next action (execute or plan)
 tools:
-  - read
-  - bash
-  - grep
-  - glob
+  read: true
+  bash: true
+  grep: true
+  glob: true
+  skill: true
 ---
 
 <objective>
@@ -19,6 +19,12 @@ Provides situational awareness before continuing work.
 
 <step name="verify">
 **Verify planning structure exists:**
+
+Use Bash (not Glob) to check—Glob respects .gitignore but .planning/ is often gitignored:
+
+```bash
+test -d .planning && echo "exists" || echo "missing"
+```
 
 If no `.planning/` directory:
 
@@ -42,9 +48,10 @@ If missing both ROADMAP.md and PROJECT.md: suggest `/gsd-new-project`.
 <step name="load">
 **Load full project context:**
 
-- read `.planning/STATE.md` for living memory (position, decisions, issues)
-- read `.planning/ROADMAP.md` for phase structure and objectives
-- read `.planning/PROJECT.md` for current state (What This Is, Core Value, Requirements)
+- Read `.planning/STATE.md` for living memory (position, decisions, issues)
+- Read `.planning/ROADMAP.md` for phase structure and objectives
+- Read `.planning/PROJECT.md` for current state (What This Is, Core Value, Requirements)
+- Read `.planning/config.json` for settings (model_profile, workflow toggles)
   </step>
 
 <step name="recent">
@@ -73,6 +80,7 @@ If missing both ROADMAP.md and PROJECT.md: suggest `/gsd-new-project`.
 # [Project Name]
 
 **Progress:** [████████░░] 8/10 plans complete
+**Profile:** [quality/balanced/budget]
 
 ## Recent Work
 - [Phase X, Plan Y]: [what was accomplished - 1 line]
@@ -144,7 +152,7 @@ Track:
 **Route A: Unexecuted plan exists**
 
 Find the first PLAN.md without matching SUMMARY.md.
-read its `<objective>` section.
+Read its `<objective>` section.
 
 ```
 ---
@@ -155,7 +163,7 @@ read its `<objective>` section.
 
 `/gsd-execute-phase {phase}`
 
-*`/new` first → fresh context window*
+<sub>`/clear` first → fresh context window</sub>
 
 ---
 ```
@@ -174,11 +182,11 @@ Check if `{phase}-CONTEXT.md` exists in phase directory.
 ## ▶ Next Up
 
 **Phase {N}: {Name}** — {Goal from ROADMAP.md}
-*✓ Context gathered, ready to plan*
+<sub>✓ Context gathered, ready to plan</sub>
 
 `/gsd-plan-phase {phase-number}`
 
-*`/new` first → fresh context window*
+<sub>`/clear` first → fresh context window</sub>
 
 ---
 ```
@@ -194,13 +202,13 @@ Check if `{phase}-CONTEXT.md` exists in phase directory.
 
 `/gsd-discuss-phase {phase}` — gather context and clarify approach
 
-*`/new` first → fresh context window*
+<sub>`/clear` first → fresh context window</sub>
 
 ---
 
 **Also available:**
 - `/gsd-plan-phase {phase}` — skip discussion, plan directly
-- `/gsd-list-phase-assumptions {phase}` — see OpenCode's assumptions
+- `/gsd-list-phase-assumptions {phase}` — see Claude's assumptions
 
 ---
 ```
@@ -220,7 +228,7 @@ UAT.md exists with gaps (diagnosed issues). User needs to plan fixes.
 
 `/gsd-plan-phase {phase} --gaps`
 
-*`/new` first → fresh context window*
+<sub>`/clear` first → fresh context window</sub>
 
 ---
 
@@ -235,7 +243,7 @@ UAT.md exists with gaps (diagnosed issues). User needs to plan fixes.
 
 **Step 3: Check milestone status (only when phase complete)**
 
-read ROADMAP.md and identify:
+Read ROADMAP.md and identify:
 1. Current phase number
 2. All phase numbers in the current milestone section
 
@@ -254,7 +262,7 @@ State: "Current phase is {X}. Milestone has {N} phases (highest: {Y})."
 
 **Route C: Phase complete, more phases remain**
 
-read ROADMAP.md to get the next phase's name and goal.
+Read ROADMAP.md to get the next phase's name and goal.
 
 ```
 ---
@@ -267,7 +275,7 @@ read ROADMAP.md to get the next phase's name and goal.
 
 `/gsd-discuss-phase {Z+1}` — gather context and clarify approach
 
-*`/new` first → fresh context window*
+<sub>`/clear` first → fresh context window</sub>
 
 ---
 
@@ -295,7 +303,7 @@ All {N} phases finished!
 
 `/gsd-complete-milestone`
 
-*`/new` first → fresh context window*
+<sub>`/clear` first → fresh context window</sub>
 
 ---
 
@@ -311,7 +319,7 @@ All {N} phases finished!
 
 A milestone was completed and archived. Ready to start the next milestone cycle.
 
-read MILESTONES.md to find the last completed milestone version.
+Read MILESTONES.md to find the last completed milestone version.
 
 ```
 ---
@@ -326,7 +334,7 @@ Ready to plan the next milestone.
 
 `/gsd-new-milestone`
 
-*`/new` first → fresh context window*
+<sub>`/clear` first → fresh context window</sub>
 
 ---
 ```

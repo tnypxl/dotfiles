@@ -1,28 +1,27 @@
 ---
-name: gsd-verify-work
 description: Validate built features through conversational UAT
 argument-hint: "[phase number, e.g., '4']"
 tools:
-  - read
-  - bash
-  - glob
-  - grep
-  - edit
-  - write
-
+  read: true
+  bash: true
+  glob: true
+  grep: true
+  edit: true
+  write: true
+  task: true
 ---
 
 <objective>
 Validate built features through conversational testing with persistent state.
 
-Purpose: Confirm what OpenCode built actually works from user's perspective. One test at a time, plain text responses, no interrogation. When issues are found, automatically diagnose, plan fixes, and prepare for execution.
+Purpose: Confirm what Claude built actually works from user's perspective. One test at a time, plain text responses, no interrogation. When issues are found, automatically diagnose, plan fixes, and prepare for execution.
 
 Output: {phase}-UAT.md tracking all test results. If issues found: diagnosed gaps, verified fix plans ready for /gsd-execute-phase
 </objective>
 
 <execution_context>
-@~/.config/opencode/get-shit-done/workflows/verify-work.md
-@~/.config/opencode/get-shit-done/templates/UAT.md
+@/Users/arikj/.config/opencode/get-shit-done/workflows/verify-work.md
+@/Users/arikj/.config/opencode/get-shit-done/templates/UAT.md
 </execution_context>
 
 <context>
@@ -50,7 +49,7 @@ Phase: $ARGUMENTS (optional)
    - Spawn gsd-planner in --gaps mode to create fix plans
    - Spawn gsd-plan-checker to verify fix plans
    - Iterate planner ↔ checker until plans pass (max 3)
-   - Present ready status with `/new` then `/gsd-execute-phase`
+   - Present ready status with `/clear` then `/gsd-execute-phase`
 </process>
 
 <anti_patterns>
@@ -92,7 +91,7 @@ UAT complete ✓
 
 /gsd-discuss-phase {Z+1} — gather context and clarify approach
 
-*/new first → fresh context window*
+<sub>/clear first → fresh context window</sub>
 
 ───────────────────────────────────────────────────────────────
 
@@ -123,7 +122,7 @@ Final phase verified ✓
 
 /gsd-audit-milestone
 
-*/new first → fresh context window*
+<sub>/clear first → fresh context window</sub>
 
 ───────────────────────────────────────────────────────────────
 
@@ -158,7 +157,7 @@ Fix plans verified ✓
 
 /gsd-execute-phase {Z} --gaps-only
 
-*/new first → fresh context window*
+<sub>/clear first → fresh context window</sub>
 
 ───────────────────────────────────────────────────────────────
 

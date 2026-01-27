@@ -1,12 +1,11 @@
 ---
 type: prompt
-name: gsd-complete-milestone
 description: Archive completed milestone and prepare for next version
 argument-hint: <version>
 tools:
-  - read
-  - write
-  - bash
+  read: true
+  write: true
+  bash: true
 ---
 
 <objective>
@@ -19,8 +18,8 @@ Output: Milestone archived (roadmap + requirements), PROJECT.md evolved, git tag
 <execution_context>
 **Load these files NOW (before proceeding):**
 
-- @~/.config/opencode/get-shit-done/workflows/complete-milestone.md (main workflow)
-- @~/.config/opencode/get-shit-done/templates/milestone-archive.md (archive template)
+- @/Users/arikj/.config/opencode/get-shit-done/workflows/complete-milestone.md (main workflow)
+- @/Users/arikj/.config/opencode/get-shit-done/templates/milestone-archive.md (archive template)
   </execution_context>
 
 <context>
@@ -76,7 +75,7 @@ Output: Milestone archived (roadmap + requirements), PROJECT.md evolved, git tag
 
 3. **Extract accomplishments:**
 
-   - read all phase SUMMARY.md files in milestone range
+   - Read all phase SUMMARY.md files in milestone range
    - Extract 4-6 key accomplishments
    - Present for approval
 
@@ -126,7 +125,7 @@ Output: Milestone archived (roadmap + requirements), PROJECT.md evolved, git tag
 
 <critical_rules>
 
-- **Load workflow first:** read complete-milestone.md before executing
+- **Load workflow first:** Read complete-milestone.md before executing
 - **Verify completion:** All phases must have SUMMARY.md files
 - **User confirmation:** Wait for approval at verification gates
 - **Archive before deleting:** Always create archive files before updating/deleting originals

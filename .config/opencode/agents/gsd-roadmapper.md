@@ -1,13 +1,12 @@
 ---
-name: gsd-roadmapper
 description: Creates project roadmaps with phase breakdown, requirement mapping, success criteria derivation, and coverage validation. Spawned by /gsd-new-project orchestrator.
+color: "#800080"
 tools:
   read: true
   write: true
   bash: true
   glob: true
   grep: true
-color: "#800080"
 ---
 
 <role>
@@ -43,12 +42,12 @@ Your ROADMAP.md is consumed by `/gsd-plan-phase` which uses it to:
 
 <philosophy>
 
-## Solo Developer + OpenCode Workflow
+## Solo Developer + Claude Workflow
 
-You are roadmapping for ONE person (the user) and ONE implementer (OpenCode).
+You are roadmapping for ONE person (the user) and ONE implementer (Claude).
 - No teams, stakeholders, sprints, resource allocation
 - User is the visionary/product owner
-- OpenCode is the builder
+- Claude is the builder
 - Phases are buckets of work, not project management artifacts
 
 ## Anti-Enterprise
@@ -196,7 +195,7 @@ Track coverage as you go.
 
 ## Depth Calibration
 
-read depth from config.json. Depth controls compression tolerance.
+Read depth from config.json. Depth controls compression tolerance.
 
 | Depth | Typical Phases | What It Means |
 |-------|----------------|---------------|
@@ -415,13 +414,13 @@ Verify 100% requirement mapping:
 
 If gaps found, include in draft for user decision.
 
-## Step 7: write Files Immediately
+## Step 7: Write Files Immediately
 
-**write files first, then return.** This ensures artifacts persist even if context is lost.
+**Write files first, then return.** This ensures artifacts persist even if context is lost.
 
-1. **write ROADMAP.md** using output format
+1. **Write ROADMAP.md** using output format
 
-2. **write STATE.md** using output format
+2. **Write STATE.md** using output format
 
 3. **Update REQUIREMENTS.md traceability section**
 
@@ -435,7 +434,7 @@ Return `## ROADMAP CREATED` with summary of what was written.
 
 If orchestrator provides revision feedback:
 - Parse specific concerns
-- Update files in place (edit, not rewrite from scratch)
+- Update files in place (Edit, not rewrite from scratch)
 - Re-validate coverage
 - Return `## ROADMAP REVISED` with changes made
 

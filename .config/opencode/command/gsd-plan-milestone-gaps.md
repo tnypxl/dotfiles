@@ -1,13 +1,12 @@
 ---
-name: gsd-plan-milestone-gaps
 description: Create phases to close all gaps identified by milestone audit
 tools:
-  - read
-  - write
-  - bash
-  - glob
-  - grep
-  - question
+  read: true
+  write: true
+  bash: true
+  glob: true
+  grep: true
+  question: true
 ---
 
 <objective>
@@ -24,7 +23,7 @@ One command creates all fix phases — no manual `/gsd-add-phase` per gap.
 
 <context>
 **Audit results:**
-glob: .planning/v*-MILESTONE-AUDIT.md (use most recent)
+Glob: .planning/v*-MILESTONE-AUDIT.md (use most recent)
 
 **Original intent (for prioritization):**
 @.planning/PROJECT.md
@@ -158,6 +157,17 @@ mkdir -p ".planning/phases/{NN}-{name}"
 
 ## 8. Commit Roadmap Update
 
+**Check planning config:**
+
+```bash
+COMMIT_PLANNING_DOCS=$(cat .planning/config.json 2>/dev/null | grep -o '"commit_docs"[[:space:]]*:[[:space:]]*[^,}]*' | grep -o 'true\|false' || echo "true")
+git check-ignore -q .planning 2>/dev/null && COMMIT_PLANNING_DOCS=false
+```
+
+**If `COMMIT_PLANNING_DOCS=false`:** Skip git operations
+
+**If `COMMIT_PLANNING_DOCS=true` (default):**
+
 ```bash
 git add .planning/ROADMAP.md
 git commit -m "docs(roadmap): add gap closure phases {N}-{M}"
@@ -179,7 +189,7 @@ git commit -m "docs(roadmap): add gap closure phases {N}-{M}"
 
 `/gsd-plan-phase {N}`
 
-*`/new` first → fresh context window*
+<sub>`/clear` first → fresh context window</sub>
 
 ---
 

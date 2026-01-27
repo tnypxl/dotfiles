@@ -1,16 +1,16 @@
 ---
-name: gsd-execute-phase
 description: Execute all plans in a phase with wave-based parallelization
 argument-hint: "<phase-number> [--gaps-only]"
 tools:
-  - read
-  - write
-  - edit
-  - glob
-  - grep
-  - bash
-  - todowrite
-  - question
+  read: true
+  write: true
+  edit: true
+  glob: true
+  grep: true
+  bash: true
+  task: true
+  todowrite: true
+  question: true
 ---
 
 <objective>
@@ -22,8 +22,8 @@ Context budget: ~15% orchestrator, 100% fresh per subagent.
 </objective>
 
 <execution_context>
-@~/.config/opencode/get-shit-done/references/ui-brand.md
-@~/.config/opencode/get-shit-done/workflows/execute-phase.md
+@/Users/arikj/.config/opencode/get-shit-done/references/ui-brand.md
+@/Users/arikj/.config/opencode/get-shit-done/workflows/execute-phase.md
 </execution_context>
 
 <context>
@@ -37,6 +37,24 @@ Phase: $ARGUMENTS
 </context>
 
 <process>
+0. **Resolve Model Profile**
+
+   Read model profile for agent spawning:
+   ```bash
+   MODEL_PROFILE=$(cat .planning/config.json 2>/dev/null | grep -o '"model_profile"[[:space:]]*:[[:space:]]*"[^"]*"' | grep -o '"[^"]*"$' | tr -d '"' || echo "balanced")
+   ```
+
+   Default to "balanced" if not set.
+
+   **Model lookup table:**
+
+   | Agent | quality | balanced | budget |
+   |-------|---------|----------|--------|
+   | gsd-executor | opus | sonnet | sonnet |
+   | gsd-verifier | sonnet | sonnet | haiku |
+
+   Store resolved models for use in Task calls below.
+
 1. **Validate phase exists**
    - Find phase directory matching argument
    - Count PLAN.md files
@@ -49,7 +67,7 @@ Phase: $ARGUMENTS
    - Build list of incomplete plans
 
 3. **Group by wave**
-   - read `wave` from each plan's frontmatter
+   - Read `wave` from each plan's frontmatter
    - Group plans by wave number
    - Report wave structure to user
 
@@ -78,6 +96,11 @@ Phase: $ARGUMENTS
    **If clean:** Continue to verification.
 
 7. **Verify phase goal**
+   Check config: `WORKFLOW_VERIFIER=$(cat .planning/config.json 2>/dev/null | grep -o '"verifier"[[:space:]]*:[[:space:]]*[^,}]*' | grep -o 'true\|false' || echo "true")`
+
+   **If `workflow.verifier` is `false`:** Skip to step 8 (treat as passed).
+
+   **Otherwise:**
    - Spawn `gsd-verifier` subagent with phase directory and goal
    - Verifier checks must_haves against actual codebase (not SUMMARY claims)
    - Creates VERIFICATION.md with detailed report
@@ -91,14 +114,16 @@ Phase: $ARGUMENTS
 
 9. **Update requirements**
    Mark phase requirements as Complete:
-   - read ROADMAP.md, find this phase's `Requirements:` line (e.g., "AUTH-01, AUTH-02")
-   - read REQUIREMENTS.md traceability table
+   - Read ROADMAP.md, find this phase's `Requirements:` line (e.g., "AUTH-01, AUTH-02")
+   - Read REQUIREMENTS.md traceability table
    - For each REQ-ID in this phase: change Status from "Pending" to "Complete"
-   - write updated REQUIREMENTS.md
+   - Write updated REQUIREMENTS.md
    - Skip if: REQUIREMENTS.md doesn't exist, or phase has no Requirements line
 
 10. **Commit phase completion**
-    Bundle all phase metadata updates in one commit:
+    Check `COMMIT_PLANNING_DOCS` from config.json (default: true).
+    If false: Skip git operations for .planning/ files.
+    If true: Bundle all phase metadata updates in one commit:
     - Stage: `git add .planning/ROADMAP.md .planning/STATE.md`
     - Stage REQUIREMENTS.md if updated: `git add .planning/REQUIREMENTS.md`
     - Commit: `docs({phase}): complete {phase-name} phase`
@@ -138,7 +163,7 @@ Goal verified ✓
 
 /gsd-discuss-phase {Z+1} — gather context and clarify approach
 
-*/new first → fresh context window*
+<sub>/clear first → fresh context window</sub>
 
 ───────────────────────────────────────────────────────────────
 
@@ -169,7 +194,7 @@ All phase goals verified ✓
 
 /gsd-audit-milestone
 
-*/new first → fresh context window*
+<sub>/clear first → fresh context window</sub>
 
 ───────────────────────────────────────────────────────────────
 
@@ -204,7 +229,7 @@ Report: .planning/phases/{phase_dir}/{phase}-VERIFICATION.md
 
 /gsd-plan-phase {Z} --gaps
 
-*/new first → fresh context window*
+<sub>/clear first → fresh context window</sub>
 
 ───────────────────────────────────────────────────────────────
 
@@ -227,12 +252,22 @@ After user runs /gsd-plan-phase {Z} --gaps:
 <wave_execution>
 **Parallel spawning:**
 
-Spawn all plans in a wave with a single message containing multiple Task calls:
+Before spawning, read file contents. The `@` syntax does not work across Task() boundaries.
+
+```bash
+# Read each plan and STATE.md
+PLAN_01_CONTENT=$(cat "{plan_01_path}")
+PLAN_02_CONTENT=$(cat "{plan_02_path}")
+PLAN_03_CONTENT=$(cat "{plan_03_path}")
+STATE_CONTENT=$(cat .planning/STATE.md)
+```
+
+Spawn all plans in a wave with a single message containing multiple Task calls, with inlined content:
 
 ```
-Task(prompt="Execute plan at {plan_01_path}\n\nPlan: @{plan_01_path}\nProject state: @.planning/STATE.md", subagent_type="gsd-executor")
-Task(prompt="Execute plan at {plan_02_path}\n\nPlan: @{plan_02_path}\nProject state: @.planning/STATE.md", subagent_type="gsd-executor")
-Task(prompt="Execute plan at {plan_03_path}\n\nPlan: @{plan_03_path}\nProject state: @.planning/STATE.md", subagent_type="gsd-executor")
+Task(prompt="Execute plan at {plan_01_path}\n\nPlan:\n{plan_01_content}\n\nProject state:\n{state_content}", subagent_type="gsd-executor", model="{executor_model}")
+Task(prompt="Execute plan at {plan_02_path}\n\nPlan:\n{plan_02_content}\n\nProject state:\n{state_content}", subagent_type="gsd-executor", model="{executor_model}")
+Task(prompt="Execute plan at {plan_03_path}\n\nPlan:\n{plan_03_content}\n\nProject state:\n{state_content}", subagent_type="gsd-executor", model="{executor_model}")
 ```
 
 All three run in parallel. Task tool blocks until all complete.
@@ -246,7 +281,7 @@ Plans with `autonomous: false` have checkpoints. The execute-phase.md workflow h
 - Orchestrator presents to user, collects response
 - Spawns fresh continuation agent (not resume)
 
-See `@~/.config/opencode/get-shit-done/workflows/execute-phase.md` step `checkpoint_handling` for complete details.
+See `@/Users/arikj/.config/opencode/get-shit-done/workflows/execute-phase.md` step `checkpoint_handling` for complete details.
 </checkpoint_handling>
 
 <deviation_rules>

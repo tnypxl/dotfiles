@@ -1,11 +1,11 @@
 ---
-name: gsd-new-project
 description: Initialize a new project with deep context gathering and PROJECT.md
 tools:
-  - read
-  - bash
-  - write
-  - question
+  read: true
+  bash: true
+  write: true
+  task: true
+  question: true
 ---
 
 <objective>
@@ -28,10 +28,10 @@ This is the most leveraged moment in any project. Deep questioning here means be
 
 <execution_context>
 
-@~/.config/opencode/get-shit-done/references/questioning.md
-@~/.config/opencode/get-shit-done/references/ui-brand.md
-@~/.config/opencode/get-shit-done/templates/project.md
-@~/.config/opencode/get-shit-done/templates/requirements.md
+@/Users/arikj/.config/opencode/get-shit-done/references/questioning.md
+@/Users/arikj/.config/opencode/get-shit-done/references/ui-brand.md
+@/Users/arikj/.config/opencode/get-shit-done/templates/project.md
+@/Users/arikj/.config/opencode/get-shit-done/templates/requirements.md
 
 </execution_context>
 
@@ -63,7 +63,7 @@ This is the most leveraged moment in any project. Deep questioning here means be
    HAS_CODEBASE_MAP=$([ -d .planning/codebase ] && echo "yes")
    ```
 
-   **You MUST run all bash commands above using the bash tool before proceeding.**
+   **You MUST run all bash commands above using the Bash tool before proceeding.**
 
 ## Phase 2: Brownfield Offer
 
@@ -144,7 +144,7 @@ If "Keep exploring" — ask what they want to add, or identify gaps and probe na
 
 Loop until "Create PROJECT.md" selected.
 
-## Phase 4: write PROJECT.md
+## Phase 4: Write PROJECT.md
 
 Synthesize all context into `.planning/PROJECT.md` using the template from `templates/project.md`.
 
@@ -177,7 +177,7 @@ All Active requirements are hypotheses until shipped and validated.
 
 Infer Validated requirements from existing code:
 
-1. read `.planning/codebase/ARCHITECTURE.md` and `STACK.md`
+1. Read `.planning/codebase/ARCHITECTURE.md` and `STACK.md`
 2. Identify what the codebase already does
 3. These become the initial Validated set
 
@@ -236,7 +236,7 @@ EOF
 
 ## Phase 5: Workflow Preferences
 
-Ask all workflow preferences in a single question call (3 questions):
+**Round 1 — Core workflow settings (4 questions):**
 
 ```
 questions: [
@@ -267,11 +267,96 @@ questions: [
       { label: "Parallel (Recommended)", description: "Independent plans run simultaneously" },
       { label: "Sequential", description: "One plan at a time" }
     ]
+  },
+  {
+    header: "Git Tracking",
+    question: "Commit planning docs to git?",
+    multiSelect: false,
+    options: [
+      { label: "Yes (Recommended)", description: "Planning docs tracked in version control" },
+      { label: "No", description: "Keep .planning/ local-only (add to .gitignore)" }
+    ]
   }
 ]
 ```
 
-Create `.planning/config.json` with chosen mode, depth, and parallelization.
+**Round 2 — Workflow agents:**
+
+These spawn additional agents during planning/execution. They add tokens and time but improve quality.
+
+| Agent | When it runs | What it does |
+|-------|--------------|--------------|
+| **Researcher** | Before planning each phase | Investigates domain, finds patterns, surfaces gotchas |
+| **Plan Checker** | After plan is created | Verifies plan actually achieves the phase goal |
+| **Verifier** | After phase execution | Confirms must-haves were delivered |
+
+All recommended for important projects. Skip for quick experiments.
+
+```
+questions: [
+  {
+    header: "Research",
+    question: "Research before planning each phase? (adds tokens/time)",
+    multiSelect: false,
+    options: [
+      { label: "Yes (Recommended)", description: "Investigate domain, find patterns, surface gotchas" },
+      { label: "No", description: "Plan directly from requirements" }
+    ]
+  },
+  {
+    header: "Plan Check",
+    question: "Verify plans will achieve their goals? (adds tokens/time)",
+    multiSelect: false,
+    options: [
+      { label: "Yes (Recommended)", description: "Catch gaps before execution starts" },
+      { label: "No", description: "Execute plans without verification" }
+    ]
+  },
+  {
+    header: "Verifier",
+    question: "Verify work satisfies requirements after each phase? (adds tokens/time)",
+    multiSelect: false,
+    options: [
+      { label: "Yes (Recommended)", description: "Confirm deliverables match phase goals" },
+      { label: "No", description: "Trust execution, skip verification" }
+    ]
+  },
+  {
+    header: "Model Profile",
+    question: "Which AI models for planning agents?",
+    multiSelect: false,
+    options: [
+      { label: "Balanced (Recommended)", description: "Sonnet for most agents — good quality/cost ratio" },
+      { label: "Quality", description: "Opus for research/roadmap — higher cost, deeper analysis" },
+      { label: "Budget", description: "Haiku where possible — fastest, lowest cost" }
+    ]
+  }
+]
+```
+
+Create `.planning/config.json` with all settings:
+
+```json
+{
+  "mode": "yolo|interactive",
+  "depth": "quick|standard|comprehensive",
+  "parallelization": true|false,
+  "commit_docs": true|false,
+  "model_profile": "quality|balanced|budget",
+  "workflow": {
+    "research": true|false,
+    "plan_check": true|false,
+    "verifier": true|false
+  }
+}
+```
+
+**If commit_docs = No:**
+- Set `commit_docs: false` in config.json
+- Add `.planning/` to `.gitignore` (create if needed)
+
+**If commit_docs = Yes:**
+- No additional gitignore entries needed
 
 **Commit config.json:**
 
@@ -283,9 +368,32 @@ chore: add project config
 Mode: [chosen mode]
 Depth: [chosen depth]
 Parallelization: [enabled/disabled]
+Workflow agents: research=[on/off], plan_check=[on/off], verifier=[on/off]
 EOF
 )"
 ```
+
+**Note:** Run `/gsd-settings` anytime to update these preferences.
+
+## Phase 5.5: Resolve Model Profile
+
+Read model profile for agent spawning:
+
+```bash
+MODEL_PROFILE=$(cat .planning/config.json 2>/dev/null | grep -o '"model_profile"[[:space:]]*:[[:space:]]*"[^"]*"' | grep -o '"[^"]*"$' | tr -d '"' || echo "balanced")
+```
+
+Default to "balanced" if not set.
+
+**Model lookup table:**
+
+| Agent | quality | balanced | budget |
+|-------|---------|----------|--------|
+| gsd-project-researcher | opus | sonnet | haiku |
+| gsd-research-synthesizer | sonnet | sonnet | haiku |
+| gsd-roadmapper | opus | sonnet | sonnet |
+
+Store resolved models for use in Task calls below.
 
 ## Phase 6: Research Decision
 
@@ -330,7 +438,8 @@ Display spawning indicator:
 Spawn 4 parallel gsd-project-researcher agents with rich context:
 
 ```
-Task(prompt="
+Task(prompt="First, read /Users/arikj/.config/opencode/agents/gsd-project-researcher.md for your role and instructions.
+
 <research_type>
 Project Research — Stack dimension for [domain].
 </research_type>
@@ -364,12 +473,13 @@ Your STACK.md feeds into roadmap creation. Be prescriptive:
 </quality_gate>
 
 <output>
-write to: .planning/research/STACK.md
-Use template: ~/.config/opencode/get-shit-done/templates/research-project/STACK.md
+Write to: .planning/research/STACK.md
+Use template: /Users/arikj/.config/opencode/get-shit-done/templates/research-project/STACK.md
 </output>
-", subagent_type="gsd-project-researcher", description="Stack research")
+", subagent_type="general-purpose", model="{researcher_model}", description="Stack research")
 
-Task(prompt="
+Task(prompt="First, read /Users/arikj/.config/opencode/agents/gsd-project-researcher.md for your role and instructions.
+
 <research_type>
 Project Research — Features dimension for [domain].
 </research_type>
@@ -403,12 +513,13 @@ Your FEATURES.md feeds into requirements definition. Categorize clearly:
 </quality_gate>
 
 <output>
-write to: .planning/research/FEATURES.md
-Use template: ~/.config/opencode/get-shit-done/templates/research-project/FEATURES.md
+Write to: .planning/research/FEATURES.md
+Use template: /Users/arikj/.config/opencode/get-shit-done/templates/research-project/FEATURES.md
 </output>
-", subagent_type="gsd-project-researcher", description="Features research")
+", subagent_type="general-purpose", model="{researcher_model}", description="Features research")
 
-Task(prompt="
+Task(prompt="First, read /Users/arikj/.config/opencode/agents/gsd-project-researcher.md for your role and instructions.
+
 <research_type>
 Project Research — Architecture dimension for [domain].
 </research_type>
@@ -442,12 +553,13 @@ Your ARCHITECTURE.md informs phase structure in roadmap. Include:
 </quality_gate>
 
 <output>
-write to: .planning/research/ARCHITECTURE.md
-Use template: ~/.config/opencode/get-shit-done/templates/research-project/ARCHITECTURE.md
+Write to: .planning/research/ARCHITECTURE.md
+Use template: /Users/arikj/.config/opencode/get-shit-done/templates/research-project/ARCHITECTURE.md
 </output>
-", subagent_type="gsd-project-researcher", description="Architecture research")
+", subagent_type="general-purpose", model="{researcher_model}", description="Architecture research")
 
-Task(prompt="
+Task(prompt="First, read /Users/arikj/.config/opencode/agents/gsd-project-researcher.md for your role and instructions.
+
 <research_type>
 Project Research — Pitfalls dimension for [domain].
 </research_type>
@@ -481,10 +593,10 @@ Your PITFALLS.md prevents mistakes in roadmap/planning. For each pitfall:
 </quality_gate>
 
 <output>
-write to: .planning/research/PITFALLS.md
-Use template: ~/.config/opencode/get-shit-done/templates/research-project/PITFALLS.md
+Write to: .planning/research/PITFALLS.md
+Use template: /Users/arikj/.config/opencode/get-shit-done/templates/research-project/PITFALLS.md
 </output>
-", subagent_type="gsd-project-researcher", description="Pitfalls research")
+", subagent_type="general-purpose", model="{researcher_model}", description="Pitfalls research")
 ```
 
 After all 4 agents complete, spawn synthesizer to create SUMMARY.md:
@@ -496,7 +608,7 @@ Synthesize research outputs into SUMMARY.md.
 </task>
 
 <research_files>
-read these files:
+Read these files:
 - .planning/research/STACK.md
 - .planning/research/FEATURES.md
 - .planning/research/ARCHITECTURE.md
@@ -504,11 +616,11 @@ read these files:
 </research_files>
 
 <output>
-write to: .planning/research/SUMMARY.md
-Use template: ~/.config/opencode/get-shit-done/templates/research-project/SUMMARY.md
+Write to: .planning/research/SUMMARY.md
+Use template: /Users/arikj/.config/opencode/get-shit-done/templates/research-project/SUMMARY.md
 Commit after writing.
 </output>
-", subagent_type="gsd-research-synthesizer", description="Synthesize research")
+", subagent_type="gsd-research-synthesizer", model="{synthesizer_model}", description="Synthesize research")
 ```
 
 Display research complete banner and key findings:
@@ -539,12 +651,12 @@ Display stage banner:
 
 **Load context:**
 
-read PROJECT.md and extract:
+Read PROJECT.md and extract:
 - Core value (the ONE thing that must work)
 - Stated constraints (budget, timeline, tech limitations)
 - Any explicit scope boundaries
 
-**If research exists:** read research/FEATURES.md and extract feature categories.
+**If research exists:** Read research/FEATURES.md and extract feature categories.
 
 **Present features by category:**
 
@@ -708,12 +820,12 @@ Create roadmap:
 2. Map every v1 requirement to exactly one phase
 3. Derive 2-5 success criteria per phase (observable user behaviors)
 4. Validate 100% coverage
-5. write files immediately (ROADMAP.md, STATE.md, update REQUIREMENTS.md traceability)
+5. Write files immediately (ROADMAP.md, STATE.md, update REQUIREMENTS.md traceability)
 6. Return ROADMAP CREATED with summary
 
-write files first, then return. This ensures artifacts persist even if context is lost.
+Write files first, then return. This ensures artifacts persist even if context is lost.
 </instructions>
-", subagent_type="gsd-roadmapper", description="Create roadmap")
+", subagent_type="gsd-roadmapper", model="{roadmapper_model}", description="Create roadmap")
 ```
 
 **Handle roadmapper return:**
@@ -725,7 +837,7 @@ write files first, then return. This ensures artifacts persist even if context i
 
 **If `## ROADMAP CREATED`:**
 
-read the created ROADMAP.md and present it nicely inline:
+Read the created ROADMAP.md and present it nicely inline:
 
 ```
 ---
@@ -786,10 +898,10 @@ Use question:
 
   Current ROADMAP.md: @.planning/ROADMAP.md
 
-  Update the roadmap based on feedback. edit files in place.
+  Update the roadmap based on feedback. Edit files in place.
   Return ROADMAP REVISED with changes made.
   </revision>
-  ", subagent_type="gsd-roadmapper", description="Revise roadmap")
+  ", subagent_type="gsd-roadmapper", model="{roadmapper_model}", description="Revise roadmap")
   ```
 - Present revised roadmap
 - Loop until user approves
@@ -840,14 +952,14 @@ Present completion with next steps:
 
 **Phase 1: [Phase Name]** — [Goal from ROADMAP.md]
 
-`/gsd-discuss-phase 1` — gather context and clarify approach
+/gsd-discuss-phase 1 — gather context and clarify approach
 
-*`/new` first → fresh context window*
+<sub>/clear first → fresh context window</sub>
 
 ---
 
 **Also available:**
-- `/gsd-plan-phase 1` — skip discussion, plan directly
+- /gsd-plan-phase 1 — skip discussion, plan directly
 
 ───────────────────────────────────────────────────────────────
 ```

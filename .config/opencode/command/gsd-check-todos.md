@@ -1,13 +1,12 @@
 ---
-name: gsd-check-todos
 description: List pending todos and select one to work on
 argument-hint: [area filter]
 tools:
-  - read
-  - write
-  - bash
-  - glob
-  - question
+  read: true
+  write: true
+  bash: true
+  glob: true
+  question: true
 ---
 
 <objective>
@@ -89,7 +88,7 @@ If invalid: "Invalid selection. Reply with a number (1-[N]) or `q` to exit."
 </step>
 
 <step name="load_context">
-read the todo file completely. Display:
+Read the todo file completely. Display:
 
 ```
 ## [title]
@@ -176,6 +175,17 @@ Update STATE.md "### Pending Todos" section if exists.
 
 <step name="git_commit">
 If todo was moved to done/, commit the change:
+
+**Check planning config:**
+
+```bash
+COMMIT_PLANNING_DOCS=$(cat .planning/config.json 2>/dev/null | grep -o '"commit_docs"[[:space:]]*:[[:space:]]*[^,}]*' | grep -o 'true\|false' || echo "true")
+git check-ignore -q .planning 2>/dev/null && COMMIT_PLANNING_DOCS=false
+```
+
+**If `COMMIT_PLANNING_DOCS=false`:** Skip git operations, log "Todo moved (not committed - commit_docs: false)"
+
+**If `COMMIT_PLANNING_DOCS=true` (default):**
 
 ```bash
 git add .planning/todos/done/[filename]
