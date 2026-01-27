@@ -12,7 +12,6 @@
     "ollama": {
       "models": {
         "glm-4.7-flash:latest": {
-          "_launch": true,
           "name": "glm-4.7-flash:latest"
         }
       },
