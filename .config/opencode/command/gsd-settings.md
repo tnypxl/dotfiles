@@ -33,6 +33,7 @@ Parse current values (default to `true` if not present):
 - `workflow.plan_check` — spawn plan checker during plan-phase
 - `workflow.verifier` — spawn verifier during execute-phase
 - `model_profile` — which model each agent uses (default: `balanced`)
+- `git.branching_strategy` — branching approach (default: `"none"`)
 
 ## 3. Present Settings
 
@@ -76,6 +77,16 @@ question([
       { label: "Yes", description: "Verify must-haves after execution" },
       { label: "No", description: "Skip post-execution verification" }
     ]
+  },
+  {
+    question: "Git branching strategy?",
+    header: "Branching",
+    multiSelect: false,
+    options: [
+      { label: "None (Recommended)", description: "Commit directly to current branch" },
+      { label: "Per Phase", description: "Create branch for each phase (gsd/phase-{N}-{name})" },
+      { label: "Per Milestone", description: "Create branch for entire milestone (gsd/{version}-{name})" }
+    ]
   }
 ])
 ```
@@ -94,6 +105,9 @@ Merge new settings into existing config.json:
     "research": true/false,
     "plan_check": true/false,
     "verifier": true/false
+  },
+  "git": {
+    "branching_strategy": "none" | "phase" | "milestone"
   }
 }
 ```
@@ -115,6 +129,7 @@ Display:
 | Plan Researcher      | {On/Off} |
 | Plan Checker         | {On/Off} |
 | Execution Verifier   | {On/Off} |
+| Git Branching        | {None/Per Phase/Per Milestone} |
 
 These settings apply to future /gsd-plan-phase and /gsd-execute-phase runs.
 
@@ -129,7 +144,7 @@ Quick commands:
 
 <success_criteria>
 - [ ] Current config read
-- [ ] User presented with 4 settings (profile + 3 toggles)
-- [ ] Config updated with model_profile and workflow section
+- [ ] User presented with 5 settings (profile + 3 workflow toggles + git branching)
+- [ ] Config updated with model_profile, workflow, and git sections
 - [ ] Changes confirmed to user
 </success_criteria>

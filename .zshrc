@@ -170,38 +170,39 @@ if [[ -n "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" == "ghostty" ]]; then
   add-zsh-hook -Uz preexec terminal_title_preexec
 fi
 
-export ZELLIJ_AUTO_ATTACH=true
 
-if [[ $- == *i* ]] && [[ -t 0 ]] && [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" == "ghostty" ]]; then
-    ZJ_SESSIONS=$(zellij list-sessions)
-
-    if [[ -n "$ZJ_SESSIONS" ]]; then
-        SELECTED_SESSION="$(echo -e "${ZJ_SESSIONS}\n[NEW SESSION]\n[NEW NAMED SESSION]" | sk --ansi --reverse --prompt="Select session: ")"
-        if [[ "$SELECTED_SESSION" == "[NEW SESSION]" ]]; then
-            zellij
-        elif [[ "$SELECTED_SESSION" == "[NEW NAMED SESSION]" ]]; then
-            echo -n "Enter session name: "
-            read SESSION_NAME
-            if [[ -n "$SESSION_NAME" ]]; then
-                zellij -s "$SESSION_NAME"
-            else
-                zellij attach -c
-            fi
-        elif [[ -n "$SELECTED_SESSION" ]]; then
-            # Extract the actual session name (strip ANSI codes and preserve full name)
-            SESSION_NAME=$(echo "$SELECTED_SESSION" | sed 's/\x1b\[[0-9;]*m//g' | sed 's/ \[Created.*$//' | sed 's/^ *//' | sed 's/ *$//')
-
-            # Check if this is an exited session that can be resurrected
-            if echo "$SELECTED_SESSION" | grep -q "EXITED"; then
-                echo "Attaching to exited session: $SESSION_NAME"
-                zellij attach "$SESSION_NAME"
-            else
-                # For active sessions, just attach directly
-                echo "Attaching to session: $SESSION_NAME"
-                zellij attach "$SESSION_NAME"
-            fi
-        fi
-    else
-        zellij attach -c
-    fi
- fi
+# export ZELLIJ_AUTO_ATTACH=true
+# 
+# if [[ $- == *i* ]] && [[ -t 0 ]] && [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" == "ghostty" ]]; then
+#     ZJ_SESSIONS=$(zellij list-sessions)
+# 
+#     if [[ -n "$ZJ_SESSIONS" ]]; then
+#         SELECTED_SESSION="$(echo -e "${ZJ_SESSIONS}\n[NEW SESSION]\n[NEW NAMED SESSION]" | sk --ansi --reverse --prompt="Select session: ")"
+#         if [[ "$SELECTED_SESSION" == "[NEW SESSION]" ]]; then
+#             zellij
+#         elif [[ "$SELECTED_SESSION" == "[NEW NAMED SESSION]" ]]; then
+#             echo -n "Enter session name: "
+#             read SESSION_NAME
+#             if [[ -n "$SESSION_NAME" ]]; then
+#                 zellij -s "$SESSION_NAME"
+#             else
+#                 zellij attach -c
+#             fi
+#         elif [[ -n "$SELECTED_SESSION" ]]; then
+#             # Extract the actual session name (strip ANSI codes and preserve full name)
+#             SESSION_NAME=$(echo "$SELECTED_SESSION" | sed 's/\x1b\[[0-9;]*m//g' | sed 's/ \[Created.*$//' | sed 's/^ *//' | sed 's/ *$//')
+# 
+#             # Check if this is an exited session that can be resurrected
+#             if echo "$SELECTED_SESSION" | grep -q "EXITED"; then
+#                 echo "Attaching to exited session: $SESSION_NAME"
+#                 zellij attach "$SESSION_NAME"
+#             else
+#                 # For active sessions, just attach directly
+#                 echo "Attaching to session: $SESSION_NAME"
+#                 zellij attach "$SESSION_NAME"
+#             fi
+#         fi
+#     else
+#         zellij attach -c
+#     fi
+#  fi

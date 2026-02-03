@@ -15,7 +15,7 @@ No Pass/Fail buttons. No severity questions. Just: "Here's what should happen. D
 </philosophy>
 
 <template>
-@~/.config/opencode/get-shit-done/templates/UAT.md
+@/Users/arikj/.config/opencode/get-shit-done/templates/UAT.md
 </template>
 
 <process>
@@ -360,7 +360,7 @@ Spawning parallel debug agents to investigate each issue.
 ```
 
 - Load diagnose-issues workflow
-- Follow @~/.config/opencode/get-shit-done/workflows/diagnose-issues.md
+- Follow @/Users/arikj/.config/opencode/get-shit-done/workflows/diagnose-issues.md
 - Spawn parallel debug agents for each issue
 - Collect root causes
 - Update UAT.md with root causes
