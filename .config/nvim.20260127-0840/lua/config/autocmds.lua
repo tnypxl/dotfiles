@@ -14,12 +14,12 @@ local filetype_settings = {
     vim.diagnostic.enable(false)
 
     -- Soft-wrap configuration for markdown files
-    vim.opt_local.wrap = true           -- Enable visual line wrapping
-    vim.opt_local.linebreak = true      -- Wrap at word boundaries (breakat chars)
-    vim.opt_local.textwidth = 0         -- Don't auto-insert line breaks (soft-wrap only)
-    vim.opt_local.colorcolumn = "100"   -- Visual guide at column 100
-    vim.opt_local.breakindent = true    -- Preserve indentation on wrapped lines
-    vim.opt_local.showbreak = "↪ "      -- Visual indicator for wrapped lines
+    vim.opt_local.wrap = true -- Enable visual line wrapping
+    vim.opt_local.linebreak = true -- Wrap at word boundaries (breakat chars)
+    vim.opt_local.textwidth = 0 -- Don't auto-insert line breaks (soft-wrap only)
+    vim.opt_local.colorcolumn = "100" -- Visual guide at column 100
+    vim.opt_local.breakindent = true -- Preserve indentation on wrapped lines
+    vim.opt_local.showbreak = "↪ " -- Visual indicator for wrapped lines
   end,
 
   json = function()
