@@ -145,7 +145,6 @@ alias la="eza -lbhHigUmua $eza_params"
 alias lx="eza -lbhHigUmua@ $eza_params"
 alias lt="eza --tree $eza_params"
 alias tree="eza --tree $eza_params"
-alias claude-mcp-config='cd /Users/arikj/Library/Application\ Support/Claude && zed claude_desktop_config.json'
 alias zc='zellij action clear'
 
 source ~/.asdf/plugins/golang/set-env.zsh
@@ -158,7 +157,7 @@ source <(procs --gen-completion-out zsh)
 
 eval "$(mise activate zsh)"
 
-if [[ -n "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" == "ghostty" ]]; then
+if [[ "$TERM_PROGRAM" == "ghostty" ]]; then
   function terminal_title_preexec() {
     # Extract command name: ${1%% *} gets first word, :t gets basename
     local cmd_name="${${1%% *}:t}"
