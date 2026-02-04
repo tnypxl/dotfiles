@@ -7,12 +7,10 @@ return {
       dim_inactive = true,
     },
   },
-
-  -- Configure LazyVim to load gruvbox
   {
     "LazyVim/LazyVim",
     opts = {
       colorscheme = "kanagawa-paper-ink",
     },
-  }
+  },
 }
