@@ -1,54 +1,59 @@
-window-padding-x = 8
-window-padding-y = 8,1
-window-padding-balance = true
-window-decoration = auto
-macos-titlebar-style = tabs
-macos-secure-input-indication = true
-unfocused-split-opacity = 0.30
-font-feature = +liga +calt +dlig -liga-c0 -calt-c0
+# Theme
+theme = kanagawa-paper
+
+# Font
 font-family = JetBrainsMono Nerd Font
 font-size = 13
 font-style = medium
 font-thicken = false
+font-feature = +liga +calt +dlig -liga-c0 -calt-c0
+
+# Cursor
+cursor-style = bar
+cursor-click-to-move = true
+adjust-cursor-height = 2%
+adjust-cursor-thickness = 1
+
+# Cell
 adjust-cell-height = 20%
 adjust-cell-width = 0
-adjust-cursor-height = 2%
+
+# Window
+window-decoration = auto
+window-padding-x = 8
+window-padding-y = 8,1
+window-padding-balance = true
+window-save-state = always
+unfocused-split-opacity = 0.30
+
+# macOS
+macos-titlebar-style = tabs
+macos-secure-input-indication = true
+
+# Shell
 shell-integration = zsh
-shell-integration-features = cursor, ssh-env
-adjust-cursor-thickness = 1
+shell-integration-features = ssh-env
+
+# Clipboard
 copy-on-select = false
 selection-clear-on-copy = true
 clipboard-trim-trailing-spaces = true
 clipboard-paste-protection = true
-cursor-style = bar
+
+# Mouse
 mouse-scroll-multiplier = 1
 
 # Keybinds
 keybind = cmd+backspace=text:\x15
-
-# Allow shift-enter to create new lines in interactive sessions
 keybind = shift+enter=text:\n
+keybind = ctrl+cmd+up=resize_split:up,30
+keybind = ctrl+cmd+shift+up=resize_split:up,120
+keybind = ctrl+cmd+down=resize_split:down,30
+keybind = ctrl+cmd+shift+down=resize_split:down,120
+keybind = ctrl+cmd+left=resize_split:left,30
+keybind = ctrl+cmd+shift+left=resize_split:left,120
+keybind = ctrl+cmd+right=resize_split:right,30
+keybind = ctrl+cmd+shift+right=resize_split:right,120
 
-palette = 0=#393836
-palette = 1=#c4746e
-palette = 2=#699469
-palette = 3=#c4b28a
-palette = 4=#547b8a
-palette = 5=#a292a3
-palette = 6=#8ea49e
-palette = 7=#C8C093
-palette = 8=#aca9a4
-palette = 9=#cc928e
-palette = 10=#72a072
-palette = 11=#d4c196
-palette = 12=#698a9b
-palette = 13=#b4a7b5
-palette = 14=#96ada7
-palette = 15=#d5cd9d
+keybind = ctrl+cmd+e=equalize_splits
 
-background = #1F1F28
-foreground = #DCD7BA
-cursor-color = #c4b28a
-selection-background = #363646
-selection-foreground = #9e9b93
-split-divider-color = #474e59
