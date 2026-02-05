@@ -24,7 +24,7 @@ window-padding-x = 8
 window-padding-y = 8,1
 window-padding-balance = true
 window-save-state = always
-unfocused-split-opacity = 0.30
+unfocused-split-opacity = 0.6
 
 # macOS
 macos-titlebar-style = tabs
@@ -32,7 +32,7 @@ macos-secure-input-indication = true
 
 # Shell
 shell-integration = zsh
-shell-integration-features = ssh-env
+shell-integration-features = true
 
 # Clipboard
 copy-on-select = false
@@ -42,6 +42,7 @@ clipboard-paste-protection = true
 
 # Mouse
 mouse-scroll-multiplier = 1
+focus-follows-mouse = true
 
 # Keybinds
 keybind = cmd+backspace=text:\x15
@@ -54,6 +55,4 @@ keybind = ctrl+cmd+left=resize_split:left,30
 keybind = ctrl+cmd+shift+left=resize_split:left,120
 keybind = ctrl+cmd+right=resize_split:right,30
 keybind = ctrl+cmd+shift+right=resize_split:right,120
-
 keybind = ctrl+cmd+e=equalize_splits
-
