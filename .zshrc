@@ -6,6 +6,8 @@ if [[ -f "/opt/homebrew/bin/brew" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+eval "$(vfox activate zsh)"
+
 # Load Zinit
 if [[ -f "/opt/homebrew/opt/zinit/zinit.zsh" ]]; then
     source '/opt/homebrew/opt/zinit/zinit.zsh'
@@ -27,7 +29,7 @@ autoload -Uz compinit && compinit
 
 
 export BUN_INSTALL="$HOME/.bun"
-export PATH="/opt/homebrew/bin:${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$BUN_INSTALL/bin:$PATH"
+export PATH="/opt/homebrew/bin:$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$BUN_INSTALL/bin:$PATH"
 export EDITOR="zed -n"
 export TERM=xterm-256color
 export WORDCHARS='*?[]~=&;!#$%^(){}<>'
@@ -146,8 +148,6 @@ alias lx="eza -lbhHigUmua@ $eza_params"
 alias lt="eza --tree $eza_params"
 alias tree="eza --tree $eza_params"
 alias zc='zellij action clear'
-
-source ~/.asdf/plugins/golang/set-env.zsh
 
 [ -f "$HOME"/.zprofile ] && source ~/.zprofile
 

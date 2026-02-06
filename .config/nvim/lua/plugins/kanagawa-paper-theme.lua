@@ -10,7 +10,12 @@ return {
         local tab = theme.ui.tabline
         return {
           LazyButtonActive = { fg = colors.palette.sumiInk0, bg = colors.palette.carpYellow, bold = true },
-          WinSeparator = { fg = tab.indicator, bg = "NONE" },
+
+          -- Snacks explorer: darker sidebar
+          SnacksPickerNormalFloat = { bg = colors.palette.sumiInk1 },
+
+          -- Subtler window separators
+          WinSeparator = { fg = colors.palette.sumiInk4 },
 
           -- Bufferline: fix missing bg on selected-state groups (upstream issue)
           BufferlineIndicatorSelected = { fg = tab.indicator, bg = tab.bg_selected },
