@@ -9,31 +9,29 @@ font-thicken = false
 font-feature = +liga +calt +dlig -liga-c0 -calt-c0
 
 # Cursor
-cursor-style = bar
+# cursor-style = bar
 cursor-click-to-move = true
-adjust-cursor-height = 2%
 adjust-cursor-thickness = 1
 
 # Cell
 adjust-cell-height = 20%
-adjust-cell-width = 0
 
 # Window
-window-decoration = auto
+window-decoration = none
 window-padding-x = 8
 window-padding-y = 8,1
 window-padding-balance = true
 window-save-state = always
 unfocused-split-opacity = 0.6
-scrollback-limit = 1000000
+scrollback-limit = 100000
 
 # macOS
-macos-titlebar-style = tabs
+macos-titlebar-style = hidden
 macos-secure-input-indication = true
 
 # Shell
 shell-integration = zsh
-shell-integration-features = true
+shell-integration-features = cursor,sudo,title
 
 # Clipboard
 copy-on-select = false
@@ -42,7 +40,7 @@ clipboard-trim-trailing-spaces = true
 clipboard-paste-protection = true
 
 # Mouse
-mouse-scroll-multiplier = 1
+# mouse-scroll-multiplier = 1
 
 # Keybinds
 keybind = cmd+backspace=text:\x15
