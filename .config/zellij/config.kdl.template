@@ -1,3 +1,4 @@
+
 // If you'd like to override the default keybindings completely, be sure to change "keybinds" to "keybinds clear-defaults=true"
 keybinds {
     normal clear-defaults=true {
@@ -71,15 +72,15 @@ plugins {
     welcome-screen location="zellij:session-manager" {
         welcome_screen true
     }
-    zjstatus location="file:/Users/arik/dotfiles/.config/zellij/plugins/zjstatus.wasm" {
-        format_left   "{mode}#[bg=#192330] {tabs}"
+    zjstatus location="file:<<<CONTEXT_USER_PATH>>>/dotfiles/.config/zellij/plugins/zjstatus.wasm" {
+        format_left   "{mode}#[bg=#29394F] {tabs}"
         format_center ""
         format_right  "#[bg=#29394F,fg=#719CD6]█#[bg=#719CD6,fg=#29394F,bold] #[bg=#2B3B51,fg=#719CD6,bold] {session} #[bg=#29394F,fg=#2B3B51,bold]"
         format_space  ""
         format_hide_on_overlength "true"
         format_precedence "crl"
 
-        border_enabled  "false"
+        border_enabled  "true"
         border_char     "─"
         border_format   "#[fg=#AEAFB0]{char}"
         border_position "top"
@@ -110,7 +111,7 @@ plugins {
         tab_active_sync         "#[bg=#29394F,fg=#F4A261]█#[bg=#F4A261,fg=#29394F,bold]{index} #[bg=#2B3B51,fg=#F4A261,bold] {name}{sync_indicator}#[bg=#29394F,fg=#2B3B51,bold]█"
 
         // separator between the tabs
-        tab_separator           "#[bg=#2b3b51] "
+        tab_separator           "#[bg=#29394F] "
 
         // indicators
         tab_sync_indicator       "  "

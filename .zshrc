@@ -151,8 +151,6 @@ alias zc='zellij action clear'
 
 [ -f "$HOME"/.zprofile ] && source ~/.zprofile
 
-eval "$(direnv hook zsh)"
-
 source <(procs --gen-completion-out zsh)
 
 eval "$(vfox activate zsh)"
@@ -169,7 +167,6 @@ if [[ "$TERM_PROGRAM" == "ghostty" ]]; then
   # Only add the preexec hook. OMP handles the precmd behavior now.
   add-zsh-hook -Uz preexec terminal_title_preexec
 fi
-
 
 export ZELLIJ_AUTO_ATTACH=true
 
