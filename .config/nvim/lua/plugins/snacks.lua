@@ -4,14 +4,14 @@ return {
     priority = 1000,
     opts = {
       picker = {
-        grep = {
-          hidden = true,
-        },
-        files = {
-          hidden = true,
-          ignored = true,
-          follow = true,
-        },
+        -- grep = {
+        --   hidden = true,
+        -- },
+        -- files = {
+        --   hidden = true,
+        --   ignored = true,
+        --   follow = true,
+        -- },
         sources = {
           explorer = {
             hidden = true,
@@ -74,6 +74,9 @@ return {
             },
           },
           grep = {
+            hidden = true,
+          },
+          files = {
             hidden = true,
           },
         },

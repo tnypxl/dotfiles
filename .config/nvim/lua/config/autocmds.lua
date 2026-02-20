@@ -49,3 +49,4 @@ for filetype, callback_func in pairs(filetype_settings) do
     callback = callback_func,
   })
 end
+

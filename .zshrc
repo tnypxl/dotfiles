@@ -6,7 +6,7 @@ if [[ -f "/opt/homebrew/bin/brew" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-eval "$(vfox activate zsh)"
+
 
 # Load Zinit
 if [[ -f "/opt/homebrew/opt/zinit/zinit.zsh" ]]; then
@@ -155,6 +155,7 @@ eval "$(direnv hook zsh)"
 
 source <(procs --gen-completion-out zsh)
 
+eval "$(vfox activate zsh)"
 eval "$(mise activate zsh)"
 
 if [[ "$TERM_PROGRAM" == "ghostty" ]]; then

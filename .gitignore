@@ -1,9 +1,10 @@
 .stow-local-ignore
 .tool-versions
-/.config/zellij/layouts/*
-!/.config/zellij/layouts/default.kdl
-/**/*.backup
+.config/mise/config.*.toml
+.config/zellij/layouts/*
+!.config/zellij/layouts/default.kdl
+**/*.backup
 .config/nvim/lazy-lock.json
-/**/.DS_Store
+**/.DS_Store
 .serena/logs/*
-/.serena/language_servers
+.serena/language_servers

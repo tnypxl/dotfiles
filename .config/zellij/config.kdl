@@ -71,6 +71,61 @@ plugins {
     welcome-screen location="zellij:session-manager" {
         welcome_screen true
     }
+    zjstatus location="file:~/dotfiles/.config/zellij/plugins/zjstatus.wasm" {
+        format_lgveft   "{mode}#[bg=#1F1F28] {tabs}"
+        format_center ""
+        format_right  "#[bg=#1F1F28,fg=#7E9CD8]█#[bg=#7E9CD8,fg=#16161D,bold] #[bg=#2A2A37,fg=#7E9CD8,bold] {session} #[bg=#1F1F28,fg=#2A2A37,bold]"
+        format_space  ""
+        format_hide_on_overlength "true"
+        format_precedence "crl"
+
+        border_enabled  "true"
+        border_char     "─"
+        border_format   "#[fg=#54546D]{char}"
+        border_position "top"
+
+        mode_normal        "#[bg=#98BB6C,fg=#1F1F28,bold] NORMAL#[bg=#1F1F28,fg=#98BB6C]█"
+        mode_locked        "#[bg=#E46876,fg=#1F1F28,bold] LOCKED #[bg=#1F1F28,fg=#E46876]█"
+        mode_resize        "#[bg=#E46876,fg=#1F1F28,bold] RESIZE#[bg=#1F1F28,fg=#E46876]█"
+        mode_pane          "#[bg=#7E9CD8,fg=#1F1F28,bold] PANE#[bg=#1F1F28,fg=#7E9CD8]█"
+        mode_tab           "#[bg=#957FB8,fg=#1F1F28,bold] TAB#[bg=#1F1F28,fg=#957FB8]█"
+        mode_scroll        "#[bg=#FF9E3B,fg=#1F1F28,bold] SCROLL#[bg=#1F1F28,fg=#FF9E3B]█"
+        mode_enter_search  "#[bg=#7FB4CA,fg=#1F1F28,bold] ENT-SEARCH#[bg=#1F1F28,fg=#7FB4CA]█"
+        mode_search        "#[bg=#7FB4CA,fg=#1F1F28,bold] SEARCHARCH#[bg=#1F1F28,fg=#7FB4CA]█"
+        mode_rename_tab    "#[bg=#E6C384,fg=#1F1F28,bold] RENAME-TAB#[bg=#1F1F28,fg=#E6C384]█"
+        mode_rename_pane   "#[bg=#E6C384,fg=#1F1F28,bold] RENAME-PANE#[bg=#1F1F28,fg=#E6C384]█"
+        mode_session       "#[bg=#7E9CD8,fg=#1F1F28,bold] SESSION#[bg=#1F1F28,fg=#7E9CD8]█"
+        mode_move          "#[bg=#D27E99,fg=#1F1F28,bold] MOVE#[bg=#1F1F28,fg=#D27E99]█"
+        mode_prompt        "#[bg=#7FB4CA,fg=#1F1F28,bold] PROMPT#[bg=#1F1F28,fg=#7FB4CA]█"
+        mode_tmux          "#[bg=#FFA066,fg=#1F1F28,bold] TMUX#[bg=#1F1F28,fg=#FFA066]█"
+
+        // formatting for inactive tabs
+        tab_normal              "#[bg=#1F1F28,fg=#7E9CD8]█#[bg=#7E9CD8,fg=#16161D,bold]{index} #[bg=#2A2A37,fg=#7E9CD8,bold] {name}{floating_indicator}#[bg=#1F1F28,fg=#2A2A37,bold]█"
+        tab_normal_fullscreen   "#[bg=#1F1F28,fg=#7E9CD8]█#[bg=#7E9CD8,fg=#16161D,bold]{index} #[bg=#2A2A37,fg=#7E9CD8,bold] {name}{fullscreen_indicator}#[bg=#1F1F28,fg=#2A2A37,bold]█"
+        tab_normal_sync         "#[bg=#1F1F28,fg=#7E9CD8]█#[bg=#7E9CD8,fg=#16161D,bold]{index} #[bg=#2A2A37,fg=#7E9CD8,bold] {name}{sync_indicator}#[bg=#1F1F28,fg=#2A2A37,bold]█"
+
+        // formatting for the current active tab
+        tab_active              "#[bg=#1F1F28,fg=#FFA066]█#[bg=#FFA066,fg=#16161D,bold]{index} #[bg=#2A2A37,fg=#FFA066,bold] {name}{floating_indicator}#[bg=#1F1F28,fg=#2A2A37,bold]█"
+        tab_active_fullscreen   "#[bg=#1F1F28,fg=#FFA066]█#[bg=#FFA066,fg=#16161D,bold]{index} #[bg=#2A2A37,fg=#FFA066,bold] {name}{fullscreen_indicator}#[bg=#1F1F28,fg=#2A2A37,bold]█"
+        tab_active_sync         "#[bg=#1F1F28,fg=#FFA066]█#[bg=#FFA066,fg=#16161D,bold]{index} #[bg=#2A2A37,fg=#FFA066,bold] {name}{sync_indicator}#[bg=#1F1F28,fg=#2A2A37,bold]█"
+
+        // separator between the tabs
+        tab_separator           "#[bg=#1F1F28] "
+
+        // indicators
+        tab_sync_indicator       "  "
+        tab_fullscreen_indicator " 󰊓"
+        tab_floating_indicator   " 󰹙 "
+
+        command_git_branch_command     "git rev-parse --abbrev-ref HEAD"
+        command_git_branch_format      "#[fg=blue] {stdout} "
+        command_git_branch_interval    "10"
+        command_git_branch_rendermode  "static"
+
+        datetime        "#[fg=#54546D,bold] {format} "
+        datetime_format "%A, %d %b %Y %H:%M"
+        datetime_timezone "America/Chicago"
+    }
 }
 
 themes {
@@ -87,9 +142,100 @@ themes {
     black "#1F1F28"
     white "#DCD7BA"
   }
+  carbonfox {
+    bg "#2a2a2a"
+    fg "#f2f4f8"
+    red "#ee5396"
+    green "#25be6a"
+    blue "#78a9ff"
+    yellow "#08bdba"
+    magenta "#be95ff"
+    orange "#3ddbd9"
+    cyan "#33b1ff"
+    black "#353535"
+    white "#b6b8bb"
+  }
+  dawnfox {
+    bg "#d0d8d8"
+    fg "#575279"
+    red "#b4637a"
+    green "#618774"
+    blue "#286983"
+    yellow "#ea9d34"
+    magenta "#907aa9"
+    orange "#d7827e"
+    cyan "#56949f"
+    black "#ebdfe4"
+    white "#625c87"
+  }
+  dayfox {
+    bg "#e7d2be"
+    fg "#3d2b5a"
+    red "#a5222f"
+    green "#396847"
+    blue "#2848a9"
+    yellow "#ac5402"
+    magenta "#6e33ce"
+    orange "#955f61"
+    cyan "#287980"
+    black "#d3c7bb"
+    white "#643f61"
+  }
+  duskfox {
+    bg "#433c59"
+    fg "#e0def4"
+    red "#eb6f92"
+    green "#a3be8c"
+    blue "#569fba"
+    yellow "#f6c177"
+    magenta "#c4a7e7"
+    orange "#ea9a97"
+    cyan "#9ccfd8"
+    black "#373354"
+    white "#cdcbe0"
+  }
+  nightfox {
+    bg "#2b3b51"
+    fg "#cdcecf"
+    red "#c94f6d"
+    green "#81b29a"
+    blue "#719cd6"
+    yellow "#dbc074"
+    magenta "#9d79d6"
+    orange "#f4a261"
+    cyan "#63cdcf"
+    black "#29394f"
+    white "#aeafb0"
+  }
+  nordfox {
+    bg "#3e4a5b"
+    fg "#cdcecf"
+    red "#bf616a"
+    green "#a3be8c"
+    blue "#81a1c1"
+    yellow "#ebcb8b"
+    magenta "#b48ead"
+    orange "#c9826b"
+    cyan "#88c0d0"
+    black "#444c5e"
+    white "#abb1bb"
+  }
+  terafox {
+    bg "#293e40"
+    fg "#e6eaea"
+    red "#e85c51"
+    green "#7aa4a1"
+    blue "#5a93aa"
+    yellow "#fda47f"
+    magenta "#ad5c7c"
+    orange "#ff8349"
+    cyan "#a1cdd8"
+    black "#254147"
+    white "#cbd9d8"
+  }
 }
 
-theme "kanagawa"
+theme "nightfox"
 
 pane_frames true
 

@@ -25,13 +25,5 @@ echo "=== NodeJS: Installing Claude Code Router"
 npm install -g @musistudio/claude-code-router
 '''
 
-[tools.go]
-version = "latest"
-postinstall = '''
-echo "=== Go (package): Installing gopls"
-go install golang.org/x/tools/gopls@latest
 
-echo "=== Go (local): Installing scrpt"
-cd ~/Buckle/scrpt; go install .
-''''
 
