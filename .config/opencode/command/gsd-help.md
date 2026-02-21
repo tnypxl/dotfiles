@@ -12,10 +12,10 @@ Output ONLY the reference content below. Do NOT add:
 </objective>
 
 <execution_context>
-@/Users/arikj/.config/opencode/get-shit-done/workflows/help.md
+@/Users/arik/.config/opencode/get-shit-done/workflows/help.md
 </execution_context>
 
 <process>
-Output the complete GSD command reference from @/Users/arikj/.config/opencode/get-shit-done/workflows/help.md.
+Output the complete GSD command reference from @/Users/arik/.config/opencode/get-shit-done/workflows/help.md.
 Display the reference content directly — no additions or modifications.
 </process>

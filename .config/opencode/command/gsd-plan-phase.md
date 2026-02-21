@@ -1,6 +1,6 @@
 ---
-description: Create detailed execution plan for a phase (PLAN.md) with verification loop
-argument-hint: "[phase] [--research] [--skip-research] [--gaps] [--skip-verify]"
+description: Create detailed phase plan (PLAN.md) with verification loop
+argument-hint: "[phase] [--auto] [--research] [--skip-research] [--gaps] [--skip-verify]"
 agent: gsd-planner
 tools:
   read: true
@@ -21,8 +21,8 @@ Create executable phase prompts (PLAN.md files) for a roadmap phase with integra
 </objective>
 
 <execution_context>
-@/Users/arikj/.config/opencode/get-shit-done/workflows/plan-phase.md
-@/Users/arikj/.config/opencode/get-shit-done/references/ui-brand.md
+@/Users/arik/.config/opencode/get-shit-done/workflows/plan-phase.md
+@/Users/arik/.config/opencode/get-shit-done/references/ui-brand.md
 </execution_context>
 
 <context>
@@ -38,6 +38,6 @@ Normalize phase input in step 2 before any directory lookups.
 </context>
 
 <process>
-Execute the plan-phase workflow from @/Users/arikj/.config/opencode/get-shit-done/workflows/plan-phase.md end-to-end.
+Execute the plan-phase workflow from @/Users/arik/.config/opencode/get-shit-done/workflows/plan-phase.md end-to-end.
 Preserve all workflow gates (validation, research, planning, verification loop, routing).
 </process>

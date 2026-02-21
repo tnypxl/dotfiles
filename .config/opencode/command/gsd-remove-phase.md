@@ -15,17 +15,16 @@ Output: Phase deleted, all subsequent phases renumbered, git commit as historica
 </objective>
 
 <execution_context>
-@/Users/arikj/.config/opencode/get-shit-done/workflows/remove-phase.md
+@/Users/arik/.config/opencode/get-shit-done/workflows/remove-phase.md
 </execution_context>
 
 <context>
 Phase: $ARGUMENTS
 
-@.planning/ROADMAP.md
-@.planning/STATE.md
+Roadmap and state are resolved in-workflow via `init phase-op` and targeted reads.
 </context>
 
 <process>
-Execute the remove-phase workflow from @/Users/arikj/.config/opencode/get-shit-done/workflows/remove-phase.md end-to-end.
+Execute the remove-phase workflow from @/Users/arik/.config/opencode/get-shit-done/workflows/remove-phase.md end-to-end.
 Preserve all validation gates (future phase check, work check), renumbering logic, and commit.
 </process>

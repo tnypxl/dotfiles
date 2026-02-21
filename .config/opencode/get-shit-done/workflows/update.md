@@ -13,11 +13,12 @@ Detect whether GSD is installed locally or globally by checking both locations:
 
 ```bash
 # Check local first (takes priority)
-if [ -f "./.claude/get-shit-done/VERSION" ]; then
-  cat "./.claude/get-shit-done/VERSION"
+# Paths templated at install time for runtime compatibility
+if [ -f ./.opencode/get-shit-done/VERSION ]; then
+  cat ./.opencode/get-shit-done/VERSION
   echo "LOCAL"
-elif [ -f /Users/arikj/.config/opencode/get-shit-done/VERSION ]; then
-  cat /Users/arikj/.config/opencode/get-shit-done/VERSION
+elif [ -f /Users/arik/.config/opencode/get-shit-done/VERSION ]; then
+  cat /Users/arik/.config/opencode/get-shit-done/VERSION
   echo "GLOBAL"
 else
   echo "UNKNOWN"
@@ -121,7 +122,7 @@ Exit.
 - `get-shit-done/` will be wiped and replaced
 - `agents/gsd-*` files will be replaced
 
-(Paths are relative to your install location: `/Users/arikj/.config/opencode/` for global, `./.claude/` for local)
+(Paths are relative to your install location: `/Users/arik/.config/opencode/` for global, `./.opencode/` for local)
 
 Your custom files in other locations are preserved:
 - Custom commands not in `commands/gsd/` ✓
@@ -160,13 +161,14 @@ Clear the update cache so statusline indicator disappears:
 
 **If LOCAL install:**
 ```bash
-rm -f ./.claude/cache/gsd-update-check.json
+rm -f ./.opencode/cache/gsd-update-check.json
 ```
 
 **If GLOBAL install:**
 ```bash
-rm -f /Users/arikj/.config/opencode/cache/gsd-update-check.json
+rm -f /Users/arik/.config/opencode/cache/gsd-update-check.json
 ```
+(Paths are templated at install time for runtime compatibility)
 </step>
 
 <step name="display_result">
