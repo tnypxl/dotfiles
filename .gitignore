@@ -1,6 +1,7 @@
 .stow-local-ignore
 .tool-versions
 .config/mise/config.*.toml
+.config/mise/mise.*.toml
 .config/zellij/layouts/*
 !.config/zellij/layouts/default.kdl
 **/*.backup
