@@ -1,3 +1,4 @@
+
 // If you'd like to override the default keybindings completely, be sure to change "keybinds" to "keybinds clear-defaults=true"
 keybinds {
     normal clear-defaults=true {
@@ -71,7 +72,7 @@ plugins {
     welcome-screen location="zellij:session-manager" {
         welcome_screen true
     }
-    zjstatus location="file:/Users/arik/dotfiles/.config/zellij/plugins/zjstatus.wasm" {
+    zjstatus location="file:/Users/arikj/dotfiles/.config/zellij/plugins/zjstatus.wasm" {
         format_left   "{mode}#[bg=#1F1F28] {tabs}"
         format_center ""
         format_right  "#[bg=#2A2A37,fg=#7E9CD8]█#[bg=#7E9CD8,fg=#2A2A37,bold] #[bg=#363646,fg=#7E9CD8,bold] {session} #[bg=#2A2A37,fg=#363646,bold]"
