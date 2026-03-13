@@ -3,6 +3,7 @@
 .config/mise/config.*.toml
 .config/mise/mise.*.toml
 .config/zellij/layouts/*
+.config/zellij/config.*.kdl
 !.config/zellij/layouts/default.kdl
 **/*.backup
 .config/nvim/lazy-lock.json
