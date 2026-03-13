@@ -17,6 +17,11 @@ terraform-ls = "0.36.4"
 erlang = "latest"
 spacectl = "1.16.0"
 golangci-lint = "latest"
+go = { version = "latest", postinstall = """
+echo "=== Go (package): Installing gopls"
+go install golang.org/x/tools/gopls@latest
+""" }
+gum = "latest"
 
 [tools.node]
 version = "lts"
@@ -24,6 +29,3 @@ postinstall = '''
 echo "=== NodeJS: Installing Claude Code Router"
 npm install -g @musistudio/claude-code-router
 '''
-
-
-
