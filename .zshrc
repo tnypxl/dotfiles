@@ -30,7 +30,7 @@ autoload -Uz compinit && compinit
 
 export BUN_INSTALL="$HOME/.bun"
 export PATH="/opt/homebrew/bin:$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$BUN_INSTALL/bin:$PATH"
-export EDITOR="zed -n"
+export EDITOR="nvim"
 export TERM=xterm-256color
 export WORDCHARS='*?[]~=&;!#$%^(){}<>'
 

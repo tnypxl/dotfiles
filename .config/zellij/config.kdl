@@ -248,6 +248,8 @@ themes {
   }
 }
 
+// Appearance
+
 theme "kanagawa"
 
 pane_frames true
@@ -257,3 +259,7 @@ ui {
     rounded_corners true
   }
 }
+
+// Other Settings
+
+copy_on_select false
