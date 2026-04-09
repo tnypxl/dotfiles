@@ -14,12 +14,12 @@ cursor-click-to-move = true
 adjust-cursor-thickness = 1
 
 # Cell
-adjust-cell-height = 20%
+adjust-cell-height = 6
 
 # Window
-window-decoration = none
-window-padding-x = 8
-window-padding-y = 8,1
+window-decoration = auto
+window-padding-x = 15
+window-padding-y = 15
 window-padding-balance = true
 window-save-state = always
 unfocused-split-opacity = 0.6
@@ -27,6 +27,7 @@ scrollback-limit = 100000
 
 # macOS
 macos-titlebar-style = hidden
+macos-window-buttons = hidden
 macos-secure-input-indication = true
 
 # Shell

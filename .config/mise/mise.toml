@@ -22,6 +22,7 @@ echo "=== Go (package): Installing gopls"
 go install golang.org/x/tools/gopls@latest
 """ }
 gum = "latest"
+lazygit = "latest"
 
 [tools.node]
 version = "lts"
