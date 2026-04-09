@@ -29,7 +29,8 @@ Exit.
 Load phase operation context:
 
 ```bash
-INIT=$(node /Users/arik/.config/opencode/get-shit-done/bin/gsd-tools.cjs init phase-op "0")
+INIT=$(node "$HOME/.config/opencode/get-shit-done/bin/gsd-tools.cjs" init phase-op "0")
+if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
 ```
 
 Check `roadmap_exists` from init JSON. If false:
@@ -44,7 +45,7 @@ Exit.
 **Delegate the phase addition to gsd-tools:**
 
 ```bash
-RESULT=$(node /Users/arik/.config/opencode/get-shit-done/bin/gsd-tools.cjs phase add "${description}")
+RESULT=$(node "$HOME/.config/opencode/get-shit-done/bin/gsd-tools.cjs" phase add "${description}")
 ```
 
 The CLI handles:
@@ -86,9 +87,9 @@ Roadmap updated: .planning/ROADMAP.md
 
 **Phase {N}: {description}**
 
-`/gsd-plan-phase {N}`
+`/clear` then:
 
-<sub>`/clear` first → fresh context window</sub>
+`/gsd-plan-phase {N}`
 
 ---
 

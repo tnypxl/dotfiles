@@ -12,14 +12,15 @@ Read all files referenced by the invoking prompt's execution_context before star
 Load todo context:
 
 ```bash
-INIT=$(node /Users/arik/.config/opencode/get-shit-done/bin/gsd-tools.cjs init todos)
+INIT=$(node "$HOME/.config/opencode/get-shit-done/bin/gsd-tools.cjs" init todos)
+if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
 ```
 
 Extract from init JSON: `commit_docs`, `date`, `timestamp`, `todo_count`, `todos`, `pending_dir`, `todos_dir_exists`.
 
 Ensure directories exist:
 ```bash
-mkdir -p .planning/todos/pending .planning/todos/done
+mkdir -p .planning/todos/pending .planning/todos/completed
 ```
 
 Note existing areas from the todos array for consistency in infer_area step.
@@ -62,7 +63,7 @@ Use existing area from step 2 if similar match exists.
 <step name="check_duplicates">
 ```bash
 # Search for key words from title in existing todos
-grep -l -i "[key words from title]" .planning/todos/pending/*.md 2>/dev/null
+grep -l -i "[key words from title]" .planning/todos/pending/*.md 2>/dev/null || true
 ```
 
 If potential duplicate found:
@@ -83,7 +84,7 @@ Use values from init context: `timestamp` and `date` are already available.
 
 Generate slug for the title:
 ```bash
-slug=$(node /Users/arik/.config/opencode/get-shit-done/bin/gsd-tools.cjs generate-slug "$title" --raw)
+slug=$(node "$HOME/.config/opencode/get-shit-done/bin/gsd-tools.cjs" generate-slug "$title" --raw)
 ```
 
 Write to `.planning/todos/pending/${date}-${slug}.md`:
@@ -99,7 +100,7 @@ files:
 
 ## Problem
 
-[problem description - enough context for future Claude to understand weeks later]
+[problem description - enough context for future the agent to understand weeks later]
 
 ## Solution
 
@@ -118,7 +119,7 @@ If `.planning/STATE.md` exists:
 Commit the todo and any updated state:
 
 ```bash
-node /Users/arik/.config/opencode/get-shit-done/bin/gsd-tools.cjs commit "docs: capture todo - [title]" --files .planning/todos/pending/[filename] .planning/STATE.md
+node "$HOME/.config/opencode/get-shit-done/bin/gsd-tools.cjs" commit "docs: capture todo - [title]" --files .planning/todos/pending/[filename] .planning/STATE.md
 ```
 
 Tool respects `commit_docs` config and gitignore automatically.
@@ -149,7 +150,7 @@ Would you like to:
 <success_criteria>
 - [ ] Directory structure exists
 - [ ] Todo file created with valid frontmatter
-- [ ] Problem section has enough context for future Claude
+- [ ] Problem section has enough context for future the agent
 - [ ] No duplicates (checked and resolved)
 - [ ] Area consistent with existing todos
 - [ ] STATE.md updated if exists
