@@ -13,9 +13,13 @@
       "models": {
         "glm-4.7-flash:latest": {
           "name": "glm-4.7-flash:latest"
+        },
+        "glm-5.1:cloud": {
+          "_launch": true,
+          "name": "glm-5.1:cloud"
         }
       },
-      "name": "Ollama (local)",
+      "name": "Ollama",
       "npm": "@ai-sdk/openai-compatible",
       "options": {
         "baseURL": "http://localhost:11434/v1"
