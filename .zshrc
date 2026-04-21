@@ -147,7 +147,7 @@ alias la="eza -lbhHigUmua $eza_params"
 alias lx="eza -lbhHigUmua@ $eza_params"
 alias lt="eza --tree $eza_params"
 alias tree="eza --tree $eza_params"
-alias zc='zellij action clear'
+alias zclear='zellij action clear'
 
 [ -f "$HOME"/.zprofile ] && source ~/.zprofile
 
