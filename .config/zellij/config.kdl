@@ -262,4 +262,4 @@ ui {
 
 // Other Settings
 
-copy_on_select false
+copy_on_select true
