@@ -54,7 +54,7 @@ When tasks are added, changed, or superseded by resolution tasks, notify the hum
 ### Change Classification
 - *Additive*: a new task is added that doesn't affect existing tasks. Notify the human that Execution and Verification may need a new entry added. No forced review of existing items.
 - *Corrective*: an existing task's description or checklist changes in a way that affects how it would be executed or verified. Flag the corresponding Execution log entry and Verification check by reference.
-- *Fundamental*: Approach Conflicts section is populated, indicating the approach itself is wrong. Halt plan advancement. Escalate to the human to return to the approach before execution or verification is considered.
+- *Fundamental*: Approach Conflicts section is populated, indicating the approach itself is wrong or insufficient. Halt plan advancement. Escalate to the human to return to the approach before execution or verification is considered.
 
 ## Rules
 - Never proceed if the session file's `phase` is not `plan`.
