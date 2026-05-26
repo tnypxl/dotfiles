@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(rm -fr *)",
+      "Bash(sudo *)",
+      "Bash(mkfs *)",
+      "Bash(dd *)",
+      "Bash(curl *|bash*)",
+      "Bash(wget *|bash*)",
+      "Bash(git push --force*)",
+      "Bash(git push *--force*)",
+      "Bash(git reset --hard*)",
+      "Read(~/.ssh/**)",
+      "Read(~/.gnupg/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.azure/**)",
+      "Read(~/.config/gh/**)",
+      "Read(~/.git-credentials)",
+      "Read(~/.docker/config.json)",
+      "Read(~/.kube/**)",
+      "Read(~/.npmrc)",
+      "Read(~/.npm/**)",
+      "Read(~/.pypirc)",
+      "Read(~/.gem/credentials)",
+      "Read(~/Library/Keychains/**)",
+    ],
+    "ask": [
+      "Edit(~/.bashrc)",
+      "Edit(~/.zshrc)",
+      "Edit(~/.ssh/**)"
+    ]
+  }
+}
