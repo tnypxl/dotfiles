@@ -13,3 +13,10 @@
 
 **/*.backup
 **/.DS_Store
+
+!/.claude/
+
+# ZSH
+
+.zshenv
+.zprofile

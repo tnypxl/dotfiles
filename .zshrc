@@ -2,33 +2,8 @@
 # shellcheck disable=SC1090
 # shellcheck disable=SC1094
 
-if [[ -f "/opt/homebrew/bin/brew" ]]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
+source ~/.zsh-common
 
-
-
-# Load Zinit
-if [[ -f "/opt/homebrew/opt/zinit/zinit.zsh" ]]; then
-    source '/opt/homebrew/opt/zinit/zinit.zsh'
-fi
-
-
-eval "$(oh-my-posh init zsh --config ${HOME}/.config/ohmyposh/zen.toml)"
-
-# Set the directory we want to store zinit and plugins
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-
-# Add custom completion directories to fpath BEFORE compinit
-fpath=("$HOME/.config/completions" "${fpath[@]}")
-fpath=("$HOME/.docker/completions" "${fpath[@]}")
-
-# Load zsh-completions
-autoload -Uz compinit && compinit
-# autoload -Uz bashcompinit && bashcompinit
-
-
-export BUN_INSTALL="$HOME/.bun"
 export PATH="/opt/homebrew/bin:$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$BUN_INSTALL/bin:$PATH"
 export EDITOR="nvim"
 export TERM=xterm-256color
@@ -147,11 +122,8 @@ alias lt="eza --tree $eza_params"
 alias tree="eza --tree $eza_params"
 alias zclear='zellij action clear'
 
-[ -f "$HOME"/.zprofile ] && source ~/.zprofile
-
 source <(procs --gen-completion-out zsh)
 
-eval "$(vfox activate zsh)"
 eval "$(mise activate zsh)"
 
 if [[ "$TERM_PROGRAM" == "ghostty" ]]; then
