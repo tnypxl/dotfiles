@@ -1,83 +1,90 @@
 ---
-skill: plan
-version: 1.1
-command: /plan
-description: Decompose the approach into ordered, executable tasks grounded against available research.
+name: plan
+description: Decompose an approach into ordered, executable tasks grounded against available research. Use whenever the human says "plan this", "break this down", "what are the steps", references a `<stem>.plan.md` or `<stem>.approach.md`, or asks to turn a strategy into concrete work — for code, writing, decisions, team processes, personal planning, or any domain — even when they don't name the skill. Prefer this skill over jumping to /execute whenever the approach is committed but tasks have not been ordered and scoped.
 ---
 
 # Plan
 
+Read [`../WORKFLOW.md`](../WORKFLOW.md) before proceeding. It owns session, status, Open Questions, blockquote, and cross-phase edit conventions.
+
 ## Purpose
+
 This skill translates the approach into concrete, ordered tasks. It is the first point in the process where execution is described in specific terms. If investigation is needed before tasks can be responsibly defined, a research document should be generated first. If grounding reveals conflicts with the approach, those must be resolved before the plan can advance.
 
 ## Invocation
-When called, look for a `session.yml` file in the current context. If none exists, generate it by prompting the human for a stem value, then create `session.yml` as follows:
 
-```yaml
-stem: <human-provided value>
-phase: plan
-note: 
-```
+Confirm `phase: plan` in `session.yml`. If missing, bootstrap with `python ../scripts/init_phase.py plan <stem>` or prompt the human for a stem and create the session file manually.
 
-Once the session file exists, read it and confirm `phase` is `plan`. Then assess whether a `<stem>.research.md` is needed before generating tasks. If so, invoke the research skill first and incorporate its output into the Research Summary. Then generate the document template below with `status: draft`, populate the Overview, and begin generating tasks. Populate Approach Conflicts if grounding reveals issues.
-
-## Session File
-Before doing anything, locate and read `session.yml`.
-- `stem`: used to locate all phase documents (`<stem>.discuss.md`, `<stem>.approach.md`, etc.)
-- `phase`: must equal `plan` for this skill to proceed. If it does not, inform the human and stop.
-- `note`: read as session context. Do not modify.
-
-Never write to the session file. It is human-owned.
+Assess whether a `<stem>.research.md` is needed before generating tasks. If so, invoke the research skill first and incorporate its output into the Research Summary. Then generate `<stem>.plan.md` from the template below with `status: draft`, populate the Overview, and begin generating tasks. Populate Approach Conflicts if grounding reveals issues.
 
 ## Behavior
+
 - Generate tasks based on the approach and any available research.
-- Number tasks sequentially using `T1`, `T2`, etc. Numbers are permanent. Never renumber.
+- Number tasks sequentially using `T1`, `T2`, etc.
 - Each task gets a `## T-` heading, a prose description, and a checklist. Dependencies are the first checkbox items in the list.
 - Use `### ` sub-sections within a task only when necessary. Prefer splitting into multiple tasks instead.
 - Nest plain bullet points under checklist items when additional detail is needed for a specific item.
 - Populate Approach Conflicts if any finding conflicts with the approach. Stop generating tasks and prompt the human to return to the approach when this section has content.
-- Use blockquotes at the bottom of relevant sections for human notes and adjustments.
-- Do not update document status. Signal readiness to advance or flag blockers in conversation.
+- Signal readiness to advance, or flag blockers, in conversation.
 
 ## Phase Relationships
 
 ### Upstream
-Draws from Approach: Thesis, Structure, Assumptions.
-Draws from Research (when present): Findings, Implications, Gaps.
-Tasks are generated against these elements. If either upstream document changes, identify which specific tasks were built against the changed elements and flag those by number. Do not regenerate the full plan unprompted.
+
+Draws from Approach: Thesis, Structure, Assumptions. Draws from Research (when present): Findings, Implications, Gaps. Tasks are generated against these elements. If either upstream document changes, identify which specific tasks were built against the changed elements and flag those by number. Do not regenerate the full plan unprompted.
 
 ### Downstream
-Execution draws from: task headings (T1, T2...) and their checklist items as the work to be performed.
-Verification draws from: task headings and their completion state.
-When tasks are added, changed, or superseded by resolution tasks, notify the human that both the Execution and Verification documents may need corresponding updates.
+
+Execution draws from task headings (T1, T2...) and their checklist items as the work to be performed. Verification draws from task headings and their completion state. When tasks are added, changed, or superseded by resolution tasks, notify the human that both the Execution and Verification documents may need corresponding updates.
 
 ### Change Classification
+
 - *Additive*: a new task is added that doesn't affect existing tasks. Notify the human that Execution and Verification may need a new entry added. No forced review of existing items.
 - *Corrective*: an existing task's description or checklist changes in a way that affects how it would be executed or verified. Flag the corresponding Execution log entry and Verification check by reference.
 - *Fundamental*: Approach Conflicts section is populated, indicating the approach itself is wrong or insufficient. Halt plan advancement. Escalate to the human to return to the approach before execution or verification is considered.
 
 ## Rules
-- Never proceed if the session file's `phase` is not `plan`.
-- Never write to the session file.
-- Never advance status if Approach Conflicts contains unresolved entries.
-- Task numbering is sequential and permanent. Never renumber existing tasks.
-- Research Summary is only present when a `<stem>.research.md` was generated.
-- Approach Conflicts entries must state: what was found, why it conflicts, and what change is recommended.
-- Never delete resolved questions. Mark them checked.
-- Never advance document status.
+
+- Task numbering is sequential and permanent. Never renumber. Execution log entries and verification checks reference task numbers by name; renumbering silently invalidates every downstream pointer.
+- Never advance status if Approach Conflicts contains unresolved entries. The plan is structurally untrustworthy until those resolve; a downstream phase acting on it will compound the conflict.
+- Research Summary is present only when a `<stem>.research.md` was generated. An empty Research Summary tells a future reader something was missed; omitting the section tells them nothing was needed.
+- Approach Conflicts entries must state what was found, why it conflicts, and what change is recommended. An unattributed conflict is not actionable.
+- Never delete a resolved Open Question. Mark `[x]` and leave it.
+- Never write to `session.yml`. Never advance document status. (See WORKFLOW.md.)
 
 ## Guidance
+
 - Prefer multiple smaller tasks over a single complex one with sub-sections.
 - Task descriptions should explain why the task exists in the context of the plan, not just restate what the checklist items say.
 - Dependencies at the top of a checklist keep sequencing visible and actionable.
 - If a task feels too large to describe in a short paragraph, it probably needs to be split.
 
+## Example
+
+Stem: `weekly-reviews`. The approach committed to async pre-read + live interpretation. One early task:
+
+```markdown
+## T1 - Draft the pre-read template
+
+This task produces the artifact that the rest of the approach depends on. Research flagged
+template design as the highest-risk decision; we want the first version in the team's hands
+quickly so we can iterate based on real submissions rather than imagined ones.
+
+- [ ] Depends on: <none>
+- [ ] Draft a one-page template with sections for "what changed", "what didn't change", and "decisions wanted"
+  - Each section should be answerable in three to five bullets
+- [ ] Circulate the draft to two team members for a sanity pass
+- [ ] Revise based on their feedback and commit the v1 template to the team wiki
+```
+
+Note that "Depends on: <none>" is explicit even when there are no dependencies — it confirms the absence rather than leaving the reader to infer it.
+
 ## Document Template
 
 ```markdown
 ---
-title: 
-date: 
+title:
+date:
 status: draft
 ---
 
@@ -97,7 +104,6 @@ Description of what this task is and why it exists within the broader plan.
 - [ ] Depends on: <none>
 - [ ] Checklist item
 - [ ] Another checklist item
-  - Additional detail or context if needed
 
 ## Approach Conflicts
 
@@ -107,5 +113,5 @@ Description of what this task is and why it exists within the broader plan.
 
 ## Open Questions
 
-<!-- Both LLM and human may add questions. Format: - [ ] Q1: <question> -->
+<!-- Format: - [ ] Q1: <question> -->
 ```
