@@ -1,11 +1,11 @@
 ---
 name: discuss
-description: Clarify, shape, and sharpen intent through structured back-and-forth before any approach work begins. Use whenever the human says "let's talk through", "I want to think about", "help me figure out", references a `<stem>.discuss.md`, or arrives with a directed goal that still needs scoping — for code, writing, decisions, team processes, personal planning, or any domain — even when they don't name the skill explicitly. Prefer this skill over jumping to /approach whenever the goal is named but scope, constraints, or success criteria are still loose.
+description: Clarify, shape, and sharpen intent through structured back-and-forth before any approach work begins. Use whenever the human says "let's talk through", "I want to think about", "help me figure out", references a `.discuss.md` document, or arrives with a directed goal that still needs scoping — for code, writing, decisions, team processes, personal planning, or any domain — even when they don't name the skill explicitly. Prefer this skill over jumping to /approach whenever the goal is named but scope, constraints, or success criteria are still loose.
 ---
 
 # Discuss
 
-Read [`../WORKFLOW.md`](../WORKFLOW.md) before proceeding. It owns session, status, Open Questions, blockquote, and cross-phase edit conventions.
+Read [`../WORKFLOW.md`](../WORKFLOW.md) before proceeding. It owns session, cadence, status, Open Questions, blockquote, cross-phase edit, and artifact-hygiene conventions.
 
 ## Purpose
 
@@ -13,16 +13,19 @@ This skill takes a directed but under-shaped intent and develops it into a well-
 
 ## Invocation
 
-Confirm `phase: discuss` in `session.yml`. If missing, bootstrap with `python ../scripts/init_phase.py discuss <stem>` or prompt the human for a stem and create the session file manually.
+Confirm `phase: discuss` in `session.yml`. If missing, bootstrap with `python <path-to>/scripts/init_phase.py discuss <stem>` or prompt the human for a stem and create the session file manually.
 
-Then generate `<stem>.discuss.md` from the template below with `status: draft` and prompt the human to fill in the Intent section. Once they provide it, populate an initial Synthesis reflecting early understanding, and begin asking clarifying questions via the Open Questions queue.
+Then generate the discuss document — named `<index>.2.discuss.md` per WORKFLOW.md's Stems and Naming — from the template below with `status: draft` and prompt the human to fill in the Intent section. Once they provide it, capture a brief initial Synthesis predicting the scope and trajectory the Intent implies, then raise the single highest-leverage clarifying question (see Cadence — at most two). Leave Scope and Constraints to fill in one boundary at a time as questions resolve; do not populate them up front.
 
-If a `<stem>.discover.md` exists, draw on its Candidate Intents, Surface, and Tensions as starting context for Synthesis. Do not copy them verbatim; the human's Intent supersedes whatever discovery surfaced.
+If a discover document (`<index>.1.discover.md`) exists, draw on its Candidate Intents, Surface, and Tensions as starting context for Synthesis. Do not copy them verbatim; the human's Intent supersedes whatever discovery surfaced.
 
 ## Behavior
 
-- Maintain and progressively update Synthesis as understanding develops across the session.
-- Add questions to Open Questions using the `Q1`, `Q2` convention. The human may also add questions.
+- Work one or two threads per turn (see Cadence in WORKFLOW.md). In this phase a thread is a single clarifying question, a single scope boundary (one In or one Out item), a single constraint, or one increment to Synthesis.
+- The value you add each turn is a tight prediction: from the Intent and the human's latest answer, name the one ambiguity whose resolution would most sharpen scope or success criteria, and raise it. Predict narrow, and surface the prediction as a question for the human to confirm — never as settled fact written into Synthesis.
+- Advance Synthesis by the increment the latest answer earns — not a wholesale rewrite, and only with understanding the human has actually confirmed.
+- Add Scope boundaries and Constraints one at a time as they are confirmed, not in a sweep.
+- Add questions to Open Questions using the `Q1`, `Q2` convention, no more than one or two per turn. The human may also add questions.
 - Mark resolved questions `[x]`. Never delete them.
 - Signal when you believe the document is ready to advance by stating it in conversation, not by modifying status or the session file.
 
@@ -45,14 +48,15 @@ Approach draws directly from Intent, Scope, Constraints, and Synthesis. If any o
 ## Rules
 
 - Never modify the Intent section after the human has written it. Intent is the anchor every downstream phase traces back to; silently mutating it breaks the grounding of everything that comes after.
-- Never guess, deduce, or assume beyond what the human has explicitly stated. Synthesis is a reflection of agreed understanding, not an opportunity for interpretation. Untracked inference here propagates as if it were the human's own commitment.
+- Never guess, deduce, or assume beyond what the human has explicitly stated. Synthesis is a reflection of agreed understanding, not an opportunity for interpretation. Untracked inference here propagates as if it were the human's own commitment. A prediction of scope or trajectory is allowed only as a question the human can confirm or reject, never as content written into Synthesis on its own authority.
+- Never raise more than one or two Open Questions in a turn, or advance more than one or two threads. Scope sharpened one boundary at a time stays unwindable; a batch of questions forces the human to weigh entangled answers at once.
 - Never remove a resolved Open Question. The trail of what was asked and resolved is how the document explains itself to a future reader.
 - Never write to `session.yml`. Never advance document status. (See WORKFLOW.md.)
 
 ## Guidance
 
 - Prefer sharpening existing scope over expanding it. More scope is rarely the answer at this stage.
-- When multiple questions are open, prioritize those that block understanding of scope or constraints.
+- When more than one question competes to be asked, raise the one that most blocks understanding of scope or constraints first, and hold the rest for later turns.
 - One question per Q item. Compound questions obscure what's actually being asked.
 - If the human's responses reveal a shift in intent, note it explicitly before updating Synthesis.
 

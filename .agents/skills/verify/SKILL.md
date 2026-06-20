@@ -1,11 +1,11 @@
 ---
 name: verify
-description: Verify that a plan was executed correctly and that the outcome matches the original intent. Use whenever the human says "did this work", "are we done", "check the outcome", references a `<stem>.verify.md` or asks to close a session — for code, writing, decisions, team processes, personal commitments, or any domain — even when they don't name the skill. Prefer this skill over informal sign-off whenever a discuss + plan + execute chain exists; verification is the gate that prevents drift between intent and outcome.
+description: Verify that a plan was executed correctly and that the outcome matches the original intent. Use whenever the human says "did this work", "are we done", "check the outcome", references a `.verify.md` document or asks to close a session — for code, writing, decisions, team processes, personal commitments, or any domain — even when they don't name the skill. Prefer this skill over informal sign-off whenever a discuss + plan + execute chain exists; verification is the gate that prevents drift between intent and outcome.
 ---
 
 # Verify
 
-Read [`../WORKFLOW.md`](../WORKFLOW.md) before proceeding. It owns session, status, Open Questions, blockquote, and cross-phase edit conventions.
+Read [`../WORKFLOW.md`](../WORKFLOW.md) before proceeding. It owns session, cadence, status, Open Questions, blockquote, cross-phase edit, and artifact-hygiene conventions.
 
 ## Purpose
 
@@ -13,9 +13,9 @@ This skill closes the loop between execution and intent. It operates in two dist
 
 ## Invocation
 
-Confirm `phase: verify` in `session.yml`. If missing, bootstrap with `python ../scripts/init_phase.py verify <stem>` or prompt the human for a stem and create the session file manually.
+Confirm `phase: verify` in `session.yml`. If missing, bootstrap with `python <path-to>/scripts/init_phase.py verify <stem>` or prompt the human for a stem and create the session file manually.
 
-Read `<stem>.plan.md`, `<stem>.execute.md`, and `<stem>.discuss.md` before generating anything. Generate `<stem>.verify.md` from the template below with `status: draft`. Generate verification criteria for both Plan Verification and Outcome Verification. Prompt the human to review, add their own criteria, and begin checking items off as verification proceeds.
+Read the plan, execution, and discuss documents (`<index>.5.plan.md`, `<index>.6.execute.md`, `<index>.2.discuss.md`) before generating anything. Generate the verification document — named `<index>.7.verify.md` per WORKFLOW.md's Stems and Naming — from the template below with `status: draft`. Generate verification criteria for both Plan Verification and Outcome Verification. Prompt the human to review, add their own criteria, and begin checking items off as verification proceeds.
 
 ## Behavior
 

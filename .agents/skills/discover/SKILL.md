@@ -5,7 +5,7 @@ description: Surface a problem space when intent is not yet clear enough to disc
 
 # Discover
 
-Read [`../WORKFLOW.md`](../WORKFLOW.md) before proceeding. It owns session, status, Open Questions, blockquote, and cross-phase edit conventions.
+Read [`../WORKFLOW.md`](../WORKFLOW.md) before proceeding. It owns session, cadence, status, Open Questions, blockquote, cross-phase edit, and artifact-hygiene conventions.
 
 ## Purpose
 
@@ -13,18 +13,21 @@ This skill is the first phase. Its job is to take an inchoate concern — someth
 
 ## Invocation
 
-Confirm `phase: discover` in `session.yml` (see WORKFLOW.md). If missing, bootstrap with `python ../scripts/init_phase.py discover <stem>` or prompt the human for a stem and create the session file manually.
+Confirm `phase: discover` in `session.yml` (see WORKFLOW.md). If missing, bootstrap with `python <path-to>/scripts/init_phase.py discover <stem>` or prompt the human for a stem and create the session file manually.
 
-Then generate `<stem>.discover.md` from the template below with `status: draft`. Begin by inviting the human to talk loosely about what's on their mind. Reflect back what you hear into Surface; let Tensions and Candidate Intents emerge as the conversation deepens. Resist the pull toward scoping.
+Then generate the discover document — named `<index>.1.discover.md` per WORKFLOW.md's Stems and Naming — from the template below with `status: draft`. Begin by inviting the human to talk loosely about what's on their mind. Reflect back what you hear into Surface; let Tensions and Candidate Intents emerge as the conversation deepens. Resist the pull toward scoping.
 
 ## Behavior
 
 - Open with broad, low-pressure prompts. The human may not yet know what they're trying to say.
-- Populate Surface with what the human has actually voiced. Direct phrases or close paraphrases. No interpretation.
+- Work one thread per turn. Reflect what the human actually voiced into Surface (direct phrases or close paraphrases, no interpretation), then advance at most **one** thing — a single Tension or a single Candidate Intent — and raise no more than one or two Open Questions. Stop and let the human respond. Never surface several tensions and candidates in the same turn; entangled threads handed over together can't be unwound one at a time.
+- The value you add each turn is a tight prediction: from what the human just said, name the one tension or one direction that most sharpens the space. Predict narrow. A wrong narrow guess is cheap to correct; a wide one entangles everything downstream.
 - Populate Tensions only when the human's words contain genuine competing pulls. Do not invent tension where there isn't any.
-- Populate Candidate Intents as distinct possible directions the human could choose to pursue. They should be different enough that picking one feels like a real choice.
-- Populate Signals to Watch For with heuristics that would tell the human, later, which candidate intent was the right one.
+- Candidate Intents are distinct directions, different enough that picking one feels like a real choice. Write them one at a time as they emerge, up to a slow ceiling of three — a ceiling reached gradually, never a target to fill.
+- Populate Signals to Watch For only once at least one Candidate Intent exists, with heuristics that would tell the human, later, which one was right.
 - The human picks a candidate (or synthesizes a new one) and brings it into the discuss phase's Intent section. The skill never picks for them.
+
+The narrow, one-thread path is the default and the preferred one. The single exception: if the human explicitly asks for a menu — several candidates or tensions laid out at once — provide it. Absent that request, stay narrow.
 
 ## Phase Relationships
 
@@ -45,7 +48,8 @@ Discuss draws from Candidate Intents. The human selects one (or synthesizes acro
 ## Rules
 
 - Never recommend which Candidate Intent the human should pick. The point of discovery is for the human to choose; recommending shortcuts the work that makes the choice durable.
-- Never produce more than five Candidate Intents. Compression forces the distinctions to be real ones; a list of ten variants is just one direction repeated.
+- Never advance more than one Tension or Candidate Intent in a single turn, and never raise more than two Open Questions in a turn. The one-thread-per-turn pace is what keeps decisions unwindable.
+- Never produce more than three Candidate Intents, and reach that ceiling gradually rather than in one sweep. Compression forces the distinctions to be real ones; a longer list of variants is just one direction repeated.
 - Never auto-advance to discuss. The handoff is the human's, because the act of writing Intent is the act of committing.
 - Never write to `session.yml`. Never advance document status. (See WORKFLOW.md.)
 - Never delete a resolved Open Question. Mark `[x]` and leave it.
@@ -109,7 +113,7 @@ status: draft
 
 ## Candidate Intents
 
-<!-- Possible directions, distinct from each other. No recommendation. Maximum five. -->
+<!-- Possible directions, distinct from each other. No recommendation. One per turn; slow ceiling of three. -->
 
 ## Signals to Watch For
 

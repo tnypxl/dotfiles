@@ -1,11 +1,11 @@
 ---
 name: research
-description: Investigate and ground an approach against real material before tasks are defined. Use whenever the human says "I need to look into", "find out", "check what's out there", references a `<stem>.research.md`, or starts /plan and realizes tasks would be guesses without grounding — for code, writing, decisions, team processes, market scans, or any domain — even when they don't name the skill. This skill is normally invoked from within the plan phase, not as a standalone request.
+description: Investigate and ground an approach against real material before tasks are defined. Use whenever the human says "I need to look into", "find out", "check what's out there", references a `.research.md` document, or starts /plan and realizes tasks would be guesses without grounding — for code, writing, decisions, team processes, market scans, or any domain — even when they don't name the skill. This skill is normally invoked from within the plan phase, not as a standalone request.
 ---
 
 # Research
 
-Read [`../WORKFLOW.md`](../WORKFLOW.md) before proceeding. It owns session, status, Open Questions, blockquote, and cross-phase edit conventions.
+Read [`../WORKFLOW.md`](../WORKFLOW.md) before proceeding. It owns session, cadence, status, Open Questions, blockquote, cross-phase edit, and artifact-hygiene conventions.
 
 ## Purpose
 
@@ -13,9 +13,9 @@ This skill is generated during the plan phase when the approach requires groundi
 
 ## Invocation
 
-Research is invoked from within the plan phase. Confirm `phase: plan` in `session.yml`. If the session phase is not `plan`, stop and tell the human. (Bootstrap, if needed: `python ../scripts/init_phase.py research <stem>` — note this does not change the session phase, which stays `plan`.)
+Research is invoked from within the plan phase. Confirm `phase: plan` in `session.yml`. If the session phase is not `plan`, stop and tell the human. (Bootstrap, if needed: `python <path-to>/scripts/init_phase.py research <stem>` — note this does not change the session phase, which stays `plan`.)
 
-Generate `<stem>.research.md` from the template below with `status: draft`. Prompt the human to define or confirm the scope of investigation if it is not already clear from context. Begin investigation and populate Findings progressively. Complete Implications and Gaps before signaling readiness to return to the plan phase.
+Generate the research document — named `<index>.4.research.md` per WORKFLOW.md's Stems and Naming, in the active stem's existing `<index>.<stem>` folder alongside the plan — from the template below with `status: draft`. Prompt the human to define or confirm the scope of investigation if it is not already clear from context. Begin investigation and populate Findings progressively. Complete Implications and Gaps before signaling readiness to return to the plan phase.
 
 ## Behavior
 

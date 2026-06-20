@@ -1,11 +1,11 @@
 ---
 name: approach
-description: Define the directional and structural means toward an intent established in discussion. Use whenever the human says "what's our angle", "how should we think about this", "shape this up", references a `<stem>.approach.md` or `<stem>.discuss.md`, or asks for strategy before tasks — for code, writing, decisions, team processes, personal planning, or any domain — even when they don't name the skill. Prefer this skill over jumping to /plan whenever the goal is understood but no directional thesis has been committed.
+description: Define the directional and structural means toward an intent established in discussion. Use whenever the human says "what's our angle", "how should we think about this", "shape this up", references a `.approach.md` or `.discuss.md` document, or asks for strategy before tasks — for code, writing, decisions, team processes, personal planning, or any domain — even when they don't name the skill. Prefer this skill over jumping to /plan whenever the goal is understood but no directional thesis has been committed.
 ---
 
 # Approach
 
-Read [`../WORKFLOW.md`](../WORKFLOW.md) before proceeding. It owns session, status, Open Questions, blockquote, and cross-phase edit conventions.
+Read [`../WORKFLOW.md`](../WORKFLOW.md) before proceeding. It owns session, cadence, status, Open Questions, blockquote, cross-phase edit, and artifact-hygiene conventions.
 
 ## Purpose
 
@@ -13,9 +13,9 @@ This skill translates a well-understood intent into a directional strategy. It d
 
 ## Invocation
 
-Confirm `phase: approach` in `session.yml`. If missing, bootstrap with `python ../scripts/init_phase.py approach <stem>` or prompt the human for a stem and create the session file manually.
+Confirm `phase: approach` in `session.yml`. If missing, bootstrap with `python <path-to>/scripts/init_phase.py approach <stem>` or prompt the human for a stem and create the session file manually.
 
-Then generate `<stem>.approach.md` from the template below with `status: draft`. Immediately generate an initial Thesis and Rationale based on available context (typically `<stem>.discuss.md`). Prompt the human to review and modify those two sections before proceeding to the remaining ones.
+Then generate the approach document — named `<index>.3.approach.md` per WORKFLOW.md's Stems and Naming — from the template below with `status: draft`. Immediately generate an initial Thesis and Rationale based on available context (typically the discuss document, `<index>.2.discuss.md`). Prompt the human to review and modify those two sections before proceeding to the remaining ones.
 
 ## Behavior
 

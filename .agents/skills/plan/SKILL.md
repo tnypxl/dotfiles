@@ -1,11 +1,11 @@
 ---
 name: plan
-description: Decompose an approach into ordered, executable tasks grounded against available research. Use whenever the human says "plan this", "break this down", "what are the steps", references a `<stem>.plan.md` or `<stem>.approach.md`, or asks to turn a strategy into concrete work — for code, writing, decisions, team processes, personal planning, or any domain — even when they don't name the skill. Prefer this skill over jumping to /execute whenever the approach is committed but tasks have not been ordered and scoped.
+description: Decompose an approach into ordered, executable tasks grounded against available research. Use whenever the human says "plan this", "break this down", "what are the steps", references a `.plan.md` or `.approach.md` document, or asks to turn a strategy into concrete work — for code, writing, decisions, team processes, personal planning, or any domain — even when they don't name the skill. Prefer this skill over jumping to /execute whenever the approach is committed but tasks have not been ordered and scoped.
 ---
 
 # Plan
 
-Read [`../WORKFLOW.md`](../WORKFLOW.md) before proceeding. It owns session, status, Open Questions, blockquote, and cross-phase edit conventions.
+Read [`../WORKFLOW.md`](../WORKFLOW.md) before proceeding. It owns session, cadence, status, Open Questions, blockquote, cross-phase edit, and artifact-hygiene conventions.
 
 ## Purpose
 
@@ -13,15 +13,16 @@ This skill translates the approach into concrete, ordered tasks. It is the first
 
 ## Invocation
 
-Confirm `phase: plan` in `session.yml`. If missing, bootstrap with `python ../scripts/init_phase.py plan <stem>` or prompt the human for a stem and create the session file manually.
+Confirm `phase: plan` in `session.yml`. If missing, bootstrap with `python <path-to>/scripts/init_phase.py plan <stem>` or prompt the human for a stem and create the session file manually.
 
-Assess whether a `<stem>.research.md` is needed before generating tasks. If so, invoke the research skill first and incorporate its output into the Research Summary. Then generate `<stem>.plan.md` from the template below with `status: draft`, populate the Overview, and begin generating tasks. Populate Approach Conflicts if grounding reveals issues.
+Assess whether a research document (`<index>.4.research.md`) is needed before generating tasks. If so, invoke the research skill first and incorporate its output into the Research Summary. Then generate the plan document — named `<index>.5.plan.md` per WORKFLOW.md's Stems and Naming — from the template below with `status: draft`, populate the Overview, and begin generating tasks. Populate Approach Conflicts if grounding reveals issues.
 
 ## Behavior
 
 - Generate tasks based on the approach and any available research.
 - Number tasks sequentially using `T1`, `T2`, etc.
 - Each task gets a `## T-` heading, a prose description, and a checklist. Dependencies are the first checkbox items in the list.
+- Size each task to one outcome confirmable by a single verification check. When confirming the task is done would take more than one independent check, the task is really several — split it. (The verify phase maps a check per task; this keeps that mapping one-to-one.)
 - Use `### ` sub-sections within a task only when necessary. Prefer splitting into multiple tasks instead.
 - Nest plain bullet points under checklist items when additional detail is needed for a specific item.
 - Populate Approach Conflicts if any finding conflicts with the approach. Stop generating tasks and prompt the human to return to the approach when this section has content.
@@ -46,8 +47,9 @@ Execution draws from task headings (T1, T2...) and their checklist items as the 
 ## Rules
 
 - Task numbering is sequential and permanent. Never renumber. Execution log entries and verification checks reference task numbers by name; renumbering silently invalidates every downstream pointer.
+- Task identifiers (`T1`, `T2`...) live only inside this plan document. They are pointers for the execution and verification phases, not labels for the work itself. When a task describes producing something external — code, prose, configs, a deliverable of any kind — write the task so its identifier never travels into that artifact's names, comments, or structure. The artifact is named for its domain; the `T1` stays here. (See WORKFLOW.md's Artifact Hygiene.)
 - Never advance status if Approach Conflicts contains unresolved entries. The plan is structurally untrustworthy until those resolve; a downstream phase acting on it will compound the conflict.
-- Research Summary is present only when a `<stem>.research.md` was generated. An empty Research Summary tells a future reader something was missed; omitting the section tells them nothing was needed.
+- Research Summary is present only when a research document (`<index>.4.research.md`) was generated. An empty Research Summary tells a future reader something was missed; omitting the section tells them nothing was needed.
 - Approach Conflicts entries must state what was found, why it conflicts, and what change is recommended. An unattributed conflict is not actionable.
 - Never delete a resolved Open Question. Mark `[x]` and leave it.
 - Never write to `session.yml`. Never advance document status. (See WORKFLOW.md.)
@@ -57,7 +59,8 @@ Execution draws from task headings (T1, T2...) and their checklist items as the 
 - Prefer multiple smaller tasks over a single complex one with sub-sections.
 - Task descriptions should explain why the task exists in the context of the plan, not just restate what the checklist items say.
 - Dependencies at the top of a checklist keep sequencing visible and actionable.
-- If a task feels too large to describe in a short paragraph, it probably needs to be split.
+- Two concrete signs a task is oversized: its description joins distinct outcomes with an "and" ("build X and migrate Y"), or a checklist item is itself a deliverable with its own acceptance bar rather than a step toward the task's single outcome. Either one means split it.
+- Splitting an oversized task usually exposes sequencing that was hidden inside it. Make that explicit as `Depends on:` edges between the resulting tasks.
 
 ## Example
 
@@ -94,7 +97,7 @@ status: draft
 
 ## Research Summary
 
-<!-- Condensed synthesis of <stem>.research.md findings relevant to task generation.
+<!-- Condensed synthesis of the research document's (<index>.4.research.md) findings relevant to task generation.
      Remove this section if no research document was generated. -->
 
 ## T1 - Task Title

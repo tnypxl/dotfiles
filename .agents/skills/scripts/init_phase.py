@@ -1,15 +1,32 @@
 #!/usr/bin/env python3
-"""Scaffold session.yml and a draft phase document for a workflow phase.
+"""Scaffold a stem folder and a draft phase document for a workflow phase.
 
 Usage: init_phase.py <phase> <stem>
 
 Phases: discover, discuss, approach, research, plan, execute, verify
 
+Run this from the project root — the directory that holds the single session.yml
+cursor and all the numbered stem folders. session.yml names the stem and phase you
+are currently working:
+
+    stem: redesign-onboarding
+    phase: discover
+    note:
+
+Each stem lives in its own folder named <index>.<stem>, where <index> is its
+chronological number. Phase documents inside are named <index>.<order>.<phase>.md,
+where <order> is the phase's fixed position in the chain (discover=1 ... verify=7).
+
 Behavior:
-- Creates session.yml in the current directory if missing, with the given phase and stem.
-- If session.yml exists with a different phase, exits with an error.
-- Creates <stem>.<phase>.md from the phase's template with status: draft.
-- Refuses to overwrite an existing <stem>.<phase>.md.
+- Creates session.yml at the project root if missing, with the given stem and phase.
+  If it exists, reads the stem and phase from it; the requested phase must match
+  (research is allowed while the phase is 'plan'). session.yml is otherwise
+  human-owned and never modified here.
+- Finds the stem's folder (<index>.<stem>). If none exists, allocates the next
+  index (1 + the highest index prefix among existing stem folders; 1 if none) and
+  creates the folder.
+- Creates <index>.<order>.<phase>.md from the phase's template with status: draft.
+- Refuses to overwrite an existing phase document.
 
 Domain-agnostic: emits markdown templates only.
 """
@@ -20,6 +37,11 @@ import sys
 from pathlib import Path
 
 PHASES = ("discover", "discuss", "approach", "research", "plan", "execute", "verify")
+
+# Fixed position of each phase in the chain. Used as the second filename segment so
+# a directory listing sorts in workflow order. A skipped phase (commonly research)
+# simply leaves a gap; the sequence still reads true.
+ORDER = {phase: i for i, phase in enumerate(PHASES, start=1)}
 
 TEMPLATES: dict[str, str] = {
     "discover": """---
@@ -38,7 +60,7 @@ status: draft
 
 ## Candidate Intents
 
-<!-- Possible directions, distinct from each other. No recommendation. Maximum five. -->
+<!-- Possible directions, distinct from each other. No recommendation. One per turn; slow ceiling of three. -->
 
 ## Signals to Watch For
 
@@ -144,7 +166,7 @@ status: draft
 
 ## Research Summary
 
-<!-- Condensed synthesis of <stem>.research.md findings relevant to task generation.
+<!-- Condensed synthesis of the research document's (<index>.4.research.md) findings relevant to task generation.
      Remove this section if no research document was generated. -->
 
 ## T1 - Task Title
@@ -218,11 +240,30 @@ status: draft
 }
 
 
-def read_session_phase(session_path: Path) -> str | None:
-    """Return the phase recorded in session.yml, or None if not found."""
+def read_session_field(session_path: Path, field: str) -> str | None:
+    """Return a scalar field recorded in session.yml, or None if not found."""
     text = session_path.read_text()
-    match = re.search(r"^phase:\s*(\S+)\s*$", text, flags=re.MULTILINE)
+    match = re.search(rf"^{field}:\s*(\S+)\s*$", text, flags=re.MULTILINE)
     return match.group(1) if match else None
+
+
+def find_stem_folder(root: Path, stem: str) -> Path | None:
+    """Return the existing <index>.<stem> folder for this stem, or None."""
+    for child in root.iterdir():
+        if child.is_dir() and re.fullmatch(rf"\d+\.{re.escape(stem)}", child.name):
+            return child
+    return None
+
+
+def allocate_index(root: Path) -> int:
+    """Next free stem index: 1 + the highest numeric prefix among stem folders."""
+    highest = 0
+    for child in root.iterdir():
+        if child.is_dir():
+            match = re.match(r"(\d+)\.", child.name)
+            if match:
+                highest = max(highest, int(match.group(1)))
+    return highest + 1
 
 
 def write_session(session_path: Path, phase: str, stem: str) -> None:
@@ -244,15 +285,27 @@ def main(argv: list[str]) -> int:
         print(f"error: stem '{stem}' must be filename-friendly (letters, digits, dot, dash, underscore)", file=sys.stderr)
         return 2
 
-    cwd = Path.cwd()
-    session_path = cwd / "session.yml"
+    root = Path.cwd()
+    session_path = root / "session.yml"
 
     if session_path.exists():
-        existing_phase = read_session_phase(session_path)
+        existing_stem = read_session_field(session_path, "stem")
+        existing_phase = read_session_field(session_path, "phase")
         if existing_phase is None:
             print("error: session.yml exists but has no readable 'phase:' field", file=sys.stderr)
             return 1
-        if existing_phase != phase:
+        if existing_stem != stem:
+            print(
+                f"error: session.yml stem is '{existing_stem}', not '{stem}'.\n"
+                f"set the stem (and phase) in session.yml before scaffolding for '{stem}'.",
+                file=sys.stderr,
+            )
+            return 1
+        # Research is generated from within the plan phase, so it is allowed while
+        # the session phase is 'plan' without flipping the phase. Every other phase
+        # must match the session phase exactly.
+        phase_ok = existing_phase == phase or (phase == "research" and existing_phase == "plan")
+        if not phase_ok:
             print(
                 f"error: session.yml has phase '{existing_phase}', not '{phase}'.\n"
                 f"flip the phase in session.yml manually before scaffolding a {phase} document.",
@@ -263,13 +316,22 @@ def main(argv: list[str]) -> int:
         write_session(session_path, phase, stem)
         print(f"created {session_path.name} (stem={stem}, phase={phase})")
 
-    doc_path = cwd / f"{stem}.{phase}.md"
+    folder = find_stem_folder(root, stem)
+    if folder is None:
+        index = allocate_index(root)
+        folder = root / f"{index}.{stem}"
+        folder.mkdir()
+        print(f"created {folder.name}/")
+    else:
+        index = int(folder.name.split(".", 1)[0])
+
+    doc_path = folder / f"{index}.{ORDER[phase]}.{phase}.md"
     if doc_path.exists():
-        print(f"error: {doc_path.name} already exists; refusing to overwrite", file=sys.stderr)
+        print(f"error: {folder.name}/{doc_path.name} already exists; refusing to overwrite", file=sys.stderr)
         return 1
 
     doc_path.write_text(TEMPLATES[phase])
-    print(f"created {doc_path.name}")
+    print(f"created {folder.name}/{doc_path.name}")
     return 0
 
 

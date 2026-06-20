@@ -1,11 +1,11 @@
 ---
 name: execute
-description: Execute a plan and maintain a chronological audit trail of actions, decisions, and outcomes. Use whenever the human says "let's do this", "start executing", "work through the plan", references a `<stem>.execute.md` or `<stem>.plan.md`, or asks to begin the work the plan describes — for code, writing, decisions, team processes, personal action, or any domain — even when they don't name the skill. Prefer this skill over freeform action whenever a plan document already exists.
+description: Execute a plan and maintain a chronological audit trail of actions, decisions, and outcomes. Use whenever the human says "let's do this", "start executing", "work through the plan", references a `.execute.md` or `.plan.md` document, or asks to begin the work the plan describes — for code, writing, decisions, team processes, personal action, or any domain — even when they don't name the skill. Prefer this skill over freeform action whenever a plan document already exists.
 ---
 
 # Execute
 
-Read [`../WORKFLOW.md`](../WORKFLOW.md) before proceeding. It owns session, status, Open Questions, blockquote, and cross-phase edit conventions.
+Read [`../WORKFLOW.md`](../WORKFLOW.md) before proceeding. It owns session, cadence, status, Open Questions, blockquote, cross-phase edit, and artifact-hygiene conventions.
 
 ## Purpose
 
@@ -13,16 +13,16 @@ This skill does the work. The skill is the primary executor. It works through th
 
 ## Invocation
 
-Confirm `phase: execute` in `session.yml`. If missing, bootstrap with `python ../scripts/init_phase.py execute <stem>` or prompt the human for a stem and create the session file manually.
+Confirm `phase: execute` in `session.yml`. If missing, bootstrap with `python <path-to>/scripts/init_phase.py execute <stem>` or prompt the human for a stem and create the session file manually.
 
-Read `<stem>.plan.md` in full before taking any action. Generate `<stem>.execute.md` from the template below with `status: draft`. Begin working through tasks in the order that best serves the plan's dependencies. Log each action as it is taken.
+Read the plan document (`<index>.5.plan.md`) in full before taking any action. Generate the execution document — named `<index>.6.execute.md` per WORKFLOW.md's Stems and Naming — from the template below with `status: draft`. Begin working through tasks in the order that best serves the plan's dependencies. Log each action as it is taken.
 
 ## Behavior
 
 - Read the full plan before beginning. Understand task dependencies before choosing where to start.
 - Execute tasks in dependency order unless the human instructs otherwise.
 - After completing each task or meaningful sub-action, write a log entry in the execution document before moving on.
-- Tick completed checklist items in `<stem>.plan.md` as each item is finished.
+- Tick completed checklist items in the plan document (`<index>.5.plan.md`) as each item is finished.
 - If execution requires a decision not covered by the plan, make the decision, log it with the reasoning, and continue. Surface it to the human if it affects scope or approach.
 - If a divergence occurs, capture it inline within the log entry where it happened. Do not move it to a separate section.
 - Signal readiness to advance in conversation.
@@ -58,6 +58,7 @@ Verification draws from the execution log to understand what was done and why, a
 - Log entries should be concise but complete. What was done, what the outcome was, and whether it aligned with the task's goals and the approach.
 - If a decision is made during execution that would have changed the plan if known earlier, note that explicitly. It helps the next pass.
 - The execution document should be readable top-to-bottom as a coherent narrative of what happened.
+- Name everything you produce — functions, variables, files, headings, keys, sections — for what it does in its own domain, never for the task or question that prompted it. The plan said `T1`; the code says `validate_email`. If a name would only make sense to someone who read the plan, rename it. (See WORKFLOW.md's Artifact Hygiene.)
 
 ## Example
 
