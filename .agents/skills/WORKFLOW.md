@@ -1,174 +1,143 @@
-# Workflow Conventions
+# The `/lets` Workflow
 
-This document owns the conventions shared by every skill in `.agents/skills/`. Each individual SKILL.md references this file rather than restating its rules. Read it once when any phase skill is invoked, then return to the skill's own body for phase-specific behavior.
+A small harness for thinking a piece of work through in stages, collaboratively. You steer; the assistant predicts narrowly and waits. It produces a handful of clean markdown documents that a person — or another assistant — can pick up later and be correctly oriented. It is domain-agnostic: code, writing, infra decisions, research, planning, anything that benefits from being thought through.
 
-The phase chain is:
+This document is the shared contract. The `lets` skill references it; read it once when `/lets` is invoked, then return to the skill for the verb's behavior.
+
+## One command
 
 ```
-discover → discuss → approach → (research) → plan → execute → verify
+/lets [discuss | research | plan | execute] <prompt>
 ```
 
-`research` is invoked from within `plan` rather than being a phase unto itself.
+The verb is the action. It selects the behavior and the one artifact that behavior writes. There is no phase to be "in" and no gate to flip — you just say what to do next.
 
-These conventions are domain-agnostic. The workflow is used for code work, writing, decisions, team processes, personal planning, and anything else that benefits from being thought through in phases.
+## The stem
 
-## Session File
-
-The whole workflow is steered by a single `session.yml` at the project root. It is the cursor: it names the stem and phase you are currently working, plus any note. There is exactly one of these, no matter how many stems exist.
-
-```yaml
-stem: <short, filename-friendly name for the work>
-phase: <one of: discover, discuss, approach, plan, execute, verify>
-note: <optional free-form context the human may write>
-```
-
-- The session file is **human-owned**. No skill may write to or modify it (the one exception is bootstrap, below, which *creates* it when none exists). To switch which stem you're working on, or to advance/loop-back a phase, the human edits this file.
-- `stem` names the active stem. It is the label for the work and, prefixed with the stem's index, the name of its folder (`<index>.<stem>` — see Stems and Naming).
-- `phase` gates which skill can act. A skill must confirm `phase` matches its own name before doing anything. If it does not, the skill stops and tells the human to flip the phase.
-- `note` is read as session context. Never overwritten.
-
-If `session.yml` is missing when a skill is invoked, the skill prompts the human for a `stem` and creates the file with `phase` set to that skill's name. Bootstrap can also be done with `scripts/init_phase.py <phase> <stem>`, run from the project root.
-
-## Cadence
-
-Every phase is worked one or two threads at a time — never more. A *thread* is a single open question, a single proposed direction, a single section advanced. The human steers the whole workflow, and the human can only steer what stays small enough to hold.
-
-What this guards against is breadth per turn, not length. The threads in a phase are not independent: resolving one changes the impact of the phase before it and the trajectory of the phase after, which shifts every other open thread. So a skill that surfaces four or five questions at once, or fills every section of its document in one pass, forces the human to weigh them all together — and being unsure about one means re-questioning the rest. Sequenced one or two at a time, each thread is resolved and allowed to settle before the next is raised, and any decision stays cheap to walk back.
-
-- **Predict narrow, first.** The most valuable move a skill makes each turn is to predict — from what the human just said — the scope, trajectory, and direction implied, then surface only the single highest-leverage thread that sharpens it. A wrong narrow prediction is cheap to correct; a wide one entangles everything downstream. The human is simultaneously tuning what the scope and direction should be, so the prediction must stay small enough to tune.
-- **One or two open questions per turn.** No phase raises more. More overloads the human and invites answers that conflict with each other.
-- **Stay narrow until it stops making sense to.** Narrow is the default. Widening — more threads at once, a menu of options, broader scope — is the human's call. A skill offers breadth only when asked; it never imposes it.
-
-The human moves the cursor (see Session File). A skill never nudges the conversation toward the next phase, and never tries to finish a phase in one sweep. It does one or two threads' worth of work, then hands back.
-
-## Stems and Naming
-
-Each piece of work — each *stem* — gets its own folder under the project root, named `<index>.<stem>`, where `index` is the stem's chronological number (the order the work began). A listing of the project root is therefore the chronology of the work itself:
+A **stem** is one cluster of thinking, planning, and execution toward one something. Each stem is a folder at the project root, named `<index>.<stem>` (index = the order the work began). A root listing is the chronology of the work.
 
 ```
 project-root/
-  session.yml            # the single cursor: stem + phase + note
+  session.yml              # active stem (+ optional note)
   1.redesign-onboarding/
+    notebook.md  research.md  plan.md  execute.md
   2.auth-refactor/
-  3.pricing-experiment/
+  .agents/
+    domains/  workflows/  documentation/  assets/    # shared references
 ```
 
-Inside a stem's folder, phase documents are named `<index>.<order>.<phase>.md`, where `order` is the phase's fixed position in the chain:
+`session.yml` is the cursor and holds one thing — which stem is active:
 
-| order | phase    |
-|-------|----------|
-| 1     | discover |
-| 2     | discuss  |
-| 3     | approach |
-| 4     | research |
-| 5     | plan     |
-| 6     | execute  |
-| 7     | verify   |
-
-So stem 1's documents are `1.1.discover.md`, `1.2.discuss.md`, `1.3.approach.md`, `1.4.research.md`, `1.5.plan.md`, `1.6.execute.md`, `1.7.verify.md`. A skipped phase (most often research) simply leaves a gap — `1.5.plan.md` following `1.3.approach.md` — and the sequence still reads true. The two-level numbering means a listing sorts first by stem (the order work began) and then by phase.
-
-**Where a skill works.** A skill reads `stem` and `phase` from the root `session.yml`, finds the matching folder (the one whose name matches `<index>.<stem>`), and reads the index off that folder's name. The `index` is never stored in `session.yml`; the folder name is its home. Because the order map is fixed, the skill can then compute any document's filename within the stem: `<index>.<order>.<phase>.md`.
-
-**Allocating the index.** When a stem has no folder yet, its index is the next free number: `1 + the highest index prefix among existing stem folders` (or `1` when there are none). The bootstrap script does this automatically; a skill bootstrapping by hand applies the same rule, then creates the `<index>.<stem>` folder.
-
-**One active stem, recoverable progress.** The root cursor tracks only the stem you're working now. An idle stem's progress is read from its documents — the latest phase document whose `status:` is not yet `complete` is where that stem stands. Switching back to it is just a matter of pointing `session.yml` at its stem and the right phase.
-
-## Status
-
-Every phase document begins with frontmatter that includes `status:`. The lifecycle is:
-
-- `draft` — being shaped. The default on creation.
-- `active` — being worked through with the human.
-- `complete` — the human has decided this phase is done.
-
-**The human advances status. No skill ever modifies status.** When a skill believes a phase is ready to advance, it says so in the conversation. The human makes the call and updates the document.
-
-## Open Questions
-
-Every phase document has an `Open Questions` section. Both the skill and the human may add questions. Format:
-
-```
-- [ ] Q1: <question>
-- [ ] Q2: <question>
+```yaml
+stem: redesign-onboarding
+note: optional free-form context
 ```
 
-Numbering is sequential and permanent. When a question is resolved, mark it `[x]` and leave it in place. **Resolved questions are never deleted.** They are part of the record of how the document evolved.
+It is human-owned. Switching work is editing one line. `/lets` reads the stem, finds the folder beside `session.yml`, and writes the artifact the verb names. On first use for a new stem it scaffolds `session.yml`, the folder, and the artifact — allocating the next index (`1 +` the highest existing stem index, or `1`).
 
-A compound question is two questions. Split it.
+## The four artifacts
 
-## Human Notes
+| verb | writes | what it is |
+|------|--------|------------|
+| `discuss` | `notebook.md` | the durable anchor — objective and approach |
+| `research` | `research.md` | deliberate investigation grounding the work |
+| `plan` | `plan.md` | ordered tasks toward the approach |
+| `execute` | `execute.md` | the work done, and a running record of it |
 
-Within any section, the human may leave notes or requested adjustments as a blockquote at the bottom of that section:
+The notebook anchors the other three. Research, plan, and execution all hang off it; when it moves, they reconcile to it.
 
-```
-> I want to revisit this once we hear back from finance.
-```
-
-Skills read these blockquotes as direction. Skills do not write into the blockquote space themselves.
-
-## Cross-Phase Edits
-
-The phase model expects the human to loop back. When something earlier needs revising mid-flow:
-
-1. The human flips `phase:` in `session.yml` to the earlier phase.
-2. The human re-invokes that earlier skill.
-3. The earlier skill assesses the change (see Change Classification below) and surfaces a targeted impact note on downstream documents.
-4. The human flips the phase back when ready to resume.
-
-**No skill ever edits a document for a phase other than its own.** Even when a downstream skill notices something that ought to change upstream, it surfaces the issue and waits.
-
-## Change Classification
-
-When an upstream document changes mid-flow, skills classify the impact so the human can act surgically rather than redoing everything. Three levels:
-
-- **Additive** — new context or detail added that does not contradict what's there. Notify the human that downstream documents may benefit from enrichment. No forced review.
-- **Corrective** — a specific section or statement that downstream work was built against has changed. Identify which downstream sections, tasks, or checks were built on the changed element and flag them by name or number.
-- **Fundamental** — the core of the upstream document is rewritten (e.g., Intent in discuss, Thesis in approach). Halt downstream work and escalate explicitly. The human confirms direction before downstream proceeds.
-
-Each phase skill defines what counts as additive / corrective / fundamental in its own Phase Relationships section.
-
-## Phase Documents — Common Frontmatter
-
-Every phase document opens with:
+## The notebook
 
 ```markdown
 ---
-title: 
-date: 
-status: draft
+title:
+status: active
+domain:            # optional; a name resolved against the domain cascade
 ---
+
+## Objective
+What this work is for. One clear statement of the something.
+
+## Approach
+How the work is structured and why — the current best account, adaptive.
+Rewritten clean as understanding shifts. Often short. May be empty until
+there is something real to say.
+
+## Open Questions
+- [ ] Q1: ...
+- [x] Q2: ... — resolved: ...
+
+## Notes        (optional, yours)
 ```
 
-The skill leaves `title` and `date` for the human and sets `status: draft` on creation.
+- **Objective** and **Approach** are *living* (see below).
+- **Open Questions** is a *ledger*.
+- **Notes** is yours: an optional section you add by hand to keep approach- or objective-adjacent context. The skill reads it; the skill never writes, fills, or prunes it.
 
-## Artifact Hygiene
+## Living vs. ledger
 
-The phase documents (`<index>.1.discover.md`, `<index>.2.discuss.md`, `<index>.3.approach.md`, `<index>.4.research.md`, `<index>.5.plan.md`, `<index>.6.execute.md`, `<index>.7.verify.md`) are the workflow's internal bookkeeping. Anything produced *as a consequence of* working through them — code, prose, designs, configs, schemas, commit messages, PR descriptions, wiki pages, slides, anything that will be committed, shipped, sent, or otherwise outlive the session — is an external artifact.
+Every section is one of two types, and the type is fixed by the section, not by a rule to remember:
 
-External artifacts must contain no trace of the workflow's internal language:
+- **Living** (Objective, Approach, and the body of research/plan): holds the current understanding, rewritten clean *whenever it changes* — left untouched when a turn doesn't move it — so it always reads as the best statement of where things stand *now*. Not append-only, and not regenerated for its own sake. When something shifts, rewrite the section to integrate it; do not bolt on a "shift noted" paragraph.
+- **Ledger** (Open Questions, the execution record): append-only and chronological. Numbering is sequential and permanent. Resolved questions are marked `[x]` and left in place, never deleted. The trail of how understanding got here lives here, not stamped into the living prose. A compound question is two questions — split it.
 
-- No task identifiers (`T1`, `T2`, ...) in code comments, function or variable names, file names, headings, commit messages, log lines, or anywhere else.
-- No question identifiers (`Q1`, `Q2`, ...) anywhere in an external artifact.
-- No references to phase documents (`<index>.5.plan.md`, `<index>.3.approach.md`, ...), phase names, or workflow concepts.
-- No skill-internal vocabulary (Thesis, Synthesis, Findings, Implications, Open Questions, etc.) bleeding into prose deliverables.
+## Status
 
-The audit trail belongs in the phase documents. The work product belongs to itself.
+Frontmatter `status:` is `active` or `locked`. You set it; the skill never does.
 
-**Why:** The phase machinery is scaffolding the human and skills use *during* the work. It is meaningful only inside this session. An artifact that leaks `// T2: validate input` or `# Resolves Q1` becomes hostage to a context its future readers don't share — maintainers won't know what `T2` was, the audit trail rots the moment the session directory is gone, and the artifact reads like generated boilerplate.
+- `active` — the default on creation; the artifact is open to change.
+- `locked` — frozen. The skill refuses to write a locked artifact, and a correction sweep that reaches a locked artifact stops and asks rather than rewriting it.
 
-**How to apply:** When naming, commenting, structuring, or otherwise shaping anything that will leave the session, write as though the workflow does not exist. Name every function, variable, file, heading, key, and section for what it *is* in its own domain, never for the task or question that motivated it. A function named `validate_t1_input`, a config key `t2_enabled`, a comment `// Resolves Q1`, a CSS class `.approach-thesis`, or a doc heading "Synthesis" in a shipped report are all the same failure — rename them to the domain meaning (`validate_email`, `retries_enabled`, drop the comment, `.summary`, "Overview"). A simple test: if a name only makes sense to someone who has read the plan, it is wrong. The execution document is where `T1` is mentioned; the code, prose, or design it produced is where it is not.
+## Cadence
 
-## Bootstrap Script
+The work moves one or two threads at a time — never more. A thread is a single open question, a single direction, a single section advanced.
 
-Run from the project root:
+- **Predict narrow, first.** From what you just said, predict the scope and direction implied, then surface only the single highest-leverage thread that sharpens it. A wrong narrow prediction is cheap to correct; a wide one entangles everything.
+- **One or two open questions per turn.** No more. Overloading invites answers that conflict with each other.
+- **You steer.** The skill never auto-advances, never finishes a stage in one sweep, never picks the direction for you. It does one or two threads' work and hands back.
+
+The instinct to guard against: trying to win the game in one possession. The skill advances the document one increment, then hands the next move back. Build progressively; keep it clean as you go — neither a finished dump nor every increment left as sediment.
+
+## The verbs
+
+- **`discuss`** — a real back-and-forth, not a document-filling exercise. As conclusions and decisions are reached, the Objective and Approach are updated to match; resolved questions move to the ledger. Narrow web lookups are welcome mid-conversation to check a fact — these are *ephemeral grounding* and write nothing to `research.md`. A fact persists only if it lands in the Objective or Approach.
+- **`research`** — deliberate investigation, delegated to the `researcher` subagent, producing `research.md`. This is the only thing that writes that file.
+- **`plan`** — decomposition into ordered tasks toward the approach, delegated to the `planner` subagent, producing `plan.md`.
+- **`execute`** — the work itself, delegated to the `executor` subagent, recorded in `execute.md`. Each finished task is reviewed; that review is where correction begins.
+
+## Drift and correction
+
+**Drift** is when a finished task produces evidence that contradicts an assumption an upstream artifact was built on — a premise becoming *wrong*. Not difficulty (a task being hard is just the task). Not opportunity (a new idea is a new open question or a new stem, not drift).
+
+The test, asked after a task: *if I rewrote the notebook from scratch right now, knowing what this task just taught me, would it say something different?* Yes → drift.
+
+You pull the trigger — the skill executes the sweep, it does not decide on its own that the approach drifted. **Correction is re-running the verb for the layer that drifted.** Drift has a depth, and the depth is the reach:
 
 ```
-python <path-to>/scripts/init_phase.py <phase> <stem>
+contradicts a plan detail   →  /lets plan      (re-settle tasks)
+contradicts the approach    →  /lets discuss   then  /lets plan
+contradicts the objective   →  /lets discuss   (and reconsider the stem)
 ```
 
-- Creates `session.yml` at the root if it does not exist, setting `stem` and `phase`. If it exists, reads `stem` and `phase` from it and requires both to match the arguments (research is allowed while the phase is `plan`); otherwise refuses, telling the human to set the stem or flip the phase. It never modifies an existing `session.yml`.
-- Finds the stem's folder (`<index>.<stem>`). If none exists, allocates the next index (next free number across existing stem folders) and creates the folder.
-- Creates `<index>.<order>.<phase>.md` inside that folder from the phase's template with `status: draft`.
-- Refuses to overwrite an existing phase document.
+No phase flip, no reconcile skill, no taxonomy. First-time work and correction use the same commands.
 
-To start a second stem, point `session.yml` at the new stem (set `stem` and `phase`) before running the script. If running scripts is not available, the human can create `session.yml` by hand using the schema above and the skill will allocate the index, create the `<index>.<stem>` folder, and scaffold the document on invocation.
+## Domain references
+
+A stem may name a domain in its notebook frontmatter (`domain: coding`). The skill resolves the name against a cascade and reads the first hit as context for shaping deliverables (code style, citation format, document structure):
+
+```
+$PWD/.agents/domains/coding.md          # project override
+~/dotfiles/.agents/domains/coding.md    # the default floor
+```
+
+These references are read-only to the skill — project- and human-owned, like Notes. A project overrides the default; the dotfiles default is the floor. The other `.agents/` dirs (`workflows/`, `documentation/`, `assets/`) follow the same cascade for whatever a domain or stem references.
+
+## Voice
+
+The documents are written for you to read — now, and on return weeks later. They describe **the work**, not the collaborators: no "the human"/"the assistant" as subjects; state what is true and let it stand. They carry **no harness vocabulary** — no `Q`/task identifiers used as narration, phase names, or control words ("drift," "locked," "ledger") in the prose; that machinery is how the skill reasons, not content. And nothing the work produces — code, prose, configs — carries any of it either; name everything for what it is in its own domain (`validate_email`, never `validate_t1_input`). A simple test: if a name only makes sense to someone who read the plan, it is wrong.
+
+## Subagents
+
+- **`researcher`** — dual-mode: a narrow inline fact-check during `discuss` (writes nothing), or a full investigation for `/lets research` (writes `research.md`).
+- **`planner`** — decomposes a committed approach into ordered tasks for `plan.md`.
+- **`executor`** — does the real work on external artifacts for `/lets execute`; the only subagent that writes outside the stem documents.

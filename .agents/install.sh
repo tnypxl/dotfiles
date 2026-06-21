@@ -51,6 +51,15 @@ collect_skills() {
   done
 }
 
+# Print top-level shared docs in ./skills/ (e.g. WORKFLOW.md) that skills
+# reference as ../WORKFLOW.md and so must sit beside them in the skills dir.
+collect_skill_docs() {
+  local f
+  for f in "$SOURCE_DIR"/skills/*.md; do
+    [[ -e "$f" ]] && printf '%s\n' "$f"
+  done
+}
+
 link_one() {
   local src="$1" dest="$2"
   mkdir -p "$(dirname "$dest")"
@@ -79,6 +88,7 @@ apply() {
   while IFS= read -r src; do "$fn" "$src" "$CLAUDE_HOME/agents/$(basename "$src")"; done < <(collect_agents)
   echo "Skills -> ${CLAUDE_HOME/#$HOME/\~}/skills/"
   while IFS= read -r src; do "$fn" "$src" "$CLAUDE_HOME/skills/$(basename "$src")"; done < <(collect_skills)
+  while IFS= read -r src; do "$fn" "$src" "$CLAUDE_HOME/skills/$(basename "$src")"; done < <(collect_skill_docs)
 }
 
 target="" action="install"
