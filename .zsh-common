@@ -19,3 +19,5 @@ fpath=("$HOME/.docker/completions" "${fpath[@]}")
 
 # Load zsh-completions
 autoload -Uz compinit && compinit
+
+alias claudex='claude --allow-dangerously-skip-permissions --append-system-prompt "$(cat ~/.agents/SYSTEM.md)"'
