@@ -51,8 +51,9 @@ collect_skills() {
   done
 }
 
-# Print top-level shared docs in ./skills/ (e.g. WORKFLOW.md) that skills
-# reference as ../WORKFLOW.md and so must sit beside them in the skills dir.
+# Print top-level shared docs in ./skills/ that skills reference as
+# ../<doc>.md and so must sit beside them in the skills dir. (Skill-private
+# references, like lets/reference/WORKFLOW.md, ride along with the skill dir.)
 collect_skill_docs() {
   local f
   for f in "$SOURCE_DIR"/skills/*.md; do
