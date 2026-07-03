@@ -1,0 +1,50 @@
+{
+  "env": {
+    "DISABLE_AUTOUPDATER": "1"
+  },
+  "includeCoAuthoredBy": false,
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "test -f ./session.yml && printf '<session.yml>\\n%s\\n</session.yml>\\n' \"$(cat ./session.yml)\"; exit 0"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [],
+    "deny": [],
+    "ask": [],
+    "defaultMode": "default"
+  },
+  "workflowKeywordTriggerEnabled": false,
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": false,
+    "skill-creator@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true
+  },
+  "effortLevel": "medium",
+  "tui": "fullscreen",
+  "skipDangerousModePermissionPrompt": true,
+  "editorMode": "normal",
+  "verbose": true,
+  "preferredNotifChannel": "ghostty",
+  "autoCompactEnabled": true,
+  "switchModelsOnFlag": true,
+  "showTurnDuration": true,
+  "remoteControlAtStartup": true,
+  "agentPushNotifEnabled": true,
+  "useAutoModeDuringPlan": false,
+  "extraKnownMarketplaces": {
+    "impeccable": {
+      "source": {
+        "source": "github",
+        "repo": "pbakaus/impeccable"
+      }
+    }
+  }
+}
