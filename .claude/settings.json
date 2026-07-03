@@ -9,7 +9,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "test -f ./session.yml && printf '<session.yml>\\n%s\\n</session.yml>\\n' \"$(cat ./session.yml)\"; exit 0"
+            "command": "test -f ./session.yml && jq -n --rawfile c ./session.yml '{systemMessage: \"\\ud83d\\udcc4 session.yml loaded\", hookSpecificOutput: {hookEventName: \"UserPromptSubmit\", additionalContext: (\"<session.yml>\\n\" + $c + \"</session.yml>\")}}'; exit 0"
           }
         ]
       }
