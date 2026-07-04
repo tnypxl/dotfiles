@@ -27,7 +27,7 @@
       "Read(~/.npm/**)",
       "Read(~/.pypirc)",
       "Read(~/.gem/credentials)",
-      "Read(~/Library/Keychains/**)",
+      "Read(~/Library/Keychains/**)"
     ],
     "ask": [
       "Edit(~/.bashrc)",

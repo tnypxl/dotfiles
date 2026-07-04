@@ -6,7 +6,7 @@ source ~/.zsh-common
 
 export PATH="/opt/homebrew/bin:$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$BUN_INSTALL/bin:$PATH"
 export EDITOR="nvim"
-export TERM=xterm-256color
+export TERM=xterm-ghostty
 export WORDCHARS='*?[]~=&;!#$%^(){}<>'
 
 zinit light zsh-users/zsh-syntax-highlighting

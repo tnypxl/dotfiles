@@ -1,12 +1,14 @@
 {
-  "statusLine": {
-    "type": "command",
-    "command": "bash ~/.claude/statusline-command.sh"
-  },
   "env": {
     "DISABLE_AUTOUPDATER": "1"
   },
   "includeCoAuthoredBy": false,
+  "permissions": {
+    "allow": [],
+    "deny": [],
+    "ask": [],
+    "defaultMode": "default"
+  },
   "hooks": {
     "UserPromptSubmit": [
       {
@@ -19,17 +21,23 @@
       }
     ]
   },
-  "permissions": {
-    "allow": [],
-    "deny": [],
-    "ask": [],
-    "defaultMode": "default"
-  },
   "workflowKeywordTriggerEnabled": false,
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
+  },
   "enabledPlugins": {
     "frontend-design@claude-plugins-official": false,
     "skill-creator@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "impeccable": {
+      "source": {
+        "source": "github",
+        "repo": "pbakaus/impeccable"
+      }
+    }
   },
   "effortLevel": "medium",
   "tui": "fullscreen",
@@ -43,12 +51,5 @@
   "remoteControlAtStartup": true,
   "agentPushNotifEnabled": true,
   "useAutoModeDuringPlan": false,
-  "extraKnownMarketplaces": {
-    "impeccable": {
-      "source": {
-        "source": "github",
-        "repo": "pbakaus/impeccable"
-      }
-    }
-  }
+  "model": "sonnet"
 }

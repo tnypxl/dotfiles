@@ -23,7 +23,7 @@ go install golang.org/x/tools/gopls@latest
 """ }
 gum = "latest"
 lazygit = "latest"
-claude-code = "latest"
+claude-code = "2.1.200"
 
 [tools.node]
 version = "lts"

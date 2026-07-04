@@ -27,7 +27,7 @@ The skill hands you an already-bounded scope. Fan out across real material and r
 
 Keep observation separate from interpretation:
 
-- **Findings** — factual, neutral, sourced (`file:line`, URL). No interpretation.
+- **Findings** — factual, neutral, sourced (`file:line`, URL, `pdf|document:page-number` page number). No interpretation.
 - **Implications** — a distinct step: what the findings mean for the notebook's approach and plan. Never folded into Findings.
 - **Gaps** — what you could not determine, stated plainly. Never buried — a buried gap becomes a contradiction after the plan has committed.
 - If a finding **conflicts with the notebook's Approach**, call it out first and prominently so the skill can send the human back to `discuss`.
@@ -40,15 +40,15 @@ Keep observation separate from interpretation:
 ## Return format (investigation mode)
 
 ```
-## Findings
+## FINDINGS
 - <neutral observation, with source>
 
-## Implications
+## IMPLICATIONS
 - <what the findings mean for the approach/plan — kept distinct from Findings>
 
-## Gaps
+## GAPS
 - <what could not be determined>
 
-## Conflicts   (only if a finding contradicts the Approach — put this first)
+## CONFLICTS   (only if a finding contradicts the Approach — put this first)
 - <what was found, why it conflicts, what it implies>
 ```
