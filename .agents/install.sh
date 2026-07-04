@@ -1,32 +1,45 @@
 #!/usr/bin/env bash
 #
-# Symlink this directory's agents and skills into a Claude config dir.
+# Symlink this directory's agents and skills into a Claude config dir, and
+# expose the domain/workflow cascade floor into ~/.agents.
 #
-#   install.sh --claude              install (symlink) into ~/.claude
+#   install.sh --claude              install (symlink) into ~/.claude and ~/.agents
 #   install.sh --claude --uninstall  remove the symlinks this script created
 #
 # Agents are the *.md files in this directory that begin with YAML frontmatter
 # (SYSTEM.md and other plain docs are ignored). Skills are the subdirectories of
 # ./skills/ that contain a SKILL.md (so ./skills/scripts/ is ignored).
 #
-# Override the target root with CLAUDE_HOME (defaults to ~/.claude).
+# The domain/workflow cascade floor: ./domains/ and ./workflows/ are linked as
+# ~/.agents/domains and ~/.agents/workflows so the skill can resolve named
+# domains and workflows against $HOME/.agents/<kind>/<name>.md on any machine.
+#
+# Override the Claude config root with CLAUDE_HOME (defaults to ~/.claude).
+# Override the agents cascade root with AGENTS_HOME (defaults to ~/.agents).
 set -euo pipefail
 
 SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CLAUDE_HOME="${CLAUDE_HOME:-$HOME/.claude}"
+AGENTS_HOME="${AGENTS_HOME:-$HOME/.agents}"
 
 usage() {
   cat <<'EOF'
-Symlink this directory's agents and skills into a Claude config dir.
+Symlink this directory's agents and skills into a Claude config dir, and
+expose the domain/workflow cascade floor into ~/.agents.
 
-  install.sh --claude              install (symlink) into ~/.claude
+  install.sh --claude              install (symlink) into ~/.claude and ~/.agents
   install.sh --claude --uninstall  remove the symlinks this script created
 
 Agents are the *.md files in this directory that begin with YAML frontmatter
 (SYSTEM.md and other plain docs are ignored). Skills are the subdirectories of
 ./skills/ that contain a SKILL.md (so ./skills/scripts/ is ignored).
 
-Override the target root with CLAUDE_HOME (defaults to ~/.claude).
+The domain/workflow cascade floor: ./domains/ and ./workflows/ are linked as
+~/.agents/domains and ~/.agents/workflows so the skill can resolve named
+domains and workflows against $HOME/.agents/<kind>/<name>.md on any machine.
+
+Override the Claude config root with CLAUDE_HOME (defaults to ~/.claude).
+Override the agents cascade root with AGENTS_HOME (defaults to ~/.agents).
 EOF
 }
 
@@ -90,6 +103,9 @@ apply() {
   echo "Skills -> ${CLAUDE_HOME/#$HOME/\~}/skills/"
   while IFS= read -r src; do "$fn" "$src" "$CLAUDE_HOME/skills/$(basename "$src")"; done < <(collect_skills)
   while IFS= read -r src; do "$fn" "$src" "$CLAUDE_HOME/skills/$(basename "$src")"; done < <(collect_skill_docs)
+  echo "Cascade floor -> ${AGENTS_HOME/#$HOME/\~}/"
+  [[ -d "$SOURCE_DIR/domains"   ]] && "$fn" "$SOURCE_DIR/domains"   "$AGENTS_HOME/domains"
+  [[ -d "$SOURCE_DIR/workflows" ]] && "$fn" "$SOURCE_DIR/workflows" "$AGENTS_HOME/workflows"
 }
 
 target="" action="install"

@@ -22,6 +22,10 @@ The `lets` skill hands you the notebook's committed Approach (and `research.md`,
 - Each task carries a **why-it-exists** line (its role in the plan, not a restatement of its steps), a checklist, and dependencies as the first checklist item (`Depends on: <none>` when there are none — state the absence).
 - If grounding **conflicts with the Approach**, do not plan around it. Stop and return the conflict separately so the skill can send the human back to `discuss`.
 
+**Setup-mode shape.** When `session.yml` carries `setup: domain` or `setup: workflow`, the Approach is decomposing a reference file (see WORKFLOW.md § Authoring mode). The same "one task = one outcome" discipline applies, but the section structure is fixed by the target file type:
+- **domain**: one task for the scope/intro, one task per standards-area section, one task for the hygiene/voice section.
+- **workflow**: one task for the frontmatter (default domain, coupling declarations), then one task per per-verb guidance section present (`discuss`, `research`, `plan`, `execute`).
+
 ## Boundaries
 
 - You have no write tools by design. Never write `session.yml` or any stem document — including `plan.md`.

@@ -4,9 +4,21 @@ Domain references are optional, read-only context for a stem. A stem opts in by 
 
 ```
 $PWD/.agents/domains/<name>.md          # project override — wins
-~/dotfiles/.agents/domains/<name>.md    # the default floor
+~/.agents/domains/<name>.md             # the default floor (~/.agents/ is typically a symlink into the dotfiles tree)
 ```
 
 A project overrides the default by placing its own `<name>.md`; the files here are the floor. A reference describes the *standards a domain's deliverables follow* — not the work itself, and not the harness. The skill reads these; it never writes them.
 
-The sibling dirs (`../workflows/`, `../documentation/`, `../assets/`) follow the same project→dotfiles cascade for whatever a domain or stem references.
+A domain file may declare that it requires a companion workflow by setting `requires_workflow:` in its frontmatter:
+
+```yaml
+---
+requires_workflow: writing
+---
+
+# Domain content follows …
+```
+
+When a stem selects a domain carrying `requires_workflow:`, the skill enforces the pairing at resolution time — deterministically, before the verb runs. The coupling is authoritative, not advisory. (The full enforcement contract lives in WORKFLOW.md § Selectors, precedence, and coupling.)
+
+The sibling dirs follow the same project→home cascade (`$PWD/.agents/…` → `~/.agents/…`): `../workflows/` holds authored workflow references, mirroring how this dir holds domain references; `../documentation/` and `../assets/` hold whatever else a domain or stem references.

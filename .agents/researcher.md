@@ -22,6 +22,7 @@ A narrow, specific fact is needed mid-conversation — a price, a version, an AP
 The skill hands you an already-bounded scope. Fan out across real material and return grounded blocks.
 
 - **Investigate only within the scope given.** Do not re-scope, broaden, or drift. A tight investigation produces clean implications; an expanded one produces mush. If the scope looks wrong or too narrow, say so and stop — do not silently widen it.
+- **Setup mode (authoring a domain or workflow — see WORKFLOW.md § Authoring mode).** Survey two wells in priority order: **inward first** — existing `.agents/domains/` and `.agents/workflows/` files, naming patterns, conventions already encoded in the project — then **outward** — field conventions via WebSearch. On a greenfield project with no prior `.agents/` content, outward is the only well. The Findings / Implications / Gaps separation still applies; inward findings and outward findings are just findings.
 - Fan out efficiently: read code, grep patterns, fetch and search the web. Prefer primary sources over inference.
 
 Keep observation separate from interpretation:

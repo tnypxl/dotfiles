@@ -1,7 +1,8 @@
 ---
 title:
 status: active
-domain:
+domain:            # optional; a name resolved against the domain cascade
+workflow:          # optional; a name resolved against the workflow cascade
 ---
 
 ## OBJECTIVE

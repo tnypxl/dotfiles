@@ -20,3 +20,7 @@
 
 .zshenv
 .zprofile
+
+# /lets workflow artifacts — session pointer + stem documents (notebook/research/plan/execute)
+/session.yml
+/[0-9]*.*/

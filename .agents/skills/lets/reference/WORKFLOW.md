@@ -27,6 +27,8 @@ project-root/
 ```yaml
 stem: redesign-onboarding
 note: optional free-form context
+domain: coding        # optional; project-wide fallback when the notebook omits it
+workflow: writing     # optional; project-wide fallback when the notebook omits it
 ```
 
 It is human-owned. Switching work is editing one line. The `note:` field can carry usable context.
@@ -51,6 +53,7 @@ The notebook's shape:
 title:
 status: active
 domain:            # optional; a name resolved against the domain cascade
+workflow:          # optional; a name resolved against the workflow cascade
 ---
 
 ## OBJECTIVE
@@ -121,9 +124,49 @@ $HOME/.agents/domains/coding.md             # the default floor
 
 These references are read-only to the skill — project- and human-owned, like the notes section. A project overrides the default; the global default is the floor. The other `.agents/` dirs (`workflows/`, `documentation/`, `assets/`) follow the same cascade for whatever a domain or stem references.
 
+## Workflow references
+
+A stem may name a workflow in its notebook frontmatter (`workflow: writing`). A workflow is a named preset that tunes how the four verbs behave: it sets a default domain and carries one prose guidance section per verb it shapes. The skill resolves the name against the same cascade as domains:
+
+```
+$PWD/.agents/workflows/writing.md              # project override
+$HOME/.agents/workflows/writing.md             # the default floor
+```
+
+A workflow file's structure is its signal: the presence of a `## discuss`, `## research`, `## plan`, or `## execute` section tells the skill that verb is shaped by this workflow; an absent section leaves that verb at its default. There is no separate `stages` list — a parallel enumeration would be a second source of truth and would drift from the sections themselves.
+
+These files are read-only to the skill — project- and human-owned, following the same cascade convention as domains.
+
+## Selectors, precedence, and coupling
+
+`domain:` and `workflow:` are orthogonal, optional selectors. Either may be set without the other. They live on the notebook — the stem's anchor — and plan, research, and execute inherit them; those artifacts never carry them directly.
+
+Both may also appear in `session.yml` as a project-wide fallback for stems that omit them. Precedence differs by selector. For `domain:`, it is three-tier: **notebook `domain:` > the selected workflow's preset `domain:` > `session.yml` `domain:`** — the notebook always wins; if the notebook names no domain, the selected workflow's preset domain applies; failing both, `session.yml`'s domain is the fallback. For `workflow:`, it remains two-tier: notebook `workflow:` > `session.yml` `workflow:`; workflows carry no third tier of their own.
+
+A domain or workflow may declare that it requires its counterpart; when it does, the resolution script enforces the pairing deterministically, before the verb runs. The enforcement logic lives in the resolution script, not here.
+
+## Authoring mode
+
+`session.yml` accepts a `setup:` key to engage authoring mode:
+
+```yaml
+setup: domain      # or: workflow
+```
+
+In this mode the stem's deliverable *is* a new reference file — written to `.agents/domains/<name>.md` or `.agents/workflows/<name>.md`. The consumption selectors (`domain:` / `workflow:`) are ignored while authoring; you are building one, not using one.
+
+Authoring reuses the same three subagents and four verbs, pointed at the reference file being written:
+
+- **discuss** — shape what the reference is *for* and its structure.
+- **research** — dual-direction survey: inward (project prior art, when any exists) then outward (field conventions via web); the flow's differentiator.
+- **plan** — decompose the reference into writable sections.
+- **execute** — write the file; no imposed granularity — the human drives.
+
 ## Voice
 
 Internal vocabulary — task identifiers, phase names, control words — belongs to the workflow, and the work it produces speaks its own language. In code, configs, and generated text, name things for what they are in their own domain. A good name makes sense to someone who never read the plan.
+
+**Exception — authoring mode.** A `setup` deliverable is *about* the harness: it exists to define stems, verbs, domains, and workflows. The executor must carry that vocabulary, not scrub it — the inversion is the rule's own documented exception.
 
 ## Subagents
 
