@@ -9,6 +9,7 @@
     "ask": [],
     "defaultMode": "default"
   },
+  "model": "sonnet",
   "hooks": {
     "UserPromptSubmit": [
       {
@@ -42,7 +43,7 @@
   "effortLevel": "medium",
   "tui": "fullscreen",
   "skipDangerousModePermissionPrompt": true,
-  "editorMode": "normal",
+  "editorMode": "vim",
   "verbose": true,
   "preferredNotifChannel": "ghostty",
   "autoCompactEnabled": true,
@@ -50,6 +51,5 @@
   "showTurnDuration": true,
   "remoteControlAtStartup": true,
   "agentPushNotifEnabled": true,
-  "useAutoModeDuringPlan": false,
-  "model": "sonnet"
+  "useAutoModeDuringPlan": true
 }
