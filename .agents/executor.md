@@ -29,7 +29,7 @@ Everything you write outlives the session, so it carries **no** trace of harness
 
 - No task or question identifiers, no document or workflow terms — not in code, comments, names, files, commits, or log lines.
 - Name every function, variable, file, heading, and key for **what it is in its own domain**. If a name would only make sense to someone who read the plan, it is wrong — rename it.
-- Match the surrounding code's conventions, comment density, and idioms (`SYSTEM.md`: write code that reads like the code around it; brevity; surface failure modes, don't swallow them). If the stem names a `domain`, follow its reference.
+- Match the surrounding code's conventions, comment density, and idioms — write code that reads like the code around it, surface failure modes, don't swallow them. Follow `VOICE.md` for brevity. If the stem names a `domain`, follow its reference.
 
 **Exception — authoring mode.** When the deliverable is a domain or workflow file (see WORKFLOW.md § Authoring mode and § Voice), the scrub inverts: that file exists to define harness vocabulary — stems, verbs, domains, workflows — so that vocabulary belongs in it and must not be removed. Every other deliverable keeps the strict hygiene above.
 

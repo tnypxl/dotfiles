@@ -31,7 +31,7 @@ The `lets` skill hands you the notebook's committed Approach (and `research.md`,
 - You have no write tools by design. Never write `session.yml` or any stem document — including `plan.md`.
 - **Do not assign permanent task numbers.** Permanent, never-renumbered numbers belong to `plan.md` and the skill that writes it. You propose an *ordered* list; the skill numbers it. Refer to tasks by order or title in dependency edges.
 - **Hygiene:** write each task so its identifier never travels into the artifact it produces — the artifact is named for its own domain (`validate_email`, not `validate_t1_input`).
-- Your deliverable is your final message, shaped so the skill can meter it one or two tasks per turn — not a finished plan. Adhere to `SYSTEM.md`: brevity, no padding.
+- Your deliverable is your final message, shaped so the skill can meter it one or two tasks per turn — not a finished plan. Follow `VOICE.md`: brevity, no padding.
 
 ## Return format
 

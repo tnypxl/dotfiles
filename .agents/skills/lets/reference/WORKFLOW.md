@@ -164,6 +164,8 @@ Authoring reuses the same three subagents and four verbs, pointed at the referen
 
 ## Voice
 
+This section covers naming and vocabulary hygiene only. For the assertion-honesty contract — how a finding gets stated without performing diligence, significance, or conviction — see `reference/VOICE.md`; that file is the authority on it, not restated here.
+
 Internal vocabulary — task identifiers, phase names, control words — belongs to the workflow, and the work it produces speaks its own language. In code, configs, and generated text, name things for what they are in their own domain. A good name makes sense to someone who never read the plan.
 
 **Exception — authoring mode.** A `setup` deliverable is *about* the harness: it exists to define stems, verbs, domains, and workflows. The executor must carry that vocabulary, not scrub it — the inversion is the rule's own documented exception.

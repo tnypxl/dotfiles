@@ -15,8 +15,9 @@ Input is `<verb> <prompt>`. The first token is the verb; the rest is the prompt.
 2. **Stem** — read `session.yml` at the project root for `stem`, any `note:` context, and `setup:` (if present; value is `domain` or `workflow`). If `session.yml` is missing, ask the human for a stem name, then create `session.yml` (`stem` + empty `note`). Find the stem folder beside it (`<index>.<stem>`); if none exists, allocate the next index (`1 +` highest existing stem index, else `1`) and create the folder.
 3. **Artifact** — map verb → file: `discuss`→`notebook.md`, `research`→`research.md`, `plan`→`plan.md`, `execute`→`execute.md`. If it doesn't exist, scaffold it from the matching template below with `status: active`.
 4. **Lock guard** — if the target artifact's frontmatter is `status: locked`, treat it as read-only: say so and stop. (During an execute review, if a correction sweep reaches a locked upstream artifact, surface the contradiction and ask to unlock before any change.)
-5. **Setup mode** — if `setup:` is set, override the artifact target: `setup: domain` → `.agents/domains/<stem>.md`; `setup: workflow` → `.agents/workflows/<stem>.md`. Ignore any `domain:` / `workflow:` selectors from the notebook or `session.yml`. Skip step 6 and proceed directly to the verb's playbook. (Authoring mode semantics: `./reference/WORKFLOW.md` § Authoring mode.)
+5. **Setup mode** — if `setup:` is set, override the artifact target: `setup: domain` → `.agents/domains/<stem>.md`; `setup: workflow` → `.agents/workflows/<stem>.md`. Ignore any `domain:` / `workflow:` selectors from the notebook or `session.yml`. Skip step 6 and proceed to step 7. (Authoring mode semantics: `./reference/WORKFLOW.md` § Authoring mode.)
 6. **Resolve context** — run `./scripts/resolve-context.sh` (relative to the skill's base directory, with the project root as the working directory; the script walks upward to find `session.yml`). Two outcomes: if it exits nonzero, it has already printed a human-readable resolution or coupling error to stderr — surface that message and stop, do not proceed to the playbook. If it exits 0, it emits `DOMAIN_NAME` / `DOMAIN_FILE` / `WORKFLOW_NAME` / `WORKFLOW_FILE` lines; read any non-empty `DOMAIN_FILE` as standards the deliverable must follow, and any non-empty `WORKFLOW_FILE` for per-verb tuning. Both are optional — empty values mean no selector, nothing to read. Precedence and coupling logic live in the script's contract and `./reference/WORKFLOW.md` § Selectors.
+7. **Load the voice** — read `./reference/VOICE.md` as the governing voice for everything you produce this turn, conversational and artifact alike.
 
 Then run the verb's playbook, advancing one or two threads at a time (cadence: `./reference/WORKFLOW.md` § Cadence), and hand the next move back to the human.
 
@@ -34,7 +35,7 @@ A real back-and-forth that shapes the notebook as you talk.
 
 Deliberate investigation, delegated to the `researcher` subagent with an already-bounded scope.
 
-- Bound the scope first (from the notebook and the prompt); hand the subagent that scope **and the path to `./reference/WORKFLOW.md`** as its contract.
+- Bound the scope first (from the notebook and the prompt); hand the subagent that scope **and the path to `./reference/WORKFLOW.md` and `./reference/VOICE.md`** as its contract.
 - Meter its return into `research.md` one or two threads at a time — keep Findings (neutral) separate from Implications (what they mean). Record Gaps honestly.
 - If a finding conflicts with the notebook's Approach, surface it; correction is the human re-running `discuss`.
 - **Setup mode**: run dual-direction — first inward (scan existing files in `.agents/domains/` and `.agents/workflows/` for prior art and naming conventions), then outward (web survey of field conventions for the reference type being authored). Both feeds scope the sections for `plan`.
@@ -43,7 +44,7 @@ Deliberate investigation, delegated to the `researcher` subagent with an already
 
 Decomposition toward the Approach, delegated to the `planner` subagent.
 
-- Hand the planner the committed Approach (and `research.md`, if any) **and the path to `./reference/WORKFLOW.md`**.
+- Hand the planner the committed Approach (and `research.md`, if any) **and the path to `./reference/WORKFLOW.md` and `./reference/VOICE.md`**.
 - One task = one outcome confirmable by a single check. Split anything that joins outcomes with "and."
 - Each task carries a why-it-exists line, a checklist, and dependencies as the first item (`Depends on: <none>` when there are none).
 - Meter proposed tasks into `plan.md` a few at a time; the skill owns the permanent numbers.
@@ -53,7 +54,7 @@ Decomposition toward the Approach, delegated to the `planner` subagent.
 
 The work itself, delegated to the `executor` subagent (which owns all writes to external artifacts).
 
-- Hand the executor one task (or a tight bounded set) **and the path to `./reference/WORKFLOW.md`**. Write its report into `execute.md` as a log entry; the log is a ledger (append-only).
+- Hand the executor one task (or a tight bounded set) **and the path to `./reference/WORKFLOW.md` and `./reference/VOICE.md`**. Write its report into `execute.md` as a log entry; the log is a ledger (append-only).
 - Tick the task in `plan.md` when done.
 - **Review each finished task for drift.** Ask: if I rewrote the notebook from scratch now, knowing this outcome, would it say something different? If the human judges it would, run the correction sweep — re-run the verb for the layer that drifted. The human judges drift; the skill surfaces the suspicion and runs the sweep once they pull the trigger. Depths and rationale: `./reference/WORKFLOW.md` § Drift and correction.
 - **Setup mode**: the executor writes the reference file directly to `.agents/domains/<name>.md` or `.agents/workflows/<name>.md`. No imposed granularity — the human drives section by section. Harness vocabulary is correct in the output file (Voice inversion; see `discuss` playbook above).

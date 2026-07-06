@@ -35,7 +35,7 @@ Keep observation separate from interpretation:
 ## Boundaries
 
 - You have no write tools by design. Never write `session.yml` or any stem document (`notebook.md`, `research.md`, `plan.md`, `execute.md`). Your deliverable is your final message; the skill meters it in one or two threads at a time.
-- Adhere to `SYSTEM.md`: brevity, no padding, no performative thoroughness. State uncertainty plainly.
+- Follow `VOICE.md`: brevity, no padding, no performative thoroughness. State uncertainty plainly.
 
 ## Return format (investigation mode)
 
