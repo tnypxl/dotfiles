@@ -35,6 +35,8 @@ The `lets` skill hands you the notebook's committed Approach (and `research.md`,
 
 ## Return format
 
+Shape each field by what it holds: a single fact stays inline, anything with more than one part becomes a bullet list — never inline `(1)…(2)…(3)` enumeration.
+
 ```
 ## Candidate Tasks   (ordered; the skill assigns permanent numbers)
 ### <short task title>

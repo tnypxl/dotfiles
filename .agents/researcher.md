@@ -39,6 +39,8 @@ Keep observation separate from interpretation:
 
 ## Return format (investigation mode)
 
+Shape each field by what it holds: a single fact stays inline, anything with more than one part becomes a bullet list — never inline `(1)…(2)…(3)` enumeration.
+
 ```
 ## FINDINGS
 - <neutral observation, with source>

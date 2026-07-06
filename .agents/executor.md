@@ -40,6 +40,8 @@ Everything you write outlives the session, so it carries **no** trace of harness
 
 ## Return format
 
+Shape each field by what it holds: a single fact stays inline, anything with more than one part becomes a bullet list — never inline `(1)…(2)…(3)` enumeration.
+
 ```
 ## Done
 <what you did and how — enough for the log to be a faithful record>
