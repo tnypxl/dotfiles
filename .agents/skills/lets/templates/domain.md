@@ -1,20 +1,20 @@
 ---
-# requires_workflow: <name>
+# requires_workflow: {name}
 # Uncomment and set when this domain's deliverables require a companion workflow.
 # The skill enforces the pairing at resolution time — deterministically, before
 # the verb runs. See WORKFLOW.md § Selectors, precedence, and coupling.
 ---
 
-# Domain: <Name>
+# Domain: {Name}
 
-Standards that <name> deliverables in this domain follow. Read as context when a stem sets `domain: <name>`; override per-project by placing a `<name>.md` under the project's `.agents/domains/`.
+Standards that {name} deliverables in this domain follow. Read as context when a stem sets `domain: {name}`; override per-project by placing a `{name}.md` under the project's `.agents/domains/`.
 
-## <Primary standards area>
+## {Primary standards area}
 
 - [What deliverables in this area must do or avoid — one clear rule per bullet.]
 - [...]
 
-## <Secondary standards area>
+## {Secondary standards area}
 
 - [...]
 

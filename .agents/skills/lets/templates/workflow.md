@@ -1,14 +1,14 @@
 ---
-domain: <name>
-# requires_domain: <name>
+domain: {name}
+# requires_domain: {name}
 # Uncomment and set when this workflow's verb guidance requires a companion domain.
 # The skill enforces the pairing at resolution time — deterministically, before
 # the verb runs. See WORKFLOW.md § Selectors, precedence, and coupling.
 ---
 
-# Workflow: <Name>
+# Workflow: {Name}
 
-How the four verbs behave when a stem sets `workflow: <name>`. Read as a preset when that stem runs any verb; override per-project by placing a `<name>.md` under the project's `.agents/workflows/`.
+How the four verbs behave when a stem sets `workflow: {name}`. Read as a preset when that stem runs any verb; override per-project by placing a `{name}.md` under the project's `.agents/workflows/`.
 
 The presence of a section below is the signal that this workflow shapes that verb. An absent section leaves the verb at its default — delete any sections you do not want to tune rather than leave them empty. Body structure beyond the section headers is recommended taste, enforced by nothing.
 

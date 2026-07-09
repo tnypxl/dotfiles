@@ -8,8 +8,8 @@ status: active
 single-fact finding stays one inline bullet. A finding with a fix and a
 source splits into sub-bullets, one line per part:
 
-- <the claim, stated plainly>
-  - *Fix:* <what to do about it>
+- {the claim, stated plainly}
+  - *Fix:* {what to do about it}
   - *Source:* <file:line, or URL>
 -->
 

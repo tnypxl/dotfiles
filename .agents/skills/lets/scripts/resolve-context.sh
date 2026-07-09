@@ -8,8 +8,8 @@ set -euo pipefail
 # resolved context as eval-safe key=value lines to stdout.
 #
 # Cascade for both domains and workflows:
-#   $PWD/.agents/<kind>/<name>.md   (project override — wins)
 #   $HOME/.agents/<kind>/<name>.md  (default floor)
+#   $PWD/.agents/<kind>/<name>.md   (project override — wins)
 #
 # Domain resolution uses three-tier precedence:
 #   notebook domain > workflow-preset domain > session domain

@@ -1,5 +1,22 @@
 # The `/lets` Workflow — Contract
 
+<!--toc:start-->
+- [The `/lets` Workflow — Contract](#the-lets-workflow-contract)
+  - [What the workflow is for](#what-the-workflow-is-for)
+  - [The stem](#the-stem)
+  - [The four artifacts](#the-four-artifacts)
+  - [Living vs. ledger](#living-vs-ledger)
+  - [Status](#status)
+  - [Cadence](#cadence)
+  - [Drift and correction](#drift-and-correction)
+  - [Domain references](#domain-references)
+  - [Workflow references](#workflow-references)
+  - [Selectors, precedence, and coupling](#selectors-precedence-and-coupling)
+  - [Authoring mode](#authoring-mode)
+  - [Voice](#voice)
+  - [Subagents](#subagents)
+<!--toc:end-->
+
 The shared, conceptual contract behind `/lets`: what a stem is, what the four artifacts mean, the living-vs-ledger distinction, cadence, drift, voice. The `lets` skill carries the operational instructions and pulls the section it needs from here on demand; the subagents read this as their authority for the concepts they must honor.
 
 This document holds *concepts and rationale*, stated once. Operational "what to do" lives in `SKILL.md`, not here.
@@ -10,7 +27,7 @@ A small harness for thinking a piece of work through in stages, collaboratively.
 
 ## The stem
 
-A **stem** is one cluster of thinking, planning, and execution toward one something. Each stem is a folder at the project root, named `<index>.<stem>` (index = the order the work began). A root listing is the chronology of the work.
+A **stem** is one cluster of thinking, planning, and execution toward one something. Each stem is a folder at the project root, named `{index}.{stem}` (index = the order the work began). A root listing is the chronology of the work.
 
 ```
 project-root/
@@ -33,7 +50,7 @@ workflow: writing     # optional; project-wide fallback when the notebook omits 
 
 It is human-owned. Switching work is editing one line. The `note:` field can carry usable context.
 
-**Workspace footprint.** `/lets` writes `session.yml` and `<index>.<stem>/` folders **at the project root** — this is the intended workspace layout, not a scratch area. Pointed at an arbitrary repo, it will add these to the root; that is by design, so a stem's chronology sits beside the work it concerns.
+**Workspace footprint.** `/lets` writes `session.yml` and `{index}.{stem}/` folders **at the project root** — this is the intended workspace layout, not a scratch area. Pointed at an arbitrary repo, it will add these to the root; that is by design, so a stem's chronology sits beside the work it concerns.
 
 ## The four artifacts
 
@@ -66,32 +83,34 @@ there is something real to say.
 
 ## OPEN QUESTIONS
 - [ ] Q1: ...
-- [x] Q2: ... — resolved: ...
+- [x] Q2: ... 
+    - RESOLVED ...
 
-## NOTES        (optional)
+## NOTES (optional)
 ```
 
-**Notes** is the human's — an optional section they add by hand to keep approach- or objective-adjacent context. The skill reads it for context and leaves the writing to them.
+**NOTES** section is owned by the human — an optional section they add by hand to keep approach- or objective-adjacent context. The skill reads it for context and leaves the writing to them.
 
 ## Living vs. ledger
 
 Every section is one of two types, and the type follows from the section itself — evident on sight:
 
-- **Living** (OBJECTIVE, APPROACH, and the body of research/plan): holds the current understanding. Rewrite it clean *whenever it changes*, and only then, so it always reads as the best statement of where things stand *now*. When something shifts, fold it into the prose so the section stays one coherent account.
-- **Ledger** (Open Questions, the execution log): append-only and chronological, with sequential, permanent numbering. Resolved questions are marked `[x]` and kept in place. The trail of how understanding got here lives here, freeing the living prose to state only where things stand now. A compound question is two questions — split it.
+- **Living** (OBJECTIVE, APPROACH, and the body of research/plan): holds the current understanding. Rewrite it clean *whenever it changes*, and only then, so it always reads as the best statement of where things stand *now*. When something shifts, fold it into the prose so the section stays one coherent account. Refrain from unnecessary verbosity or performative comprehensiveness. Brevity is respect. Comprehensiveness is a byproduct of careful iteration.
+- **Ledger** (Open Questions, the execution log): append-only and chronological, with sequential, permanent numbering.  Resolved questions are marked `[x]` and kept in place. The trail of how understanding got here lives here, freeing the living prose to state only where things stand now. A compound question is two questions — split it. Do
 
 ## Status
 
 Frontmatter `status:` is `active` or `locked`. The human owns it; the skill reads it and follows.
 
 - `active` — the default on creation; the artifact is open to change.
-- `locked` — frozen. A locked artifact is read-only: the skill leaves the file as is, and a correction sweep that reaches one stops and asks to unlock.
+- `locked` — frozen. A locked artifact is read-only: the skill leaves the file as is, and a correction sweep (see Drift and correction) that reaches one stops and asks to unlock.
 
 ## Cadence
 
-The work moves one or two threads at a time — at most two. A thread is a single open question, a single direction, a single section advanced.
+The work moves one or two threads at a time. A thread is a single open question, a single direction, a single section advanced.
 
 - **Predict narrow, first.** From what the human just said, predict the scope and direction implied, then surface the single highest-leverage thread that sharpens it. A wrong narrow prediction is cheap to correct; a wide one entangles everything.
+- **Scope and complexity are fluid**. Begin with a minimal, well-defined slice and let complexity flex in both directions until the right shape reveals itself.
 - **One or two open questions per turn.** Enough to move forward, few enough that the answers stay consistent with each other.
 - **The human steers.** Advance one or two threads, then hand the next move back — the human picks the direction each turn.
 
@@ -153,18 +172,23 @@ A domain or workflow may declare that it requires its counterpart; when it does,
 setup: domain      # or: workflow
 ```
 
-In this mode the stem's deliverable *is* a new reference file — written to `.agents/domains/<name>.md` or `.agents/workflows/<name>.md`. The consumption selectors (`domain:` / `workflow:`) are ignored while authoring; you are building one, not using one.
+In this mode the stem's deliverable *is* a new reference file — written to `.agents/domains/{name}.md` or `.agents/workflows/{name}.md`. The consumption selectors (`domain:` / `workflow:`) are ignored while authoring; you are building one, not using one.
+
+The deliverable is written to one of two paths. Always confirm which one is preferred before writing. If the project path is chosen and a domain or workflow of the same name already exists at the global path, say so briefly — the project copy will override it.
+
+- Project path: `$PWD/.agents/{domains,workflows}/{name}.md` (project override)
+- Global path: `$HOME/.agents/{domains,workflows}/{name}.md` (default floor)
 
 Authoring reuses the same three subagents and four verbs, pointed at the reference file being written:
 
 - **discuss** — shape what the reference is *for* and its structure.
-- **research** — dual-direction survey: inward (project prior art, when any exists) then outward (field conventions via web); the flow's differentiator.
+- **research** — dual-direction survey: inward (project prior art, when any exists) then outward (field conventions via web, local documents/artifacts external to project path). This inward-then-outward flow is what sets authoring research apart from the standard verb.
 - **plan** — decompose the reference into writable sections.
 - **execute** — write the file; no imposed granularity — the human drives.
 
 ## Voice
 
-This section covers naming and vocabulary hygiene only. For the assertion-honesty contract — how a finding gets stated without performing diligence, significance, or conviction — see `reference/VOICE.md`; that file is the authority on it, not restated here.
+This section covers naming and vocabulary hygiene only. For the assertion-honesty contract — how a finding gets stated without performing diligence, significance, or conviction — see `reference/VOICE.md` (bundled alongside this contract, not part of the project's `.agents/` tree); that file is the authority on it, not restated here.
 
 Internal vocabulary — task identifiers, phase names, control words — belongs to the workflow, and the work it produces speaks its own language. In code, configs, and generated text, name things for what they are in their own domain. A good name makes sense to someone who never read the plan.
 
