@@ -21,6 +21,6 @@ requires_workflow: writing
 # Domain content follows …
 ```
 
-When a stem selects a domain carrying `requires_workflow:`, the skill enforces the pairing at resolution time — deterministically, before the verb runs. The coupling is authoritative, not advisory. (The full enforcement contract lives in WORKFLOW.md § Selectors, precedence, and coupling.)
+When a stem selects a domain carrying `requires_workflow:`, the skill enforces the pairing at resolution time — deterministically, before the verb runs. The coupling is authoritative, not advisory. (The enforcement logic lives in `../skills/lets/scripts/resolve-context.sh`.)
 
 The sibling dirs follow the same project→home cascade (`$PWD/.agents/…` → `~/.agents/…`): `../workflows/` holds authored workflow references, mirroring how this dir holds domain references; `../documentation/` and `../assets/` hold whatever else a domain or stem references.

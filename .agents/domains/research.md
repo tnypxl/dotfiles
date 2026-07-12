@@ -23,7 +23,7 @@ Standards that research deliverables in this domain follow. Read as context when
 
 ## Deliverable hygiene
 
-- Nothing in the deliverable carries harness vocabulary — no stem, task, or question identifiers, no phase names, no workflow terms in headings, prose, or citations. Name everything in the subject's own terms. (See WORKFLOW.md § Voice.)
+- Nothing in the deliverable carries harness vocabulary — no stem, task, or question identifiers, no phase names, no workflow terms in headings, prose, or citations. Name everything in the subject's own terms. (See `../skills/lets/reference/CORE.md` § Voice.)
 - Citation format is consistent throughout one deliverable.
 
 > This is a starter floor. Tend it to your defaults — preferred citation style, report templates, audience register, depth bar.

@@ -16,7 +16,7 @@ Standards that software deliverables in this domain follow. Read as context when
 
 ## Deliverable hygiene
 
-- Nothing shipped carries harness vocabulary — no task or question identifiers, no phase names, no workflow terms in names, comments, commits, or logs. (See WORKFLOW.md § Voice.)
+- Nothing shipped carries harness vocabulary — no task or question identifiers, no phase names, no workflow terms in names, comments, commits, or logs. (See `../skills/lets/reference/CORE.md` § Voice.)
 - Commit messages describe the change in the project's own terms.
 
 > This is a starter floor. Tend it to your defaults — preferred languages, frameworks, lint/format rules, review bar.

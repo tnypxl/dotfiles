@@ -2,7 +2,8 @@
 # requires_workflow: {name}
 # Uncomment and set when this domain's deliverables require a companion workflow.
 # The skill enforces the pairing at resolution time — deterministically, before
-# the verb runs. See WORKFLOW.md § Selectors, precedence, and coupling.
+# the verb runs. See scripts/resolve-context.sh for the resolution and
+# coupling logic.
 ---
 
 # Domain: {Name}
@@ -20,6 +21,6 @@ Standards that {name} deliverables in this domain follow. Read as context when a
 
 ## Deliverable hygiene
 
-- Nothing in the deliverable carries harness vocabulary — no stem, task, or question identifiers, no phase names, no workflow terms in names, prose, or output. Name everything in the subject's own terms. (See WORKFLOW.md § Voice.)
+- Nothing in the deliverable carries harness vocabulary — no stem, task, or question identifiers, no phase names, no workflow terms in names, prose, or output. Name everything in the subject's own terms. (See `../reference/CORE.md` § Voice.)
 
 > This is a starter shape. The sections above are recommended taste, enforced by nothing — restructure them freely for your domain. Tend it to your actual defaults.

@@ -26,6 +26,6 @@ requires_domain: writing
 # Workflow content follows …
 ```
 
-`domain:` sets the default domain the workflow presets — a stem that selects this workflow inherits that domain unless its notebook overrides it. `requires_domain:` declares that the workflow must be paired with a specific domain; when a stem selects a workflow carrying `requires_domain:`, the skill enforces the pairing at resolution time — deterministically, before the verb runs. The coupling is authoritative, not advisory. (The full enforcement contract lives in WORKFLOW.md § Selectors, precedence, and coupling.)
+`domain:` sets the default domain the workflow presets — a stem that selects this workflow inherits that domain unless its notebook overrides it. `requires_domain:` declares that the workflow must be paired with a specific domain; when a stem selects a workflow carrying `requires_domain:`, the skill enforces the pairing at resolution time — deterministically, before the verb runs. The coupling is authoritative, not advisory. (The enforcement logic lives in `../skills/lets/scripts/resolve-context.sh`.)
 
 The sibling dirs follow the same project→home cascade (`$PWD/.agents/…` → `~/.agents/…`): `../domains/` holds domain references, mirroring how this dir holds workflow references; `../documentation/` and `../assets/` hold whatever else a domain or stem references.
