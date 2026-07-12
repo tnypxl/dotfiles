@@ -1,3 +1,10 @@
+if [[ "$TERM_PROGRAM" == "ghostty" ]]; then
+  export TERM=xterm-ghostty
+else
+  export TERM=xterm-256color
+fi
+
+
 if [[ -f "/opt/homebrew/bin/brew" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
