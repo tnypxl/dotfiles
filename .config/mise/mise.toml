@@ -23,11 +23,5 @@ go install golang.org/x/tools/gopls@latest
 """ }
 gum = "latest"
 lazygit = "latest"
-claude-code = "2.1.200"
-
-[tools.node]
-version = "lts"
-postinstall = '''
-echo "=== NodeJS: Installing Claude Code Router"
-npm install -g @musistudio/claude-code-router
-'''
+claude-code = "latest"
+node = "lts"

@@ -1,5 +1,5 @@
 ---
-domain: {name}
+domain: '{name}'
 # requires_domain: {name}
 # Uncomment and set when this workflow's verb guidance requires a companion domain.
 # The skill enforces the pairing at resolution time — deterministically, before
