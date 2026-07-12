@@ -2,7 +2,11 @@
   "env": {
     "DISABLE_AUTOUPDATER": "1"
   },
-  "includeCoAuthoredBy": false,
+  "attribution": {
+    "commit": "",
+    "pr": "",
+    "sessionUrl": false
+  },
   "permissions": {
     "allow": [],
     "deny": [],
@@ -48,6 +52,7 @@
   "preferredNotifChannel": "ghostty",
   "autoCompactEnabled": true,
   "switchModelsOnFlag": true,
+  "fileCheckpointingEnabled": true,
   "showTurnDuration": true,
   "remoteControlAtStartup": true,
   "agentPushNotifEnabled": true,
