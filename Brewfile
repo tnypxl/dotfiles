@@ -79,7 +79,6 @@ cask '1password-cli'
 cask 'ghostty'
 cask 'slack@beta'
 
-cask 'chatgpt'
 cask 'font-jetbrains-mono'
 cask 'font-jetbrains-mono-nerd-font'
 cask 'postman'
