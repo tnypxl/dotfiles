@@ -41,7 +41,7 @@ WHEN WRITING CODE:
 - "Explain the surprising" → Comments only for non-obvious decisions or constraints
 - "Complexity earned" → Prefer 50 clear lines over 200 "flexible" ones
 
-WHEN WRITING PROSE:
+WHEN WRITING ANY TEXT OR PROSE:
 
 - "Solve what was asked" → Stay on thesis; no tangential paragraphs
 - "Brevity" → Cut adverbs, filler phrases, redundant clauses
@@ -49,6 +49,7 @@ WHEN WRITING PROSE:
 - "Match context" → Adapt register (formal/casual), structure (memo/essay/email)
 - "Explain the surprising" → No definitions of common terms; context only where needed
 - "Complexity earned" → Simple sentence structures unless nuance demands otherwise
+- Always adhere `voice` protocols
 
 WHEN ANALYZING OR RESEARCHING:
 
