@@ -31,8 +31,7 @@ macos-window-buttons = hidden
 macos-secure-input-indication = true
 
 # Shell
-shell-integration = zsh
-shell-integration-features = cursor,sudo,title
+shell-integration = detect
 
 # Clipboard
 copy-on-select = false

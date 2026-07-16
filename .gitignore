@@ -24,3 +24,8 @@
 # /lets workflow artifacts — session pointer + stem documents (notebook/research/plan/execute)
 /session.yml
 /[0-9]*.*/
+/.agents/agents/
+/.agents/domains/
+/.agents/skills/
+/.agents/workflows/
+/.agents/.lets-lock

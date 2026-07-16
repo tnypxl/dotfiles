@@ -1,0 +1,36 @@
+# Start with all rules enabled by default
+default: true
+
+# MD013: Line length (default 80 characters)
+# Annoying because modern editors soft-wrap perfectly, and hard-wrapping breaks git diffs.
+MD013: false
+
+# MD033: Inline HTML
+# Annoying when you need basic HTML tags (like <kbd>, <br>, <img> alignment, or custom anchor links).
+MD033: false
+
+# MD024: Duplicate heading sibling/anywhere
+# Relaxed so headings can be repeated (e.g., "Examples" or "Parameters" under different parent headings).
+MD024:
+  siblings_only: true
+
+# MD029: Ordered list prefix sequential numbering
+# Changed to allow using "1." for every item, making list reordering and git diffs clean.
+MD029: false
+
+# MD041: First line in a file must be a top-level heading
+# Disabled to accommodate YAML front matter, introductory images, or custom layouts.
+MD041: false
+
+# MD014: Dollar signs before commands without showing output
+# Annoying when you copy-paste commands with single "$" prompts to show CLI usage.
+MD014: false
+
+# MD007: Unordered list indentation
+# Set to a standard, forgiving 2-space indentation.
+MD007:
+  indent: 2
+
+# MD034: Bare URLs
+# Disabled if you frequently write auto-linked URLs without wrap tags.
+MD034: false
