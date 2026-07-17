@@ -29,3 +29,4 @@
 /.agents/skills/
 /.agents/workflows/
 /.agents/.lets-lock
+!/.claude/CLAUDE.md
